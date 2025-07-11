@@ -45,11 +45,11 @@ export function Header() {
         <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-[#FE6100] to-[#FFDB42] rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] rounded-full flex items-center justify-center">
               <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="hidden xs:block">
-              <h1 className="heading-font text-lg sm:text-xl lg:text-2xl text-[#385723] leading-tight">
+              <h1 className="heading-font text-lg sm:text-xl lg:text-2xl text-[var(--reino-green-e)] leading-tight">
                 Reino nas Ruas
               </h1>
             </div>
@@ -61,9 +61,9 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-[#FE6100] whitespace-nowrap ${
+                className={`text-sm font-medium transition-colors duration-200 hover:text-[var(--reino-orange)] whitespace-nowrap ${
                   pathname === item.href 
-                    ? 'text-[#FE6100] border-b-2 border-[#FE6100] pb-1' 
+                    ? 'text-[var(--reino-orange)] border-b-2 border-[var(--reino-orange)] pb-1' 
                     : 'text-gray-700'
                 }`}
               >
@@ -76,13 +76,13 @@ export function Header() {
           <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 shrink-0">
             <button
               onClick={handleVolunteerClick}
-              className="text-xs xl:text-sm px-4 py-2 border-2 border-[#FE6100] text-[#FE6100] rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300 whitespace-nowrap"
+              className="text-xs xl:text-sm px-4 py-2 border-2 border-[var(--reino-orange)] text-[var(--reino-orange)] rounded-full font-semibold hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 whitespace-nowrap"
             >
               Seja Voluntário
             </button>
             <Link 
               href="/donate" 
-              className="text-xs xl:text-sm bg-[#FE6100] text-white px-4 py-2 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap"
+              className="text-xs xl:text-sm bg-[var(--reino-orange)] text-white px-4 py-2 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap"
             >
               Doar Agora
             </Link>
@@ -91,7 +91,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-[#FE6100] hover:bg-gray-100 transition-colors shrink-0"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-[var(--reino-orange)] hover:bg-gray-100 transition-colors shrink-0"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -106,9 +106,9 @@ export function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`block px-4 py-3 text-base font-medium transition-colors duration-200 hover:text-[#FE6100] hover:bg-gray-50 ${
+                  className={`block px-4 py-3 text-base font-medium transition-colors duration-200 hover:text-[var(--reino-orange)] hover:bg-gray-50 ${
                     pathname === item.href 
-                      ? 'text-[#FE6100] bg-gray-50 border-l-4 border-[#FE6100]' 
+                      ? 'text-[var(--reino-orange)] bg-gray-50 border-l-4 border-[var(--reino-orange)]' 
                       : 'text-gray-700'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -122,13 +122,13 @@ export function Header() {
                     handleVolunteerClick();
                     setIsMenuOpen(false);
                   }}
-                  className="w-full text-sm px-4 py-3 border-2 border-[#FE6100] text-[#FE6100] rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300"
+                  className="w-full text-sm px-4 py-3 border-2 border-[var(--reino-orange)] text-[var(--reino-orange)] rounded-full font-semibold hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300"
                 >
                   Seja Voluntário
                 </button>
                 <Link 
                   href="/donate" 
-                  className="w-full text-sm bg-[#FE6100] text-white px-4 py-3 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 block text-center"
+                  className="w-full text-sm bg-[var(--reino-orange)] text-white px-4 py-3 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 block text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Doar Agora

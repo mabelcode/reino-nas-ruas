@@ -151,7 +151,7 @@ export default function MediaPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-linear-to-r from-[#40AD52] to-[#385723] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-c)] to-[var(--reino-green-e)] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -174,7 +174,7 @@ export default function MediaPage() {
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
                   activeCategory === category.id
-                    ? 'bg-[#FE6100] text-white shadow-lg'
+                    ? 'bg-[var(--reino-orange)] text-white shadow-lg'
                     : 'bg-white text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -198,14 +198,14 @@ export default function MediaPage() {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-[#FE6100] text-white text-sm rounded-full capitalize">
+                    <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
                       {categories.find(cat => cat.id === item.category)?.name}
                     </span>
                   </div>
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#385723] mb-3 line-clamp-2">
+                  <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
@@ -225,7 +225,7 @@ export default function MediaPage() {
                   
                   <button 
                     onClick={() => handleReadMore(item)}
-                    className="w-full bg-gray-100 text-[#FE6100] font-semibold py-3 rounded-xl hover:bg-[#FE6100] hover:text-white transition-all duration-300 flex items-center justify-center"
+                    className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
                   >
                     Ler Mais
                     <ArrowRight className="w-4 h-4 ml-2" />
@@ -238,7 +238,7 @@ export default function MediaPage() {
       </section>
 
       {/* Newsletter */}
-      <section className="section-padding bg-[#FE6100] text-white">
+      <section className="section-padding bg-[var(--reino-orange)] text-white">
         <div className="container-max text-center">
           <h2 className="heading-font text-3xl sm:text-4xl mb-6">
             Receba Nossas Novidades
@@ -253,7 +253,7 @@ export default function MediaPage() {
                 placeholder="Seu melhor e-mail"
                 className="flex-1 px-6 py-3 rounded-full text-gray-700 placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-white"
               />
-              <button className="bg-white text-[#FE6100] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
+              <button className="bg-white text-[var(--reino-orange)] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
                 Inscrever-se
               </button>
             </div>

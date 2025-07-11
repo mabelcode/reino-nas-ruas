@@ -86,7 +86,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <span className="px-3 py-1 bg-[#FE6100] text-white text-sm rounded-full capitalize">
+              <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
                 {item.category}
               </span>
               <div className="flex items-center text-sm text-gray-500">
@@ -111,7 +111,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
         <div className="h-full overflow-y-auto pb-20">
           <div className="p-4 lg:p-8">
             {/* Title */}
-            <h1 className="heading-font text-2xl sm:text-3xl lg:text-4xl text-[#385723] mb-4 lg:mb-6">
+            <h1 className="heading-font text-2xl sm:text-3xl lg:text-4xl text-[var(--reino-green-e)] mb-4 lg:mb-6">
               {item.title}
             </h1>
 
@@ -120,8 +120,8 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 lg:mb-8">
                 {fullContent.details.participants && (
                   <div className="bg-gray-50 rounded-xl p-3 lg:p-4 text-center">
-                    <Users className="w-5 h-5 lg:w-6 lg:h-6 text-[#FE6100] mx-auto mb-2" />
-                    <div className="text-lg lg:text-xl font-bold text-[#385723]">
+                    <Users className="w-5 h-5 lg:w-6 lg:h-6 text-[var(--reino-orange)] mx-auto mb-2" />
+                    <div className="text-lg lg:text-xl font-bold text-[var(--reino-green-e)]">
                       {fullContent.details.participants}
                     </div>
                     <div className="text-xs lg:text-sm text-gray-600">Participantes</div>
@@ -129,8 +129,8 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 )}
                 {fullContent.details.location && (
                   <div className="bg-gray-50 rounded-xl p-3 lg:p-4 text-center">
-                    <MapPin className="w-5 h-5 lg:w-6 lg:h-6 text-[#40AD52] mx-auto mb-2" />
-                    <div className="text-sm lg:text-base font-semibold text-[#385723] mb-1">
+                    <MapPin className="w-5 h-5 lg:w-6 lg:h-6 text-[var(--reino-green-c)] mx-auto mb-2" />
+                    <div className="text-sm lg:text-base font-semibold text-[var(--reino-green-e)] mb-1">
                       Local
                     </div>
                     <div className="text-xs lg:text-sm text-gray-600">{fullContent.details.location}</div>
@@ -138,8 +138,8 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 )}
                 {fullContent.details.duration && (
                   <div className="bg-gray-50 rounded-xl p-3 lg:p-4 text-center">
-                    <Clock className="w-5 h-5 lg:w-6 lg:h-6 text-[#FFDB42] mx-auto mb-2" />
-                    <div className="text-sm lg:text-base font-semibold text-[#385723] mb-1">
+                    <Clock className="w-5 h-5 lg:w-6 lg:h-6 text-[var(--reino-yellow)] mx-auto mb-2" />
+                    <div className="text-sm lg:text-base font-semibold text-[var(--reino-green-e)] mb-1">
                       Duração
                     </div>
                     <div className="text-xs lg:text-sm text-gray-600">{fullContent.details.duration}</div>
@@ -147,7 +147,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 )}
                 {fullContent.details.organizer && (
                   <div className="bg-gray-50 rounded-xl p-3 lg:p-4 text-center">
-                    <div className="text-sm lg:text-base font-semibold text-[#385723] mb-1">
+                    <div className="text-sm lg:text-base font-semibold text-[var(--reino-green-e)] mb-1">
                       Organização
                     </div>
                     <div className="text-xs lg:text-sm text-gray-600">{fullContent.details.organizer}</div>
@@ -166,7 +166,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
             {/* Video Section */}
             {fullContent.videoUrl && (
               <div className="mb-6 lg:mb-8">
-                <h2 className="text-xl lg:text-2xl font-bold text-[#385723] mb-4">
+                <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
                   Vídeo do Evento
                 </h2>
                 {!showVideo ? (
@@ -180,7 +180,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[#FE6100] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[var(--reino-orange)] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Play className="w-8 h-8 lg:w-10 lg:h-10 text-white ml-1" />
                       </div>
                     </div>
@@ -201,7 +201,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
             {/* Image Gallery */}
             {fullContent.images.length > 0 && (
               <div className="mb-6 lg:mb-8">
-                <h2 className="text-xl lg:text-2xl font-bold text-[#385723] mb-4">
+                <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
                   Galeria de Fotos ({fullContent.images.length})
                 </h2>
                 
@@ -246,7 +246,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                         onClick={() => setCurrentImageIndex(index)}
                         className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${
                           index === currentImageIndex 
-                            ? 'border-[#FE6100] scale-105' 
+                            ? 'border-[var(--reino-orange)] scale-105' 
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
@@ -265,13 +265,13 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
             {/* Highlights */}
             {fullContent.highlights.length > 0 && (
               <div className="mb-6 lg:mb-8">
-                <h2 className="text-xl lg:text-2xl font-bold text-[#385723] mb-4">
+                <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
                   Destaques do Evento
                 </h2>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
                   {fullContent.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-start space-x-3 bg-gray-50 rounded-xl p-3 lg:p-4">
-                      <div className="w-2 h-2 bg-[#FE6100] rounded-full mt-2 shrink-0"></div>
+                      <div className="w-2 h-2 bg-[var(--reino-orange)] rounded-full mt-2 shrink-0"></div>
                       <p className="text-sm lg:text-base text-gray-700">{highlight}</p>
                     </div>
                   ))}
@@ -281,7 +281,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
 
             {/* Impact */}
             {fullContent.impact && (
-              <div className="bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white rounded-2xl p-4 lg:p-6">
+              <div className="bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white rounded-2xl p-4 lg:p-6">
                 <h2 className="text-xl lg:text-2xl font-bold mb-3">
                   Impacto Social
                 </h2>

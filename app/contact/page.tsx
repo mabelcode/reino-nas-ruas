@@ -43,7 +43,7 @@ export default function ContactPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -62,12 +62,12 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="animate-slide-in-left">
-              <h2 className="heading-font text-3xl text-[#385723] mb-6">
+              <h2 className="heading-font text-3xl text-[var(--reino-green-e)] mb-6">
                 Envie uma Mensagem
               </h2>
               
               {isSubmitted ? (
-                <div className="bg-[#40AD52] text-white rounded-3xl p-8 text-center">
+                <div className="bg-[var(--reino-green-c)] text-white rounded-3xl p-8 text-center">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Send className="w-8 h-8" />
                   </div>
@@ -88,7 +88,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200"
                         placeholder="Seu nome completo"
                       />
                     </div>
@@ -104,7 +104,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200"
                         placeholder="seu@email.com"
                       />
                     </div>
@@ -121,7 +121,7 @@ export default function ContactPage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200"
                         placeholder="(11) 99999-9999"
                       />
                     </div>
@@ -136,7 +136,7 @@ export default function ContactPage() {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200"
                       >
                         <option value="">Selecione um assunto</option>
                         <option value="informacoes">Informações Gerais</option>
@@ -160,7 +160,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 resize-none"
                       placeholder="Escreva sua mensagem aqui..."
                     />
                   </div>
@@ -177,17 +177,17 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div className="animate-slide-in-right">
-              <h2 className="heading-font text-3xl text-[#385723] mb-6">
+              <h2 className="heading-font text-3xl text-[var(--reino-green-e)] mb-6">
                 Informações de Contato
               </h2>
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-[var(--reino-orange)] rounded-full flex items-center justify-center shrink-0">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#385723] mb-1">Endereço</h3>
+                    <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Endereço</h3>
                     <p className="text-gray-600">
                       Rua da Esperança, 123<br />
                       Jardim São Paulo, SP<br />
@@ -197,11 +197,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#40AD52] rounded-full flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center shrink-0">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#385723] mb-1">Telefone</h3>
+                    <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Telefone</h3>
                     <p className="text-gray-600">
                       (11) 99999-9999<br />
                       (11) 3333-4444
@@ -210,11 +210,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#FFDB42] rounded-full flex items-center justify-center shrink-0">
-                    <Mail className="w-6 h-6 text-[#385723]" />
+                  <div className="w-12 h-12 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center shrink-0">
+                    <Mail className="w-6 h-6 text-[var(--reino-green-e)]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#385723] mb-1">E-mail</h3>
+                    <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">E-mail</h3>
                     <p className="text-gray-600">
                       contato@reinonasruas.org<br />
                       diretoria@reinonasruas.org
@@ -223,11 +223,11 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#385723] rounded-full flex items-center justify-center shrink-0">
+                  <div className="w-12 h-12 bg-[var(--reino-green-e)] rounded-full flex items-center justify-center shrink-0">
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#385723] mb-1">Horário de Funcionamento</h3>
+                    <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Horário de Funcionamento</h3>
                     <p className="text-gray-600">
                       Segunda a Sexta: 8h às 18h<br />
                       Sábado: 8h às 12h<br />
@@ -239,13 +239,13 @@ export default function ContactPage() {
 
               {/* Social Media */}
               <div className="bg-gray-50 rounded-3xl p-6">
-                <h3 className="font-semibold text-[#385723] mb-4">Redes Sociais</h3>
+                <h3 className="font-semibold text-[var(--reino-green-e)] mb-4">Redes Sociais</h3>
                 <div className="flex space-x-4">
                   <a
                     href="https://facebook.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center hover:bg-[#e55500] transition-colors"
+                    className="w-12 h-12 bg-[var(--reino-orange)] rounded-full flex items-center justify-center hover:bg-[var(--reino-orange-hover)] transition-colors"
                   >
                     <Facebook className="w-6 h-6 text-white" />
                   </a>
@@ -253,7 +253,7 @@ export default function ContactPage() {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center hover:bg-[#e55500] transition-colors"
+                    className="w-12 h-12 bg-[var(--reino-orange)] rounded-full flex items-center justify-center hover:bg-[var(--reino-orange-hover)] transition-colors"
                   >
                     <Instagram className="w-6 h-6 text-white" />
                   </a>
@@ -261,7 +261,7 @@ export default function ContactPage() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center hover:bg-[#e55500] transition-colors"
+                    className="w-12 h-12 bg-[var(--reino-orange)] rounded-full flex items-center justify-center hover:bg-[var(--reino-orange-hover)] transition-colors"
                   >
                     <Linkedin className="w-6 h-6 text-white" />
                   </a>
@@ -276,7 +276,7 @@ export default function ContactPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-12">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-4">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
               Nossa Localização
             </h2>
             <p className="text-lg text-gray-600">
@@ -287,7 +287,7 @@ export default function ContactPage() {
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
             <div className="aspect-video bg-gray-200 flex items-center justify-center">
               <div className="text-center">
-                <MapPin className="w-16 h-16 text-[#FE6100] mx-auto mb-4" />
+                <MapPin className="w-16 h-16 text-[var(--reino-orange)] mx-auto mb-4" />
                 <p className="text-gray-600 mb-2">Mapa Interativo</p>
                 <p className="text-sm text-gray-500">
                   Rua da Esperança, 123 - Jardim São Paulo, SP

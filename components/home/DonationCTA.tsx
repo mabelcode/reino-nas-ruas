@@ -5,7 +5,7 @@ import { Heart, ArrowRight } from 'lucide-react';
 
 export function DonationCTA() {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <div className="animate-fade-in">
@@ -18,7 +18,7 @@ export function DonationCTA() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-6 sm:mb-8 px-4">
-              <Link href="/donate" className="w-full sm:w-auto bg-white text-[#FE6100] px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg text-base sm:text-lg inline-flex items-center justify-center">
+              <Link href="/donate" className="w-full sm:w-auto bg-white text-[var(--reino-orange)] px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg text-base sm:text-lg inline-flex items-center justify-center">
                 Doar Agora via PIX
                 <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Link>
@@ -27,7 +27,7 @@ export function DonationCTA() {
                   const event = new CustomEvent('openVolunteerModal');
                   window.dispatchEvent(event);
                 }}
-                className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-[#FE6100] transition-all duration-300 hover:scale-105 text-base sm:text-lg"
+                className="w-full sm:w-auto bg-transparent border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-white hover:text-[var(--reino-orange)] transition-all duration-300 hover:scale-105 text-base sm:text-lg"
               >
                 Seja Voluntário
               </button>

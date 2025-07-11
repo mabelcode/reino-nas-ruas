@@ -89,15 +89,15 @@
 }
 
 @utility btn-primary {
-  @apply bg-[#FE6100] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+  @apply bg-[var(--reino-orange)] text-white px-6 py-3 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg;
 }
 
 @utility btn-secondary {
-  @apply bg-[#40AD52] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#359544] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+  @apply bg-[var(--reino-green-c)] text-white px-6 py-3 rounded-full font-semibold hover:bg-[var(--reino-green-c-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg;
 }
 
 @utility btn-outline {
-  @apply border-2 border-[#FE6100] text-[#FE6100] px-6 py-3 rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300 hover:scale-105;
+  @apply border-2 border-[var(--reino-orange)] text-[var(--reino-orange)] px-6 py-3 rounded-full font-semibold hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 hover:scale-105;
 }
 
 @utility section-padding {
@@ -171,6 +171,11 @@
     --reino-green-e-light: #446934;
     --reino-blue-dark: #0D3B66;
     --neutral-dark: #333333;
+    --reino-orange-hover: #e55500;
+    --reino-green-c-hover: #359544;
+    --reino-yellow-hover: #e6c538;
+    --white: #FFFFFF;
+    --gray-light: #ccc;
   }
 }
 
@@ -254,7 +259,7 @@
 
 /* Focus styles for better accessibility */
 .focus-visible {
-  @apply outline-2 outline-offset-2 outline-[#FE6100];
+  @apply outline-2 outline-offset-2 outline-[var(--reino-orange)];
 }
 
 /* Smooth scrolling for anchor links */

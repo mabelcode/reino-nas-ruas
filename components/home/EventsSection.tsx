@@ -34,7 +34,7 @@ export function EventsSection() {
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="heading-font text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#385723] mb-4">
+          <h2 className="heading-font text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[var(--reino-green-e)] mb-4">
             Próximos Eventos
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
@@ -56,14 +56,14 @@ export function EventsSection() {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                  <div className="bg-[#FE6100] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
+                  <div className="bg-[var(--reino-orange)] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
                     Próximo
                   </div>
                 </div>
               </div>
               
               <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold text-[#385723] mb-2 sm:mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-[var(--reino-green-e)] mb-2 sm:mb-3">
                   {event.title}
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
@@ -72,15 +72,15 @@ export function EventsSection() {
                 
                 <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-500">
                   <div className="flex items-center">
-                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
+                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
                     <span>{event.date}</span>
                   </div>
                   <div className="flex items-center">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
                     <span>{event.time}</span>
                   </div>
                   <div className="flex items-center">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
                     <span>{event.location}</span>
                   </div>
                 </div>

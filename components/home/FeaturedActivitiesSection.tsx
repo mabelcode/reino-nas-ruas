@@ -34,7 +34,7 @@ export function FeaturedActivitiesSection() {
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="heading-font text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#385723] mb-4">
+          <h2 className="heading-font text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[var(--reino-green-e)] mb-4">
             Nossas Atividades
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
@@ -60,7 +60,7 @@ export function FeaturedActivitiesSection() {
               
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
                 <div className="flex items-center mb-2">
-                  <activity.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#FFDB42] mr-2" />
+                  <activity.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--reino-yellow)] mr-2" />
                   <h3 className="text-lg sm:text-xl font-bold">{activity.title}</h3>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-200 leading-relaxed">

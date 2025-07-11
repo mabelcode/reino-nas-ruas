@@ -39,13 +39,13 @@ export function Header() {
 
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
+      isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-xs'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] rounded-full flex items-center justify-center">
+          <Link href="/" className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-[#FE6100] to-[#FFDB42] rounded-full flex items-center justify-center">
               <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="hidden xs:block">
@@ -73,7 +73,7 @@ export function Header() {
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 flex-shrink-0">
+          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 shrink-0">
             <button
               onClick={handleVolunteerClick}
               className="text-xs xl:text-sm px-4 py-2 border-2 border-[#FE6100] text-[#FE6100] rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300 whitespace-nowrap"
@@ -91,7 +91,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-[#FE6100] hover:bg-gray-100 transition-colors flex-shrink-0"
+            className="lg:hidden p-2 rounded-md text-gray-700 hover:text-[#FE6100] hover:bg-gray-100 transition-colors shrink-0"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={20} /> : <Menu size={20} />}

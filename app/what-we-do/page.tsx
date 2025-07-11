@@ -83,7 +83,7 @@ export default function WhatWeDoPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">

@@ -1,11 +1,139 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --breakpoint-xs: 475px;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility btn-primary {
+  @apply bg-[#FE6100] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+}
+
+@utility btn-secondary {
+  @apply bg-[#40AD52] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#359544] transition-all duration-300 hover:scale-105 hover:shadow-lg;
+}
+
+@utility btn-outline {
+  @apply border-2 border-[#FE6100] text-[#FE6100] px-6 py-3 rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300 hover:scale-105;
+}
+
+@utility section-padding {
+  @apply py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8;
+}
+
+@utility container-max {
+  @apply max-w-7xl mx-auto;
+}
+
+@utility card-hover {
+  @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+@utility animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+@utility animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+@utility animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+@layer utilities {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
+  }
 }
 
 @layer base {
@@ -55,48 +183,6 @@
 
   .body-font {
     font-family: 'Poppins', sans-serif;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-[#FE6100] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105 hover:shadow-lg;
-  }
-
-  .btn-secondary {
-    @apply bg-[#40AD52] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#359544] transition-all duration-300 hover:scale-105 hover:shadow-lg;
-  }
-
-  .btn-outline {
-    @apply border-2 border-[#FE6100] text-[#FE6100] px-6 py-3 rounded-full font-semibold hover:bg-[#FE6100] hover:text-white transition-all duration-300 hover:scale-105;
-  }
-
-  .section-padding {
-    @apply py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8;
-  }
-
-  .container-max {
-    @apply max-w-7xl mx-auto;
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.8s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slide-up 0.8s ease-out;
-  }
-
-  .animate-slide-in-left {
-    animation: slide-in-left 0.8s ease-out;
-  }
-
-  .animate-slide-in-right {
-    animation: slide-in-right 0.8s ease-out;
   }
 }
 

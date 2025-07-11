@@ -151,7 +151,7 @@ export default function MediaPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#40AD52] to-[#385723] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#40AD52] to-[#385723] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -191,7 +191,7 @@ export default function MediaPage() {
                 className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="aspect-[16/9] relative">
+                <div className="aspect-video relative">
                   <img 
                     src={item.image} 
                     alt={item.title}
@@ -251,7 +251,7 @@ export default function MediaPage() {
               <input
                 type="email"
                 placeholder="Seu melhor e-mail"
-                className="flex-1 px-6 py-3 rounded-full text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                className="flex-1 px-6 py-3 rounded-full text-gray-700 placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-white"
               />
               <button className="bg-white text-[#FE6100] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
                 Inscrever-se

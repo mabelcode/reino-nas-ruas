@@ -49,7 +49,7 @@ export function EventsSection() {
               className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="aspect-[16/9] relative">
+              <div className="aspect-video relative">
                 <img 
                   src={event.image} 
                   alt={event.title}
@@ -72,15 +72,15 @@ export function EventsSection() {
                 
                 <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-500">
                   <div className="flex items-center">
-                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] flex-shrink-0" />
+                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
                     <span>{event.date}</span>
                   </div>
                   <div className="flex items-center">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] flex-shrink-0" />
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
                     <span>{event.time}</span>
                   </div>
                   <div className="flex items-center">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] flex-shrink-0" />
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[#FE6100] shrink-0" />
                     <span>{event.location}</span>
                   </div>
                 </div>

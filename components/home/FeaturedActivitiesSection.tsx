@@ -49,13 +49,13 @@ export function FeaturedActivitiesSection() {
               className={`group relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="aspect-[4/3] relative">
+              <div className="aspect-4/3 relative">
                 <img 
                   src={activity.image} 
                   alt={activity.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
               </div>
               
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">

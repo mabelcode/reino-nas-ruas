@@ -98,7 +98,7 @@ export default function TransparencyPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#385723] to-[#40AD52] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#385723] to-[#40AD52] text-white">
         <div className="container-max">
           <div className="text-center">
             <BarChart3 className="w-20 h-20 mx-auto mb-6" />
@@ -331,7 +331,7 @@ export default function TransparencyPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <div className="w-16 h-16 bg-[#FFDB42] rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-8 h-8 text-[#385723]" />
               </div>
@@ -341,7 +341,7 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <div className="w-16 h-16 bg-[#FE6100] rounded-full flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="w-8 h-8 text-white" />
               </div>
@@ -351,7 +351,7 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <div className="w-16 h-16 bg-[#40AD52] rounded-full flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-white" />
               </div>

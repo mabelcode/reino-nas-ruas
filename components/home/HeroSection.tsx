@@ -36,7 +36,7 @@ export function HeroSection() {
               Faça uma Doação
               <Heart className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
-            <Link href="/about" className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-[#FE6100] transition-all duration-300 inline-flex items-center justify-center">
+            <Link href="/about" className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold bg-white/10 backdrop-blur-xs border-2 border-white text-white hover:bg-white hover:text-[#FE6100] transition-all duration-300 inline-flex items-center justify-center">
               Conheça Nossa História
               <ChevronRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
@@ -45,17 +45,17 @@ export function HeroSection() {
 
         {/* Stats Cards */}
         <div className="animate-slide-up grid grid-cols-1 xs:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-16 px-2">
-          <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 sm:p-6 text-center">
+          <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Users className="w-6 h-6 sm:w-8 sm:h-8 text-[#FFDB42] mx-auto mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-[#FFDB42]">500+</div>
             <div className="text-xs sm:text-sm text-gray-200">Crianças Atendidas</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 sm:p-6 text-center">
+          <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Target className="w-6 h-6 sm:w-8 sm:h-8 text-[#FE6100] mx-auto mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-[#FE6100]">15</div>
             <div className="text-xs sm:text-sm text-gray-200">Projetos Ativos</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-2xl p-4 sm:p-6 text-center">
+          <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-[#40AD52] mx-auto mb-2" />
             <div className="text-2xl sm:text-3xl font-bold text-[#40AD52]">8</div>
             <div className="text-xs sm:text-sm text-gray-200">Anos de Impacto</div>

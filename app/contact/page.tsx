@@ -43,7 +43,7 @@ export default function ContactPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -183,7 +183,7 @@ export default function ContactPage() {
               
               <div className="space-y-6 mb-8">
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#FE6100] rounded-full flex items-center justify-center shrink-0">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -197,7 +197,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#40AD52] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#40AD52] rounded-full flex items-center justify-center shrink-0">
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#FFDB42] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#FFDB42] rounded-full flex items-center justify-center shrink-0">
                     <Mail className="w-6 h-6 text-[#385723]" />
                   </div>
                   <div>
@@ -223,7 +223,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 bg-[#385723] rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#385723] rounded-full flex items-center justify-center shrink-0">
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
@@ -285,7 +285,7 @@ export default function ContactPage() {
           </div>
 
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
-            <div className="aspect-[16/9] bg-gray-200 flex items-center justify-center">
+            <div className="aspect-video bg-gray-200 flex items-center justify-center">
               <div className="text-center">
                 <MapPin className="w-16 h-16 text-[#FE6100] mx-auto mb-4" />
                 <p className="text-gray-600 mb-2">Mapa Interativo</p>

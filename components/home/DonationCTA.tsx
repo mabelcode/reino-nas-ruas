@@ -5,7 +5,7 @@ import { Heart, ArrowRight } from 'lucide-react';
 
 export function DonationCTA() {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
           <div className="animate-fade-in">

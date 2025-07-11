@@ -11,7 +11,7 @@ export function Footer() {
           {/* Logo and Description */}
           <div className="sm:col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-4 sm:mb-6">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-[#FE6100] to-[#FFDB42] rounded-full flex items-center justify-center">
                 <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
               </div>
               <h2 className="heading-font text-xl sm:text-2xl text-white">
@@ -89,15 +89,15 @@ export function Footer() {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contato</h3>
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] flex-shrink-0" />
+                <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] shrink-0" />
                 <span className="text-sm sm:text-base text-gray-300">contato@reinonasruas.org</span>
               </li>
               <li className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] flex-shrink-0" />
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] shrink-0" />
                 <span className="text-sm sm:text-base text-gray-300">(11) 99999-9999</span>
               </li>
               <li className="flex items-start space-x-3">
-                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] mt-1 flex-shrink-0" />
+                <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFDB42] mt-1 shrink-0" />
                 <span className="text-sm sm:text-base text-gray-300">
                   Rua da Esperança, 123<br />
                   São Paulo, SP - 01234-567

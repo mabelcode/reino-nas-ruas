@@ -50,7 +50,7 @@ export function ProjectsSection() {
               className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="aspect-[16/9] relative">
+              <div className="aspect-video relative">
                 <img 
                   src={project.image} 
                   alt={project.title}

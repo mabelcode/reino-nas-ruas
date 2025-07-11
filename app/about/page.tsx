@@ -48,7 +48,7 @@ export default function AboutPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#385723] to-[#40AD52] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#385723] to-[#40AD52] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -157,7 +157,7 @@ export default function AboutPage() {
             {awards.map((award, index) => (
               <div 
                 key={award.title}
-                className={`bg-gradient-to-br from-[#FE6100] to-[#FFDB42] text-white rounded-3xl p-6 card-hover animate-slide-up`}
+                className={`bg-linear-to-br from-[#FE6100] to-[#FFDB42] text-white rounded-3xl p-6 card-hover animate-slide-up`}
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <Award className="w-12 h-12 mb-4" />

@@ -80,7 +80,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs">
       <div className="relative w-full h-full max-w-6xl mx-4 my-4 bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4 lg:p-6">
@@ -206,7 +206,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 </h2>
                 
                 {/* Main Image */}
-                <div className="relative aspect-video lg:aspect-[16/10] rounded-2xl overflow-hidden mb-4 bg-gray-100">
+                <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
                   <img 
                     src={fullContent.images[currentImageIndex]} 
                     alt={`Foto ${currentImageIndex + 1} do evento`}
@@ -244,7 +244,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                        className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${
                           index === currentImageIndex 
                             ? 'border-[#FE6100] scale-105' 
                             : 'border-gray-200 hover:border-gray-300'
@@ -271,7 +271,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
                   {fullContent.highlights.map((highlight, index) => (
                     <div key={index} className="flex items-start space-x-3 bg-gray-50 rounded-xl p-3 lg:p-4">
-                      <div className="w-2 h-2 bg-[#FE6100] rounded-full mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 bg-[#FE6100] rounded-full mt-2 shrink-0"></div>
                       <p className="text-sm lg:text-base text-gray-700">{highlight}</p>
                     </div>
                   ))}
@@ -281,7 +281,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
 
             {/* Impact */}
             {fullContent.impact && (
-              <div className="bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white rounded-2xl p-4 lg:p-6">
+              <div className="bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white rounded-2xl p-4 lg:p-6">
                 <h2 className="text-xl lg:text-2xl font-bold mb-3">
                   Impacto Social
                 </h2>

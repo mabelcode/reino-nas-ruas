@@ -47,7 +47,7 @@ export default function DonatePage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
         <div className="container-max">
           <div className="text-center">
             <Heart className="w-20 h-20 mx-auto mb-6" />
@@ -188,7 +188,7 @@ export default function DonatePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#FE6100] to-[#FFDB42] text-white rounded-3xl p-8 text-center">
+            <div className="bg-linear-to-br from-[#FE6100] to-[#FFDB42] text-white rounded-3xl p-8 text-center">
               <div className="text-4xl font-bold mb-2">70%</div>
               <div className="text-lg font-semibold mb-2">Programas Diretos</div>
               <p className="text-sm opacity-90">
@@ -196,7 +196,7 @@ export default function DonatePage() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#40AD52] to-[#385723] text-white rounded-3xl p-8 text-center">
+            <div className="bg-linear-to-br from-[#40AD52] to-[#385723] text-white rounded-3xl p-8 text-center">
               <div className="text-4xl font-bold mb-2">20%</div>
               <div className="text-lg font-semibold mb-2">Infraestrutura</div>
               <p className="text-sm opacity-90">
@@ -204,7 +204,7 @@ export default function DonatePage() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-[#FFDB42] to-[#FE6100] text-white rounded-3xl p-8 text-center">
+            <div className="bg-linear-to-br from-[#FFDB42] to-[#FE6100] text-white rounded-3xl p-8 text-center">
               <div className="text-4xl font-bold mb-2">10%</div>
               <div className="text-lg font-semibold mb-2">Administração</div>
               <p className="text-sm opacity-90">
@@ -228,7 +228,7 @@ export default function DonatePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <Users className="w-12 h-12 text-[#FFDB42] mx-auto mb-4" />
               <h3 className="text-xl font-bold mb-3">Seja Voluntário</h3>
               <p className="text-gray-300 mb-4">
@@ -245,7 +245,7 @@ export default function DonatePage() {
               </button>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <Trophy className="w-12 h-12 text-[#FE6100] mx-auto mb-4" />
               <h3 className="text-xl font-bold mb-3">Doe Materiais</h3>
               <p className="text-gray-300 mb-4">
@@ -259,7 +259,7 @@ export default function DonatePage() {
               </a>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-6 text-center">
+            <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
               <Heart className="w-12 h-12 text-[#40AD52] mx-auto mb-4" />
               <h3 className="text-xl font-bold mb-3">Divulgue</h3>
               <p className="text-gray-300 mb-4">

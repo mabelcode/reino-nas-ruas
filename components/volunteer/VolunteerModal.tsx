@@ -55,10 +55,10 @@ export function VolunteerModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
       <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-sm sm:max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#FE6100] to-[#FFDB42] text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
+        <div className="bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
               <Heart className="w-6 h-6 sm:w-8 sm:h-8" />

@@ -8,30 +8,30 @@ export function StatsSection() {
       icon: Users,
       number: "500+",
       label: "Crianças e Adolescentes Atendidos",
-      color: "text-[#FE6100]"
+      color: "text-[var(--reino-orange)]"
     },
     {
       icon: Calendar,
       number: "8",
       label: "Anos de Atividade",
-      color: "text-[#40AD52]"
+      color: "text-[var(--reino-green-c)]"
     },
     {
       icon: Trophy,
       number: "15",
       label: "Projetos Ativos",
-      color: "text-[#FFDB42]"
+      color: "text-[var(--reino-yellow)]"
     },
     {
       icon: Heart,
       number: "100%",
       label: "Amor e Dedicação",
-      color: "text-[#385723]"
+      color: "text-[var(--reino-green-e)]"
     }
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[#385723] text-white">
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[var(--reino-green-e)] text-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="heading-font text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-4">

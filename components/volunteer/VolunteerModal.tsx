@@ -58,7 +58,7 @@ export function VolunteerModal() {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
       <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-sm sm:max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
+        <div className="bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
               <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -77,8 +77,8 @@ export function VolunteerModal() {
         <div className="p-4 sm:p-6">
           {isSubmitted ? (
             <div className="text-center py-6 sm:py-8">
-              <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-[#40AD52] mx-auto mb-3 sm:mb-4" />
-              <h3 className="text-xl sm:text-2xl font-bold text-[#385723] mb-2">
+              <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-[var(--reino-green-c)] mx-auto mb-3 sm:mb-4" />
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-2">
                 Obrigado!
               </h3>
               <p className="text-sm sm:text-base text-gray-600 px-2">
@@ -88,7 +88,7 @@ export function VolunteerModal() {
           ) : (
             <>
               <div className="mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-[#385723] mb-2">
+                <h3 className="text-lg sm:text-xl font-bold text-[var(--reino-green-e)] mb-2">
                   Junte-se a nós!
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600">
@@ -110,7 +110,7 @@ export function VolunteerModal() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                       placeholder="Digite seu nome completo"
                     />
                   </div>
@@ -129,7 +129,7 @@ export function VolunteerModal() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                       placeholder="seu@email.com"
                     />
                   </div>
@@ -147,7 +147,7 @@ export function VolunteerModal() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                       placeholder="(11) 99999-9999"
                     />
                   </div>
@@ -162,7 +162,7 @@ export function VolunteerModal() {
                     name="availability"
                     value={formData.availability}
                     onChange={handleChange}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                   >
                     <option value="">Selecione sua disponibilidade</option>
                     <option value="manhã">Manhã</option>
@@ -183,7 +183,7 @@ export function VolunteerModal() {
                     name="skills"
                     value={formData.skills}
                     onChange={handleChange}
-                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
+                    className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                     placeholder="Ex: Educação, Esportes, Arte, Administração..."
                   />
                 </div>
@@ -200,7 +200,7 @@ export function VolunteerModal() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#FE6100] focus:border-transparent transition-all duration-200 resize-none text-sm sm:text-base"
+                      className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 resize-none text-sm sm:text-base"
                       placeholder="Conte-nos um pouco sobre sua motivação..."
                     />
                   </div>
@@ -208,7 +208,7 @@ export function VolunteerModal() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[#FE6100] text-white px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4 sm:mt-6 text-sm sm:text-base"
+                  className="w-full bg-[var(--reino-orange)] text-white px-6 py-2.5 sm:py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-dark)] transition-all duration-300 hover:scale-105 hover:shadow-lg mt-4 sm:mt-6 text-sm sm:text-base"
                 >
                   Enviar Inscrição
                 </button>

@@ -83,7 +83,7 @@ export default function WhatWeDoPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-linear-to-r from-[#FE6100] to-[#FFDB42] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white">
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
@@ -100,7 +100,7 @@ export default function WhatWeDoPage() {
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-16">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-4">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
               Nossos Programas
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -118,11 +118,11 @@ export default function WhatWeDoPage() {
               >
                 <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''} animate-slide-in-left`}>
                   <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 bg-[#FE6100] rounded-full flex items-center justify-center mr-4">
+                    <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mr-4">
                       <program.icon className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-[#385723]">{program.title}</h3>
+                      <h3 className="text-2xl font-bold text-[var(--reino-green-e)]">{program.title}</h3>
                       <div className="flex items-center space-x-4 text-sm text-gray-600 mt-1">
                         <span className="flex items-center">
                           <Users className="w-4 h-4 mr-1" />
@@ -143,7 +143,7 @@ export default function WhatWeDoPage() {
                   <ul className="space-y-2 mb-6">
                     {program.details.map((detail, detailIndex) => (
                       <li key={detailIndex} className="flex items-center text-gray-600">
-                        <div className="w-2 h-2 bg-[#FE6100] rounded-full mr-3"></div>
+                        <div className="w-2 h-2 bg-[var(--reino-orange)] rounded-full mr-3"></div>
                         {detail}
                       </li>
                     ))}
@@ -167,7 +167,7 @@ export default function WhatWeDoPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-16">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-4">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
               Histórias de Transformação
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -183,14 +183,14 @@ export default function WhatWeDoPage() {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="mb-4">
-                  <div className="text-4xl text-[#FE6100] mb-2">"</div>
+                  <div className="text-4xl text-[var(--reino-orange)] mb-2">"</div>
                   <p className="text-gray-600 leading-relaxed mb-4">
                     {testimonial.text}
                   </p>
                 </div>
                 <div className="border-t border-gray-200 pt-4">
-                  <div className="font-semibold text-[#385723]">{testimonial.name}</div>
-                  <div className="text-sm text-[#FE6100]">{testimonial.program}</div>
+                  <div className="font-semibold text-[var(--reino-green-e)]">{testimonial.name}</div>
+                  <div className="text-sm text-[var(--reino-orange)]">{testimonial.program}</div>
                 </div>
               </div>
             ))}
@@ -199,7 +199,7 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="section-padding bg-[#385723] text-white">
+      <section className="section-padding bg-[var(--reino-green-e)] text-white">
         <div className="container-max text-center">
           <h2 className="heading-font text-3xl sm:text-4xl mb-6">
             Seja Parte da Transformação
@@ -213,13 +213,13 @@ export default function WhatWeDoPage() {
                 const event = new CustomEvent('openVolunteerModal');
                 window.dispatchEvent(event);
               }}
-              className="bg-[#FE6100] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#e55500] transition-all duration-300 hover:scale-105"
+              className="bg-[var(--reino-orange)] text-white px-8 py-3 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105"
             >
               Seja Voluntário
             </button>
             <a 
               href="/donate" 
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[#385723] transition-all duration-300 hover:scale-105"
+              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-[var(--reino-green-e)] transition-all duration-300 hover:scale-105"
             >
               Fazer Doação
             </a>

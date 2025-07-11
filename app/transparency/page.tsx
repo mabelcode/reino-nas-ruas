@@ -98,7 +98,7 @@ export default function TransparencyPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative py-20 bg-linear-to-r from-[#385723] to-[#40AD52] text-white">
+      <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-e)] to-[var(--reino-green-c)] text-white">
         <div className="container-max">
           <div className="text-center">
             <BarChart3 className="w-20 h-20 mx-auto mb-6" />
@@ -116,7 +116,7 @@ export default function TransparencyPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-12">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-6">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-6">
               Dados Financeiros
             </h2>
             <div className="flex justify-center gap-4 mb-8">
@@ -126,7 +126,7 @@ export default function TransparencyPage() {
                   onClick={() => setSelectedYear(year)}
                   className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
                     selectedYear === year
-                      ? 'bg-[#FE6100] text-white shadow-lg'
+                      ? 'bg-[var(--reino-orange)] text-white shadow-lg'
                       : 'bg-white text-gray-600 hover:bg-gray-100'
                   }`}
                 >
@@ -139,32 +139,32 @@ export default function TransparencyPage() {
           {/* Resumo Financeiro */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
-              <DollarSign className="w-10 h-10 text-[#40AD52] mx-auto mb-3" />
-              <div className="text-2xl font-bold text-[#385723] mb-1">
+              <DollarSign className="w-10 h-10 text-[var(--reino-green-c)] mx-auto mb-3" />
+              <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
                 {formatCurrency(financialData.totalReceived)}
               </div>
               <div className="text-sm text-gray-600">Total Recebido</div>
             </div>
 
             <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
-              <TrendingUp className="w-10 h-10 text-[#FE6100] mx-auto mb-3" />
-              <div className="text-2xl font-bold text-[#385723] mb-1">
+              <TrendingUp className="w-10 h-10 text-[var(--reino-orange)] mx-auto mb-3" />
+              <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
                 {formatCurrency(financialData.totalSpent)}
               </div>
               <div className="text-sm text-gray-600">Total Investido</div>
             </div>
 
             <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
-              <Users className="w-10 h-10 text-[#FFDB42] mx-auto mb-3" />
-              <div className="text-2xl font-bold text-[#385723] mb-1">
+              <Users className="w-10 h-10 text-[var(--reino-yellow)] mx-auto mb-3" />
+              <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
                 {financialData.beneficiaries}
               </div>
               <div className="text-sm text-gray-600">Beneficiários</div>
             </div>
 
             <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
-              <Calendar className="w-10 h-10 text-[#385723] mx-auto mb-3" />
-              <div className="text-2xl font-bold text-[#385723] mb-1">
+              <Calendar className="w-10 h-10 text-[var(--reino-green-e)] mx-auto mb-3" />
+              <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
                 {financialData.events}
               </div>
               <div className="text-sm text-gray-600">Eventos Realizados</div>
@@ -173,15 +173,15 @@ export default function TransparencyPage() {
 
           {/* Distribuição de Recursos */}
           <div className="bg-white rounded-3xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold text-[#385723] mb-6 text-center">
+            <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-6 text-center">
               Distribuição de Recursos - {selectedYear}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="w-24 h-24 bg-[#FE6100] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-24 h-24 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-lg">74%</span>
                 </div>
-                <h4 className="font-semibold text-[#385723] mb-2">Projetos Diretos</h4>
+                <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                 <p className="text-gray-600 text-sm mb-2">
                   {formatCurrency(financialData.projects)}
                 </p>
@@ -191,10 +191,10 @@ export default function TransparencyPage() {
               </div>
 
               <div className="text-center">
-                <div className="w-24 h-24 bg-[#40AD52] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-24 h-24 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-lg">20%</span>
                 </div>
-                <h4 className="font-semibold text-[#385723] mb-2">Infraestrutura</h4>
+                <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Infraestrutura</h4>
                 <p className="text-gray-600 text-sm mb-2">
                   {formatCurrency(financialData.infrastructure)}
                 </p>
@@ -204,10 +204,10 @@ export default function TransparencyPage() {
               </div>
 
               <div className="text-center">
-                <div className="w-24 h-24 bg-[#FFDB42] rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-24 h-24 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-lg">6%</span>
                 </div>
-                <h4 className="font-semibold text-[#385723] mb-2">Administração</h4>
+                <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Administração</h4>
                 <p className="text-gray-600 text-sm mb-2">
                   {formatCurrency(financialData.administration)}
                 </p>
@@ -224,7 +224,7 @@ export default function TransparencyPage() {
       <section className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-12">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-4">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
               Investimento por Projeto
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -240,7 +240,7 @@ export default function TransparencyPage() {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold text-[#385723]">{project.name}</h3>
+                  <h3 className="text-xl font-bold text-[var(--reino-green-e)]">{project.name}</h3>
                   <span className="text-sm text-gray-600">{project.beneficiaries} beneficiários</span>
                 </div>
                 
@@ -255,13 +255,13 @@ export default function TransparencyPage() {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
                     <div 
-                      className="bg-[#FE6100] h-2 rounded-full transition-all duration-1000"
+                      className="bg-[var(--reino-orange)] h-2 rounded-full transition-all duration-1000"
                       style={{ width: `${project.progress}%` }}
                     ></div>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Execução</span>
-                    <span className="font-semibold text-[#FE6100]">{project.progress}%</span>
+                    <span className="font-semibold text-[var(--reino-orange)]">{project.progress}%</span>
                   </div>
                 </div>
               </div>
@@ -274,7 +274,7 @@ export default function TransparencyPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-max">
           <div className="text-center mb-12">
-            <h2 className="heading-font text-3xl sm:text-4xl text-[#385723] mb-4">
+            <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
               Relatórios Detalhados
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -291,9 +291,9 @@ export default function TransparencyPage() {
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center">
-                    <FileText className="w-10 h-10 text-[#FE6100] mr-3" />
+                    <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
                     <div>
-                      <h3 className="text-lg font-bold text-[#385723]">{report.title}</h3>
+                      <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
                       <p className="text-sm text-gray-600">{report.type}</p>
                     </div>
                   </div>
@@ -308,7 +308,7 @@ export default function TransparencyPage() {
                   </div>
                 </div>
                 
-                <button className="w-full bg-[#FE6100] text-white py-3 rounded-xl font-semibold hover:bg-[#e55500] transition-colors flex items-center justify-center">
+                <button className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center">
                   <Download className="w-5 h-5 mr-2" />
                   Baixar Relatório
                 </button>
@@ -319,7 +319,7 @@ export default function TransparencyPage() {
       </section>
 
       {/* Certificações */}
-      <section className="section-padding bg-[#385723] text-white">
+      <section className="section-padding bg-[var(--reino-green-e)] text-white">
         <div className="container-max">
           <div className="text-center mb-12">
             <h2 className="heading-font text-3xl sm:text-4xl mb-6">
@@ -332,8 +332,8 @@ export default function TransparencyPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-              <div className="w-16 h-16 bg-[#FFDB42] rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-[#385723]" />
+              <div className="w-16 h-16 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="w-8 h-8 text-[var(--reino-green-e)]" />
               </div>
               <h3 className="text-xl font-bold mb-2">CNPJ Ativo</h3>
               <p className="text-gray-300 text-sm">
@@ -342,7 +342,7 @@ export default function TransparencyPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-              <div className="w-16 h-16 bg-[#FE6100] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2">Auditoria Externa</h3>
@@ -352,7 +352,7 @@ export default function TransparencyPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-              <div className="w-16 h-16 bg-[#40AD52] rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
                 <TrendingUp className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2">Selo de Transparência</h3>

@@ -161,9 +161,16 @@
 
     /* NGO Brand Colors */
     --reino-yellow: #FFDB42;
+    --reino-yellow-dark: #E6C538;
+    --reino-yellow-darker: #D4B731;
     --reino-orange: #FE6100;
+    --reino-orange-dark: #CC4D00;
     --reino-green-c: #40AD52;
+    --reino-green-c-dark: #38984A;
     --reino-green-e: #385723;
+    --reino-green-e-light: #446934;
+    --reino-blue-dark: #0D3B66;
+    --neutral-dark: #333333;
   }
 }
 

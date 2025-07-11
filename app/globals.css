@@ -265,17 +265,6 @@ html {
   display: none; /* Chrome, Safari, Opera */
 }
 
-/* Show scrollbars when scrolling */
-html.show-scrollbars,
-html.show-scrollbars * {
-  -ms-overflow-style: auto;
-  scrollbar-width: thin;
-}
-
-html.show-scrollbars *::-webkit-scrollbar {
-  display: block;
-}
-
 /* Line clamp utilities */
 .line-clamp-2 {
   display: -webkit-box;

@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { AutoHideScrollbars } from '@/components/AutoHideScrollbars';
 import { VolunteerModal } from '@/components/volunteer/VolunteerModal';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -34,7 +33,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={inter.className}>
-        <AutoHideScrollbars />
         <Header />
         <main className="min-h-screen">
           {children}

@@ -183,7 +183,7 @@ export default function WhatWeDoPage() {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="mb-4">
-                  <div className="text-4xl text-[var(--reino-orange)] mb-2">"</div>
+                  <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
                   <p className="text-gray-600 leading-relaxed mb-4">
                     {testimonial.text}
                   </p>

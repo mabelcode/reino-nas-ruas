@@ -163,38 +163,32 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               </p>
             </div>
 
-            {/* Video Section */}
-            {fullContent.videoUrl && (
+            {/* Highlights */}
+            {fullContent.highlights.length > 0 && (
               <div className="mb-6 lg:mb-8">
                 <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
-                  Vídeo do Evento
+                  Destaques do Evento
                 </h2>
-                {!showVideo ? (
-                  <div 
-                    className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-pointer group"
-                    onClick={() => setShowVideo(true)}
-                  >
-                    <img 
-                      src={fullContent.images[0]} 
-                      alt="Video thumbnail"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[var(--reino-orange)] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-8 h-8 lg:w-10 lg:h-10 text-white ml-1" />
-                      </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
+                  {fullContent.highlights.map((highlight, index) => (
+                    <div key={index} className="flex items-start space-x-3 bg-gray-50 rounded-xl p-3 lg:p-4">
+                      <div className="w-2 h-2 bg-[var(--reino-orange)] rounded-full mt-2 shrink-0"></div>
+                      <p className="text-sm lg:text-base text-gray-700">{highlight}</p>
                     </div>
-                  </div>
-                ) : (
-                  <div className="aspect-video rounded-2xl overflow-hidden">
-                    <iframe
-                      src={getYouTubeEmbedUrl(fullContent.videoUrl)}
-                      title="Video do evento"
-                      className="w-full h-full"
-                      allowFullScreen
-                    />
-                  </div>
-                )}
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Impact */}
+            {fullContent.impact && (
+              <div className="bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white rounded-2xl p-4 lg:p-6 mb-6 lg:mb-8">
+                <h2 className="text-xl lg:text-2xl font-bold mb-3">
+                  Impacto Social
+                </h2>
+                <p className="text-sm lg:text-base leading-relaxed">
+                  {fullContent.impact}
+                </p>
               </div>
             )}
 
@@ -262,32 +256,38 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               </div>
             )}
 
-            {/* Highlights */}
-            {fullContent.highlights.length > 0 && (
+            {/* Video Section */}
+            {fullContent.videoUrl && (
               <div className="mb-6 lg:mb-8">
                 <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
-                  Destaques do Evento
+                  Vídeo do Evento
                 </h2>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-4">
-                  {fullContent.highlights.map((highlight, index) => (
-                    <div key={index} className="flex items-start space-x-3 bg-gray-50 rounded-xl p-3 lg:p-4">
-                      <div className="w-2 h-2 bg-[var(--reino-orange)] rounded-full mt-2 shrink-0"></div>
-                      <p className="text-sm lg:text-base text-gray-700">{highlight}</p>
+                {!showVideo ? (
+                  <div 
+                    className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-pointer group"
+                    onClick={() => setShowVideo(true)}
+                  >
+                    <img 
+                      src={fullContent.images[0]} 
+                      alt="Video thumbnail"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[var(--reino-orange)] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <Play className="w-8 h-8 lg:w-10 lg:h-10 text-white ml-1" />
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Impact */}
-            {fullContent.impact && (
-              <div className="bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white rounded-2xl p-4 lg:p-6">
-                <h2 className="text-xl lg:text-2xl font-bold mb-3">
-                  Impacto Social
-                </h2>
-                <p className="text-sm lg:text-base leading-relaxed">
-                  {fullContent.impact}
-                </p>
+                  </div>
+                ) : (
+                  <div className="aspect-video rounded-2xl overflow-hidden">
+                    <iframe
+                      src={getYouTubeEmbedUrl(fullContent.videoUrl)}
+                      title="Video do evento"
+                      className="w-full h-full"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
               </div>
             )}
           </div>

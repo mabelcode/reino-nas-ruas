@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Heart, Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-[var(--reino-green-e)] text-white">
       <div className="max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
@@ -108,13 +109,28 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-600 pt-6 sm:pt-8 mt-8 sm:mt-12">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0 w-full">
             <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
-              © 2024 Associação Reino nas Ruas. Todos os direitos reservados.
+              © {currentYear} - Associação Reino nas Ruas. Todos os direitos reservados.
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm">
-              CNPJ: 12.345.678/0001-90
-            </p>
+            <p className="text-gray-400 text-xs sm:text-sm">CNPJ: 12.345.678/0001-90</p>
+            <a
+              href="https://mabelcode.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 group mt-2 sm:mt-0 hover:opacity-90 transition-opacity"
+              aria-label="Desenvolvido por Mabel Code"
+            >
+              <span className="font-medium text-xs sm:text-sm text-gray-200 group-hover:text-white transition-colors tracking-wide" style={{ letterSpacing: '0.02em' }}>
+                Desenvolvido por <span className="font-bold">Mabel Code®</span>
+              </span>
+              <img
+                src="/logo.png"
+                alt="Logo Mabel Code"
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-full shadow-md border border-white/20 bg-white object-contain"
+                style={{ background: '#fff' }}
+              />
+            </a>
           </div>
         </div>
       </div>

@@ -92,7 +92,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="text-center">
-          <Link href="/what-we-do" className="inline-flex items-center bg-[var(--reino-orange)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base">
+          <Link href="/projects" className="inline-flex items-center bg-[var(--reino-orange)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base">
             Ver Todos os Projetos
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
           </Link>

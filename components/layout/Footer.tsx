@@ -63,8 +63,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/what-we-do" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
-                  O que Fazemos
+                <Link href="/projects" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                  Projetos
                 </Link>
               </li>
               <li>

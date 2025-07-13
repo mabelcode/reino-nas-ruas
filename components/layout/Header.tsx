@@ -31,7 +31,7 @@ export function Header() {
   const navItems = [
     { name: 'Início', href: '/' },
     { name: 'Sobre Nós', href: '/about' },
-    { name: 'O que Fazemos', href: '/what-we-do' },
+    { name: 'Projetos', href: '/projects' },
     { name: 'Mídia', href: '/media' },
     { name: 'Transparência', href: '/transparency' },
     { name: 'Contato', href: '/contact' },

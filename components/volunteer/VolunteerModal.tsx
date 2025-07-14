@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Heart, User, Mail, Phone, MessageCircle, CheckCircle } from 'lucide-react';
+import { X, User, Mail, Phone, MessageCircle, CheckCircle } from 'lucide-react';
+import { VolunteerModalLogo } from '@/components/ui/Logo';
 
 export function VolunteerModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +62,7 @@ export function VolunteerModal() {
         <div className="bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">
-              <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
+              <VolunteerModalLogo />
               <h2 className="text-lg sm:text-xl font-bold">Seja Voluntário</h2>
             </div>
             <button

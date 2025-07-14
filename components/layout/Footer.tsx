@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { FooterLogo } from '@/components/ui/Logo';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,9 +13,7 @@ export function Footer() {
           {/* Logo and Description */}
           <div className="sm:col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-4 sm:mb-6">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-linear-to-r from-[var(--reino-orange)] to-[var(--reino-yellow)] rounded-full flex items-center justify-center">
-                <Heart className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-              </div>
+              <FooterLogo />
               <h2 className="heading-font text-xl sm:text-2xl text-white">
                 Reino nas Ruas
               </h2>
@@ -125,7 +124,7 @@ export function Footer() {
                 Desenvolvido por <span className="font-bold">Mabel Code®</span>
               </span>
               <img
-                src="/logo.png"
+                src="/assets/images/logos/mabel-code-logo.png"
                 alt="Logo Mabel Code"
                 className="w-8 h-8 sm:w-9 sm:h-9 rounded-full shadow-md border border-white/20 bg-white object-contain"
                 style={{ background: '#fff' }}

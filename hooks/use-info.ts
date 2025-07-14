@@ -37,16 +37,15 @@ export const fallbackInfo: ONGInfo = {
 };
 
 export function useInfo() {
-  const [info, setInfo] = useState<ONGInfo>(fallbackInfo);
+  const [info, setInfo] = useState<ONGInfo | null>(null);
 
   useEffect(() => {
     async function fetchInfo() {
       try {
         const res = await fetch('/api/info');
-        if (res.ok) {
-          const data = await res.json();
-          setInfo(data.data);
-        }
+        if (!res.ok) throw new Error('Failed');
+        const data = await res.json();
+        setInfo(data.data);
       } catch {
         setInfo(fallbackInfo);
       }
@@ -55,5 +54,5 @@ export function useInfo() {
     fetchInfo();
   }, []);
 
-  return info;
+  return info ?? fallbackInfo;
 }

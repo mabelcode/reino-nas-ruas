@@ -2,12 +2,29 @@
 
 import Link from 'next/link';
 import { useInfo } from '@/hooks/use-info';
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
+import { useSocials } from '@/hooks/use-socials';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from 'lucide-react';
 import { FooterLogo } from '@/components/ui/Logo';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const info = useInfo();
+  const socials = useSocials();
+
+  const iconMap = {
+    facebook: Facebook,
+    instagram: Instagram,
+    linkedin: Linkedin,
+    youtube: Youtube,
+  } as const;
   return (
     <footer className="bg-[var(--reino-green-e)] text-white">
       <div className="max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
@@ -24,33 +41,21 @@ export function Footer() {
               Transformando vidas através da educação e do esporte. Trabalhamos com crianças e adolescentes em situação de vulnerabilidade, promovendo inclusão social e oportunidades de crescimento.
             </p>
             <div className="flex space-x-3 sm:space-x-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-white/10 rounded-full hover:bg-[var(--reino-orange-dark)] transition-colors duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-white/10 rounded-full hover:bg-[var(--reino-orange-dark)] transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-white/10 rounded-full hover:bg-[var(--reino-orange-dark)] transition-colors duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-              </a>
+              {socials.map(({ id, platform, url }) => {
+                const Icon = iconMap[platform as keyof typeof iconMap] || Facebook;
+                return (
+                  <a
+                    key={id}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 bg-white/10 rounded-full hover:bg-[var(--reino-orange-dark)] transition-colors duration-300"
+                    aria-label={platform}
+                  >
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 

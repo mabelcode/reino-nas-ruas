@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
+import { useInfo } from '@/hooks/use-info';
 import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { FooterLogo } from '@/components/ui/Logo';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const info = useInfo();
   return (
     <footer className="bg-[var(--reino-green-e)] text-white">
       <div className="max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
@@ -90,17 +92,38 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--reino-yellow)] shrink-0" />
-                <span className="text-sm sm:text-base text-gray-300">contato@reinonasruas.org</span>
+                <span className="text-sm sm:text-base text-gray-300">
+                  {info.email}
+                </span>
               </li>
+              {info?.email_2 && (
+                <li className="flex items-center space-x-3">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--reino-yellow)] shrink-0" />
+                  <span className="text-sm sm:text-base text-gray-300">
+                    {info.email_2}
+                  </span>
+                </li>
+              )}
               <li className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--reino-yellow)] shrink-0" />
-                <span className="text-sm sm:text-base text-gray-300">(11) 99999-9999</span>
+                <span className="text-sm sm:text-base text-gray-300">
+                  {info.phone}
+                </span>
               </li>
+              {info?.phone_2 && (
+                <li className="flex items-center space-x-3">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--reino-yellow)] shrink-0" />
+                  <span className="text-sm sm:text-base text-gray-300">
+                    {info.phone_2}
+                  </span>
+                </li>
+              )}
               <li className="flex items-start space-x-3">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--reino-yellow)] mt-1 shrink-0" />
                 <span className="text-sm sm:text-base text-gray-300">
-                  Rua da Esperança, 123<br />
-                  São Paulo, SP - 01234-567
+                  {`${info.street}, ${info.number} - ${info.neighborhood}`}
+                  <br />
+                  {`${info.city}, ${info.state} - ${info.zipcode}`}
                 </span>
               </li>
             </ul>
@@ -112,7 +135,9 @@ export function Footer() {
             <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
               © {currentYear} - Associação Reino nas Ruas. Todos os direitos reservados.
             </p>
-            <p className="text-gray-400 text-xs sm:text-sm">CNPJ: 12.345.678/0001-90</p>
+            <p className="text-gray-400 text-xs sm:text-sm">
+              CNPJ: {info.cnpj}
+            </p>
             <a
               href="https://mabelcode.com.br"
               target="_blank"

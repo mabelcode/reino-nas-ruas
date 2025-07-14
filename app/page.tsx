@@ -7,7 +7,7 @@ import { PartnersShowcase } from '@/components/home/PartnersShowcase';
 import { EventsSection } from '@/components/home/EventsSection';
 import { DonationCTA } from '@/components/home/DonationCTA';
 
-export default async function Home() {
+export default function Home() {
 
   return (
     <div className="min-h-screen">

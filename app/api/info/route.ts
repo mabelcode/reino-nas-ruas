@@ -42,8 +42,9 @@ export async function GET() {
   });
 
   if (!infoRes.ok) {
+    console.error(`Directus API error: ${infoRes.status} ${infoRes.statusText}`);
     return NextResponse.json(
-      { error: 'Failed to fetch info' },
+      { error: 'Unable to retrieve organization information' },
       { status: infoRes.status }
     );
   }

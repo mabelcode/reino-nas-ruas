@@ -2,17 +2,20 @@
 
 import Link from 'next/link';
 import { ChevronRight, Users, Heart, Target } from 'lucide-react';
+import Image from 'next/image';
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.pexels.com/photos/8613320/pexels-photo-8613320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        <Image
+          src="/api/home/hero"
           alt="Crianças sorrindo em atividades esportivas"
           className="w-full h-full object-cover"
           loading="eager"
+          width={1920}
+          height={1080}
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>

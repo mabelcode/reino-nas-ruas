@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useInfo } from '@/hooks/use-info';
 import { useSocials } from '@/hooks/use-socials';
+import MapIframe from '@/components/MapIframe';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -315,14 +316,10 @@ export default function ContactPage() {
           </div>
 
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
-            <div className="aspect-video bg-gray-200 flex items-center justify-center">
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-[var(--reino-orange)] mx-auto mb-4" />
-                <p className="text-gray-600 mb-2">Mapa Interativo</p>
-                <p className="text-sm text-gray-500">
-                  {info.street}, {info.number} - {info.neighborhood}, {info.city} - {info.state}
-                </p>
-              </div>
+            <div className="aspect-video">
+              <MapIframe
+                address={`${info.street}, ${info.number} - ${info.neighborhood}, ${info.city} - ${info.state}`}
+              />
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ export default function ContactPage() {
     // Here you would typically send the data to your backend
     console.log('Contact form submitted:', formData);
     setIsSubmitted(true);
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
       setIsSubmitted(false);
@@ -85,7 +85,7 @@ export default function ContactPage() {
               <h2 className="heading-font text-3xl text-[var(--reino-green-e)] mb-6">
                 Envie uma Mensagem
               </h2>
-              
+
               {isSubmitted ? (
                 <div className="bg-[var(--reino-green-c)] text-white rounded-3xl p-8 text-center">
                   <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -200,7 +200,7 @@ export default function ContactPage() {
               <h2 className="heading-font text-3xl text-[var(--reino-green-e)] mb-6">
                 Informações de Contato
               </h2>
-              
+
               <div className="space-y-6 mb-8">
                 <div className="flex items-start space-x-4">
                   <div className="w-12 h-12 bg-[var(--reino-orange)] rounded-full flex items-center justify-center shrink-0">
@@ -259,17 +259,17 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Horário de Funcionamento</h3>
                     <p className="text-gray-600">
-                      {info.working_days_1}
+                      Segunda a Sexta: {info.working_days_1}
                       {info.working_days_2 && (
                         <>
                           <br />
-                          {info.working_days_2}
+                          Sábado: {info.working_days_2}
                         </>
                       )}
                       {info.working_days_3 && (
                         <>
                           <br />
-                          {info.working_days_3}
+                          Domingo: {info.working_days_3}
                         </>
                       )}
                     </p>

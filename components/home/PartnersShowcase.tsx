@@ -1,35 +1,32 @@
 'use client';
 
 import { ExternalLink } from 'lucide-react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export function PartnersShowcase() {
-  // Dados dos parceiros - você pode substituir por dados reais
-  const partners = [
-    {
-      name: "Empresa A",
-      logo: "/assets/images/logos/logo-primary.png", // Placeholder - substitua por logos reais
-      website: "https://empresa-a.com",
-      category: "Patrocinador Principal"
-    },
-    {
-      name: "Empresa B", 
-      logo: "/assets/images/logos/logo-black.png", // Placeholder - substitua por logos reais
-      website: "https://empresa-b.com",
-      category: "Parceiro Estratégico"
-    },
-    {
-      name: "Empresa C",
-      logo: "/assets/images/logos/mabel-code-logo.png", // Placeholder - substitua por logos reais
-      website: "https://empresa-c.com",
-      category: "Mantenedor"
-    },
-    {
-      name: "Empresa D",
-      logo: "/assets/images/logos/logo-primary.png", // Placeholder - substitua por logos reais
-      website: "https://empresa-d.com",
-      category: "Parceiro Institucional"
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchPartners() {
+      try {
+        const res = await fetch('/api/home/partners');
+        if (!res.ok) throw new Error('Failed to fetch partners');
+        const data = await res.json();
+        setPartners(data.data || []);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+    fetchPartners();
+  }, []);
+
+  if (loading) return <div>Carregando parceiros...</div>;
+  if (error) return <div>Erro ao carregar parceiros: {error}</div>;
 
   return (
     <div className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -44,19 +41,25 @@ export function PartnersShowcase() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {partners.map((partner, index) => (
+          {partners.map((partner: any, index: number) => (
             <a
-              key={partner.name}
-              href={partner.website}
+              key={partner.id || partner.name}
+              href={
+                partner.website?.startsWith('http://') || partner.website?.startsWith('https://')
+                  ? partner.website
+                  : `https://${partner.website}`
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-white rounded-xl p-4 sm:p-6 text-center hover:shadow-lg transition-all duration-300 hover:scale-105 border border-gray-100 animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                <img
-                  src={partner.logo}
+                <Image
+                  src={`/api/assets/${partner.logo}`}
                   alt={`Logo ${partner.name}`}
+                  width={64}
+                  height={64}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
@@ -85,4 +88,4 @@ export function PartnersShowcase() {
       </div>
     </div>
   );
-} 
+}

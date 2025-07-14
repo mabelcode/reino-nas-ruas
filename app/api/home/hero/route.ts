@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
-const BASE_URL = process.env.DIRECTUS_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
 export const revalidate = 86400; // cache for 24 hours
@@ -12,14 +13,14 @@ interface DirectusHeroResponse {
 }
 
 export async function GET() {
-  if (!BASE_URL || !TOKEN) {
+  if (!DIRECTUS_URL || !TOKEN) {
     return NextResponse.json(
       { error: 'Server misconfiguration' },
       { status: 500 }
     );
   }
 
-  const itemRes = await fetch(`${BASE_URL}/items/hero`, {
+  const itemRes = await fetch(`${DIRECTUS_URL}/items/hero`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
@@ -43,7 +44,7 @@ export async function GET() {
     );
   }
 
-  const imageRes = await fetch(`${BASE_URL}/assets/${imageId}`, {
+  const imageRes = await fetch(`${DIRECTUS_URL}/assets/${imageId}`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
@@ -57,12 +58,5 @@ export async function GET() {
     );
   }
 
-  const contentType = imageRes.headers.get('content-type') || 'application/octet-stream';
-
-  return new Response(imageRes.body, {
-    headers: {
-      'Content-Type': contentType,
-      'Cache-Control': `public, max-age=${revalidate}`,
-    },
-  });
+  return NextResponse.redirect(`${BASE_URL}/api/assets/${imageId}`, { status: 307 });
 }

@@ -8,10 +8,11 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.pexels.com/photos/8613320/pexels-photo-8613320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-          alt="Crianças sorrindo em atividades esportivas" 
+        <img
+          src="https://images.pexels.com/photos/8613320/pexels-photo-8613320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="Crianças sorrindo em atividades esportivas"
           className="w-full h-full object-cover"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
@@ -20,13 +21,13 @@ export function HeroSection() {
       <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
         <div className="animate-fade-in">
           <h1 className="heading-font text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight">
-            <span className="text-[var(--reino-yellow)] block sm:inline">Transformando</span> 
+            <span className="text-[var(--reino-yellow)] block sm:inline">Transformando</span>
             <span className="block sm:inline"> Vidas</span>
             <br />
-            <span className="text-[var(--reino-orange)] block sm:inline">Construindo</span> 
+            <span className="text-[var(--reino-orange)] block sm:inline">Construindo</span>
             <span className="block sm:inline"> Futuros</span>
           </h1>
-          
+
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 max-w-4xl mx-auto font-light leading-relaxed px-2">
             Promovemos transformação social através de educação, esporte e cultura para crianças e adolescentes em situação de vulnerabilidade.
           </p>

@@ -3,7 +3,13 @@ import { NextResponse } from 'next/server';
 const BASE_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export const revalidate = 60 * 60; // cache for 1 hour
+export const revalidate = 24 * 60 * 60; // cache for 24 hours
+
+interface DirectusHeroResponse {
+  data?: {
+    hero_image?: string;
+  };
+}
 
 export async function GET() {
   if (!BASE_URL || !TOKEN) {
@@ -27,7 +33,7 @@ export async function GET() {
     );
   }
 
-  const item = await itemRes.json();
+  const item: DirectusHeroResponse = await itemRes.json();
   const imageId = item?.data?.hero_image;
 
   if (!imageId) {

@@ -15,6 +15,22 @@ export default function DonatePage() {
     setTimeout(() => setCopiedPix(false), 2000);
   };
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Reino nas Ruas',
+          text: 'Conheça o trabalho incrível da ONG Reino nas Ruas! Vi no site e achei inspirador.',
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.error('Erro ao compartilhar', err);
+      }
+    } else {
+      alert('O compartilhamento não é suportado neste navegador.');
+    }
+  };
+
   const donationImpacts = [
     {
       icon: BookOpen,
@@ -265,7 +281,10 @@ export default function DonatePage() {
               <p className="text-gray-300 mb-4">
                 Compartilhe nosso trabalho nas redes sociais e ajude a ampliar nosso alcance.
               </p>
-              <button className="bg-[var(--reino-green-c)] text-white px-6 py-2 rounded-full font-semibold hover:bg-[var(--reino-green-c-hover)] transition-colors">
+              <button
+                onClick={handleShare}
+                className="bg-[var(--reino-green-c)] text-white px-6 py-2 rounded-full font-semibold hover:bg-[var(--reino-green-c-hover)] transition-colors"
+              >
                 Compartilhar
               </button>
             </div>

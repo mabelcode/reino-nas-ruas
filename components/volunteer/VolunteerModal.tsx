@@ -25,25 +25,35 @@ export function VolunteerModal() {
     return () => window.removeEventListener('openVolunteerModal', handleOpenModal);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Volunteer form submitted:', formData);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setIsOpen(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: '',
-        availability: '',
-        skills: ''
+    try {
+      const payload = { ...formData, subject: 'Seja Voluntário' };
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
-    }, 3000);
+      if (res.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+          availability: '',
+          skills: ''
+        });
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setIsOpen(false);
+        }, 3000);
+      } else {
+        console.error('Failed to send volunteer');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -138,7 +148,7 @@ export function VolunteerModal() {
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1 sm:mb-2">
-                    Telefone
+                    Telefone *
                   </label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-2.5 sm:top-3 w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
@@ -148,6 +158,7 @@ export function VolunteerModal() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      required
                       className="w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--reino-orange)] focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                       placeholder="(11) 99999-9999"
                     />

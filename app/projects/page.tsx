@@ -146,12 +146,16 @@ export default function WhatWeDoPage() {
               >
                 <div className="mb-4">
                   <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
-                  <p className="text-gray-600 leading-relaxed mb-4">
-                    {testimonial.testimony}
-                  </p>
+                  <div
+                    className="text-gray-600 leading-relaxed mb-4"
+                    dangerouslySetInnerHTML={{ __html: testimonial.testimony }}
+                  />
                 </div>
                 <div className="border-t border-gray-200 pt-4">
-                  <div className="font-semibold text-[var(--reino-green-e)]">{testimonial.name}</div>
+                  <div className="font-semibold text-[var(--reino-green-e)]">
+                    {testimonial.name}
+                    {testimonial.age ? `, ${testimonial.age} anos` : ''}
+                  </div>
                   <div className="text-sm text-[var(--reino-orange)]">
                     {testimonial.project ? projectMap[testimonial.project] : ''}
                   </div>

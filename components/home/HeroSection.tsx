@@ -8,7 +8,7 @@ import { useProjectStats } from '@/hooks/use-project-stats';
 
 export function HeroSection() {
   const info = useInfo();
-  const { totalKids, activeProjects } = useProjectStats();
+  const { totalPeople, activeProjects } = useProjectStats();
   const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -56,8 +56,8 @@ export function HeroSection() {
         <div className="animate-slide-up grid grid-cols-1 xs:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-16 px-2">
           <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Users className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--reino-yellow)] mx-auto mb-2" />
-            <div className="text-2xl sm:text-3xl font-bold text-[var(--reino-yellow)]">{totalKids}</div>
-            <div className="text-xs sm:text-sm text-gray-200">Crianças Atendidas</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[var(--reino-yellow)]">{totalPeople}</div>
+            <div className="text-xs sm:text-sm text-gray-200">Pessoas Impactadas</div>
           </div>
           <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Target className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--reino-orange)] mx-auto mb-2" />

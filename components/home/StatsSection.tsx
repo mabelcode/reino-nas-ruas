@@ -6,32 +6,56 @@ import { useProjectStats } from '@/hooks/use-project-stats';
 
 export function StatsSection() {
   const info = useInfo();
-  const { totalKids, activeProjects } = useProjectStats();
+  const {
+    totalKids,
+    totalYoung,
+    totalAdult,
+    totalElderly,
+    activeProjects
+  } = useProjectStats();
   const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   const stats = [
     {
       icon: Users,
       number: String(totalKids),
-      label: 'Crianças e Adolescentes Atendidos',
+      label: 'Crianças Atendidas',
       color: 'text-[var(--reino-orange)]'
+    },
+    {
+      icon: Users,
+      number: String(totalYoung),
+      label: 'Adolescentes e Jovens',
+      color: 'text-[var(--reino-yellow)]'
+    },
+    {
+      icon: Users,
+      number: String(totalAdult),
+      label: 'Adultos',
+      color: 'text-[var(--reino-green-c)]'
+    },
+    {
+      icon: Users,
+      number: String(totalElderly),
+      label: 'Idosos',
+      color: 'text-[var(--reino-green-e)]'
     },
     {
       icon: Calendar,
       number: String(impactYears),
-      label: "Anos de Atividade",
-      color: "text-[var(--reino-green-c)]"
+      label: 'Anos de Atividade',
+      color: 'text-[var(--reino-green-c)]'
     },
     {
       icon: Trophy,
       number: String(activeProjects),
-      label: "Projetos Ativos",
-      color: "text-[var(--reino-yellow)]"
+      label: 'Projetos Ativos',
+      color: 'text-[var(--reino-yellow)]'
     },
     {
       icon: Heart,
-      number: "100%",
-      label: "Amor e Dedicação",
-      color: "text-[var(--reino-green-e)]"
+      number: '100%',
+      label: 'Amor e Dedicação',
+      color: 'text-white'
     }
   ];
 

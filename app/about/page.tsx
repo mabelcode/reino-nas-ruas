@@ -32,7 +32,7 @@ interface TeamMember {
 
 export default function AboutPage() {
   const info = useInfo();
-  const { totalKids, activeProjects } = useProjectStats();
+  const { totalPeople, activeProjects } = useProjectStats();
 
   const [about, setAbout] = useState<AboutData | null>(null);
   const [team, setTeam] = useState<TeamMember[]>([]);
@@ -113,8 +113,8 @@ export default function AboutPage() {
                   <div className="text-sm text-gray-600">Fundação</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[var(--reino-green-c)]">{totalKids}</div>
-                  <div className="text-sm text-gray-600">Jovens atendidos</div>
+                  <div className="text-3xl font-bold text-[var(--reino-green-c)]">{totalPeople}</div>
+                  <div className="text-sm text-gray-600">Pessoas impactadas</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-[var(--reino-yellow)]">{activeProjects}</div>

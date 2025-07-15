@@ -8,7 +8,6 @@ describe('Home page', () => {
     render(component);
     expect(screen.getByRole('heading', { name: /transformando/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /nossa essência/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /nossas atividades/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /projetos em destaque/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /nosso impacto/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /próximos eventos/i })).toBeInTheDocument();

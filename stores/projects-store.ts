@@ -23,7 +23,7 @@ export const fallbackProjects: Project[] = [
     description:
       'Fortalecimento da identidade cultural e autoestima através de atividades artísticas e culturais, conectando os jovens com suas origens.',
     keywords: ['Cultura'],
-    status: 'Ativo',
+    status: 'Em andamento',
     start_date: '2024-01-01',
     end_date: null,
     cover_image: '',
@@ -38,7 +38,7 @@ export const fallbackProjects: Project[] = [
     description:
       'Desenvolvimento de habilidades esportivas e valores através do Jiu-Jitsu, promovendo disciplina e respeito entre os participantes.',
     keywords: ['Esporte'],
-    status: 'Ativo',
+    status: 'Em andamento',
     start_date: '2024-01-01',
     end_date: null,
     cover_image: '',
@@ -53,7 +53,7 @@ export const fallbackProjects: Project[] = [
     description:
       'Capacitação profissional e desenvolvimento de habilidades empreendedoras para mulheres da comunidade, incluindo cursos e mentoria.',
     keywords: ['Empreendedorismo'],
-    status: 'Ativo',
+    status: 'Em andamento',
     start_date: '2024-01-01',
     end_date: null,
     cover_image: '',

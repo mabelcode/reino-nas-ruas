@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { Zap, Users, Calendar, Star, ClipboardList } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { useProjects } from '@/hooks/use-projects';
 import { useTestimonials } from '@/hooks/use-testimonials';
 
@@ -10,12 +12,18 @@ export default function WhatWeDoPage() {
   const testimonials = useTestimonials();
 
   const programs = projects.map((p) => ({
+    id: p.id,
     icon: p.highlighted ? Star : ClipboardList,
     title: p.title,
     description: p.description,
     details: p.keywords || [],
     participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
-    duration: p.start_date ? `${p.start_date}${p.end_date ? ` - ${p.end_date}` : ''}` : '',
+    duration: p.start_date
+      ? formatDistanceToNow(new Date(p.start_date), {
+          addSuffix: true,
+          locale: ptBR,
+        })
+      : '',
     image: p.cover_image ? `/api/assets/${p.cover_image}` : '',
     status: p.status,
   }));
@@ -38,7 +46,7 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* Programas */}
-      <section className="section-padding bg-white">
+      <section id="programs" className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
@@ -51,8 +59,9 @@ export default function WhatWeDoPage() {
 
           <div className="space-y-16">
             {programs.map((program, index) => (
-              <div 
+              <div
                 key={program.title}
+                id={program.id}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
                   index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
                 }`}

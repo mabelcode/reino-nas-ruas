@@ -3,16 +3,25 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Calendar, Users, Star } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { useProjects } from '@/hooks/use-projects';
 
 export function ProjectsSection() {
-  const projects = useProjects();
+  const projects = useProjects().filter(
+    (p) => p.status?.toLowerCase() === 'em andamento'
+  );
 
-  const mappedProjects = projects.map((p) => ({
+  const mappedProjects = projects.slice(0, 3).map((p) => ({
     ...p,
     image: p.cover_image ? `/api/assets/${p.cover_image}` : (p as any).image,
     participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
-    duration: p.start_date ? `${p.start_date}${p.end_date ? ` - ${p.end_date}` : ''}` : '',
+    duration: p.start_date
+      ? formatDistanceToNow(new Date(p.start_date), {
+          addSuffix: true,
+          locale: ptBR,
+        })
+      : '',
   }));
 
   return (
@@ -67,17 +76,20 @@ export function ProjectsSection() {
                   </div>
                 </div>
                 
-                <button className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-2 sm:py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center text-sm sm:text-base">
+                <Link
+                  href={`/projects#${project.id}`}
+                  className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-2 sm:py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center text-sm sm:text-base"
+                >
                   Saiba Mais
                   <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 ml-2" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}
         </div>
 
         <div className="text-center">
-          <Link href="/projects" className="inline-flex items-center bg-[var(--reino-orange)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base">
+          <Link href="/projects#programs" className="inline-flex items-center bg-[var(--reino-orange)] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:bg-[var(--reino-orange-hover)] transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base">
             Ver Todos os Projetos
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
           </Link>

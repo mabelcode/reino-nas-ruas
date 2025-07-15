@@ -198,7 +198,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
                 "contactType": "customer service",
                 "availableLanguage": "Portuguese"
               },
-              "foundingDate": "2020",
+              "foundingDate": "2018",
               "areaServed": "Brasil",
               "serviceType": ["Educação", "Esporte", "Arte", "Cultura", "Empoderamento Feminino"]
             })

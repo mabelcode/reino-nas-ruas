@@ -1,28 +1,32 @@
 'use client';
 
 import { Target, Eye, Heart } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface About {
+  mission: string;
+  vision: string;
+  values: string;
+}
 
 export function MissionSection() {
-  const values = [
-    {
-      icon: Target,
-      title: "Missão",
-      description: "Promover a transformação social de crianças e adolescentes em situação de vulnerabilidade através de atividades educativas, esportivas e culturais, desenvolvendo seu potencial e construindo um futuro melhor.",
-      color: "text-[var(--reino-orange)]"
-    },
-    {
-      icon: Eye,
-      title: "Visão",
-      description: "Ser reconhecida como uma organização de referência na promoção da inclusão social e desenvolvimento integral de jovens, criando uma sociedade mais justa e igualitária.",
-      color: "text-[var(--reino-green-c)]"
-    },
-    {
-      icon: Heart,
-      title: "Valores",
-      description: "Amor, respeito, inclusão, transparência, compromisso social e desenvolvimento humano. Acreditamos no poder transformador da educação e do esporte como ferramentas de mudança.",
-      color: "text-[var(--reino-yellow)]"
+  const [about, setAbout] = useState<About | null>(null);
+
+  useEffect(() => {
+    async function fetchAbout() {
+      try {
+        const res = await fetch('/api/about');
+        if (res.ok) {
+          const data = await res.json();
+          setAbout(data.data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
-  ];
+
+    fetchAbout();
+  }, []);
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -37,23 +41,59 @@ export function MissionSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {values.map((value, index) => (
-            <div 
-              key={value.title}
-              className={`bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className={`w-12 h-12 sm:w-16 sm:h-16 ${value.color} bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6`}>
-                <value.icon className="w-6 h-6 sm:w-8 sm:h-8" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
-                {value.title}
-              </h3>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                {value.description}
-              </p>
+          <div
+            className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up"
+            style={{ animationDelay: '0s' }}
+          >
+            <div className="w-12 h-12 sm:w-16 sm:h-16 text-[var(--reino-orange)] bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+              <Target className="w-6 h-6 sm:w-8 sm:h-8" />
             </div>
-          ))}
+            <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
+              Missão
+            </h3>
+            {about && (
+              <div
+                className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: about.mission }}
+              />
+            )}
+          </div>
+
+          <div
+            className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up"
+            style={{ animationDelay: '0.2s' }}
+          >
+            <div className="w-12 h-12 sm:w-16 sm:h-16 text-[var(--reino-green-c)] bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+              <Eye className="w-6 h-6 sm:w-8 sm:h-8" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
+              Visão
+            </h3>
+            {about && (
+              <div
+                className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: about.vision }}
+              />
+            )}
+          </div>
+
+          <div
+            className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up"
+            style={{ animationDelay: '0.4s' }}
+          >
+            <div className="w-12 h-12 sm:w-16 sm:h-16 text-[var(--reino-yellow)] bg-gray-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
+              Valores
+            </h3>
+            {about && (
+              <div
+                className="text-sm sm:text-base text-gray-600 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: about.values }}
+              />
+            )}
+          </div>
         </div>
       </div>
     </section>

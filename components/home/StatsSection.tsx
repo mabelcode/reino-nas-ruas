@@ -7,37 +7,16 @@ import { useProjectStats } from '@/hooks/use-project-stats';
 export function StatsSection() {
   const info = useInfo();
   const {
-    totalKids,
-    totalYoung,
-    totalAdult,
-    totalElderly,
+    totalPeople,
     activeProjects
   } = useProjectStats();
   const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   const stats = [
     {
       icon: Users,
-      number: String(totalKids),
-      label: 'Crianças Atendidas',
+      number: String(totalPeople),
+      label: 'Pessoas Atendidas',
       color: 'text-[var(--reino-orange)]'
-    },
-    {
-      icon: Users,
-      number: String(totalYoung),
-      label: 'Adolescentes e Jovens',
-      color: 'text-[var(--reino-yellow)]'
-    },
-    {
-      icon: Users,
-      number: String(totalAdult),
-      label: 'Adultos',
-      color: 'text-[var(--reino-green-c)]'
-    },
-    {
-      icon: Users,
-      number: String(totalElderly),
-      label: 'Idosos',
-      color: 'text-[var(--reino-green-e)]'
     },
     {
       icon: Calendar,

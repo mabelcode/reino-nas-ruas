@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Zap, Music, BookOpen, Users } from 'lucide-react';
 
 export function FeaturedActivitiesSection() {
@@ -50,10 +51,11 @@ export function FeaturedActivitiesSection() {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="aspect-4/3 relative">
-                <img 
-                  src={activity.image} 
+                <Image
+                  src={activity.image}
                   alt={activity.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
               </div>

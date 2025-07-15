@@ -1,84 +1,25 @@
 'use client';
 
-import { Zap, Music, BookOpen, Users, Target, Calendar, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import { Zap, Users, Calendar, Star, ClipboardList } from 'lucide-react';
+import { useProjects } from '@/hooks/use-projects';
+import { useTestimonials } from '@/hooks/use-testimonials';
 
 export default function WhatWeDoPage() {
-  const programs = [
-    {
-      icon: Zap,
-      title: "Futuro Campeão - Jiu-Jitsu",
-      description: "Programa esportivo que desenvolve disciplina, autoestima e valores através da prática do Jiu-Jitsu.",
-      details: [
-        "Aulas 3x por semana",
-        "Faixas etárias: 6 a 17 anos",
-        "Filosofia e valores marciais",
-        "Competições e eventos"
-      ],
-      participants: 60,
-      duration: "12 meses",
-      image: "https://images.pexels.com/photos/7045859/pexels-photo-7045859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: Music,
-      title: "Ritmo e Rima - RAP e Cultura",
-      description: "Desenvolvimento da expressão artística e consciência social através da música e cultura hip-hop.",
-      details: [
-        "Oficinas de rap e beatbox",
-        "Produção musical",
-        "Apresentações públicas",
-        "Letras com consciência social"
-      ],
-      participants: 35,
-      duration: "10 meses",
-      image: "https://images.pexels.com/photos/7034369/pexels-photo-7034369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: BookOpen,
-      title: "Educação Transformadora",
-      description: "Programa de reforço escolar e desenvolvimento educacional personalizado.",
-      details: [
-        "Acompanhamento pedagógico",
-        "Reforço em matemática e português",
-        "Desenvolvimento da leitura",
-        "Preparação para vestibulares"
-      ],
-      participants: 80,
-      duration: "12 meses",
-      image: "https://images.pexels.com/photos/8613097/pexels-photo-8613097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: Users,
-      title: "Mulheres Empreendedoras",
-      description: "Programa de empoderamento feminino com foco em capacitação profissional e empreendedorismo.",
-      details: [
-        "Cursos de capacitação profissional",
-        "Workshops de empreendedorismo",
-        "Mentoria empresarial",
-        "Microcrédito e apoio financeiro"
-      ],
-      participants: 25,
-      duration: "8 meses",
-      image: "https://images.pexels.com/photos/7551677/pexels-photo-7551677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
-  ];
+  const projects = useProjects();
+  const testimonials = useTestimonials();
 
-  const testimonials = [
-    {
-      name: "Ana, 16 anos",
-      text: "O projeto mudou minha vida. Aprendi disciplina no Jiu-Jitsu e hoje sou faixa azul. Meus pais ficam orgulhosos!",
-      program: "Futuro Campeão"
-    },
-    {
-      name: "Carlos, 14 anos",
-      text: "Através do rap, consegui expressar meus sentimentos e ajudar outros jovens da comunidade.",
-      program: "Ritmo e Rima"
-    },
-    {
-      name: "Maria, mãe de participante",
-      text: "Minha filha melhorou muito na escola depois que começou a participar do reforço. Obrigada Reino nas Ruas!",
-      program: "Educação Transformadora"
-    }
-  ];
+  const programs = projects.map((p) => ({
+    icon: p.highlighted ? Star : ClipboardList,
+    title: p.title,
+    description: p.description,
+    details: p.keywords || [],
+    participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
+    duration: p.start_date ? `${p.start_date}${p.end_date ? ` - ${p.end_date}` : ''}` : '',
+    image: p.cover_image ? `/api/assets/${p.cover_image}` : '',
+    status: p.status,
+  }));
+
 
   return (
     <div className="pt-20">
@@ -151,10 +92,12 @@ export default function WhatWeDoPage() {
                 </div>
                 
                 <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''} animate-slide-in-right`}>
-                  <img 
-                    src={program.image} 
+                  <Image
+                    src={program.image}
                     alt={program.title}
-                    className="rounded-3xl shadow-lg w-full"
+                    width={800}
+                    height={600}
+                    className="rounded-3xl shadow-lg w-full object-cover"
                   />
                 </div>
               </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 
 export function EventsSection() {
@@ -50,10 +51,11 @@ export function EventsSection() {
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <div className="aspect-video relative">
-                <img 
-                  src={event.image} 
+                <Image
+                  src={event.image}
                   alt={event.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
                   <div className="bg-[var(--reino-orange)] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">

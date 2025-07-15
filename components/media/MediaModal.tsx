@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, Calendar, Eye, Play, Users, MapPin, Clock } from 'lucide-react';
 
 interface MediaItem {
@@ -201,10 +202,11 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                 
                 {/* Main Image */}
                 <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                  <img 
-                    src={fullContent.images[currentImageIndex]} 
+                  <Image
+                    src={fullContent.images[currentImageIndex]}
                     alt={`Foto ${currentImageIndex + 1} do evento`}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   
                   {/* Navigation Arrows */}
@@ -244,10 +246,11 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                             : 'border-gray-200 hover:border-gray-300'
                         }`}
                       >
-                        <img 
-                          src={image} 
+                        <Image
+                          src={image}
                           alt={`Miniatura ${index + 1}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       </button>
                     ))}
@@ -267,10 +270,11 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                     className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-pointer group"
                     onClick={() => setShowVideo(true)}
                   >
-                    <img 
-                      src={fullContent.images[0]} 
+                    <Image
+                      src={fullContent.images[0]}
                       alt="Video thumbnail"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                       <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[var(--reino-orange)] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

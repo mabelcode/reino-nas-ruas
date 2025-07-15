@@ -1,35 +1,19 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Calendar, Users, Star } from 'lucide-react';
+import { useProjects } from '@/hooks/use-projects';
 
 export function ProjectsSection() {
-  const projects = [
-    {
-      title: "Projeto Raízes",
-      description: "Fortalecimento da identidade cultural e autoestima através de atividades artísticas e culturais, conectando os jovens com suas origens.",
-      participants: 45,
-      duration: "6 meses",
-      status: "Ativo",
-      image: "https://images.pexels.com/photos/8613224/pexels-photo-8613224.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Futuro Campeão",
-      description: "Desenvolvimento de habilidades esportivas e valores através do Jiu-Jitsu, promovendo disciplina e respeito entre os participantes.",
-      participants: 60,
-      duration: "12 meses",
-      status: "Ativo",
-      image: "https://images.pexels.com/photos/7045859/pexels-photo-7045859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Mulheres Empreendedoras",
-      description: "Capacitação profissional e desenvolvimento de habilidades empreendedoras para mulheres da comunidade, incluindo cursos e mentoria.",
-      participants: 25,
-      duration: "8 meses",
-      status: "Ativo",
-      image: "https://images.pexels.com/photos/7551677/pexels-photo-7551677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
-  ];
+  const projects = useProjects();
+
+  const mappedProjects = projects.map((p) => ({
+    ...p,
+    image: p.cover_image ? `/api/assets/${p.cover_image}` : (p as any).image,
+    participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
+    duration: p.start_date ? `${p.start_date}${p.end_date ? ` - ${p.end_date}` : ''}` : '',
+  }));
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -44,17 +28,18 @@ export function ProjectsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
-          {projects.map((project, index) => (
+          {mappedProjects.map((project, index) => (
             <div 
               key={project.title}
               className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <div className="aspect-video relative">
-                <img 
-                  src={project.image} 
+                <Image
+                  src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                   <span className="px-2 sm:px-3 py-1 bg-[var(--reino-green-c)] text-white text-xs sm:text-sm rounded-full">

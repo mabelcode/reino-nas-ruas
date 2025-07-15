@@ -1,8 +1,11 @@
 'use client';
 
 import { Users, Calendar, Trophy, Heart } from 'lucide-react';
+import { useInfo } from '@/hooks/use-info';
 
 export function StatsSection() {
+  const info = useInfo();
+  const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   const stats = [
     {
       icon: Users,
@@ -12,7 +15,7 @@ export function StatsSection() {
     },
     {
       icon: Calendar,
-      number: "8",
+      number: String(impactYears),
       label: "Anos de Atividade",
       color: "text-[var(--reino-green-c)]"
     },

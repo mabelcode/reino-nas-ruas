@@ -1,13 +1,15 @@
 'use client';
 
 import { Award, Users, Target, Calendar, Star } from 'lucide-react';
+import { useInfo } from '@/hooks/use-info';
 
 export default function AboutPage() {
+  const info = useInfo();
   const team = [
     {
       name: "Maria Santos",
       role: "Fundadora e Diretora",
-      bio: "Assistente social com 15 anos de experiência em projetos sociais. Fundou a Reino nas Ruas em 2016 com o sonho de transformar vidas.",
+      bio: `Assistente social com 15 anos de experiência em projetos sociais. Fundou a Reino nas Ruas em ${info.founded_year} com o sonho de transformar vidas.`,
       image: "https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     },
     {
@@ -77,14 +79,14 @@ export default function AboutPage() {
                 Como Tudo Começou
               </h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                A Associação Reino nas Ruas nasceu em 2016 do sonho de Maria Santos, uma assistente social que trabalhava em comunidades vulneráveis de São Paulo. Ela percebeu que muitas crianças e adolescentes precisavam de um espaço seguro para se desenvolver e descobrir seus talentos.
+                A Associação Reino nas Ruas nasceu em {info.founded_year} do sonho de Maria Santos, uma assistente social que trabalhava em comunidades vulneráveis de São Paulo. Ela percebeu que muitas crianças e adolescentes precisavam de um espaço seguro para se desenvolver e descobrir seus talentos.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 O que começou como um pequeno grupo de 10 crianças em uma quadra emprestada, hoje se transformou em uma organização que atende mais de 500 jovens em diversos projetos educacionais, esportivos e culturais.
               </p>
               <div className="flex items-center space-x-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[var(--reino-orange)]">2016</div>
+                  <div className="text-3xl font-bold text-[var(--reino-orange)]">{info.founded_year}</div>
                   <div className="text-sm text-gray-600">Fundação</div>
                 </div>
                 <div className="text-center">

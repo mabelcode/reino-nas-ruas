@@ -3,8 +3,11 @@
 import Link from 'next/link';
 import { ChevronRight, Users, Heart, Target } from 'lucide-react';
 import Image from 'next/image';
+import { useInfo } from '@/hooks/use-info';
 
 export function HeroSection() {
+  const info = useInfo();
+  const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -61,7 +64,7 @@ export function HeroSection() {
           </div>
           <div className="bg-white/15 backdrop-blur-xs rounded-2xl p-4 sm:p-6 text-center">
             <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-[var(--reino-green-c)] mx-auto mb-2" />
-            <div className="text-2xl sm:text-3xl font-bold text-[var(--reino-green-c)]">8</div>
+            <div className="text-2xl sm:text-3xl font-bold text-[var(--reino-green-c)]">{impactYears}</div>
             <div className="text-xs sm:text-sm text-gray-200">Anos de Impacto</div>
           </div>
         </div>

@@ -15,6 +15,7 @@ import {
 import { useInfo } from '@/hooks/use-info';
 import { useSocials } from '@/hooks/use-socials';
 import MapIframe from '@/components/MapIframe';
+import { WhatsAppButton } from '@/components/WhatsAppButton';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -296,6 +297,10 @@ export default function ContactPage() {
                       </a>
                     );
                   })}
+                  <WhatsAppButton
+                    className="w-12 h-12"
+                    color="var(--reino-orange)"
+                  />
                 </div>
               </div>
             </div>

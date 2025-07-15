@@ -14,14 +14,19 @@ export function ProjectsSection() {
 
   const mappedProjects = projects.slice(0, 3).map((p) => ({
     ...p,
-    image: p.cover_image ? `/api/assets/${p.cover_image}` : (p as any).image,
-    participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
+    image: p.cover_image ? `/api/assets/${p.cover_image}` : undefined,
+    participants:
+      (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
     duration: p.start_date
       ? formatDistanceToNow(new Date(p.start_date), {
           addSuffix: true,
           locale: ptBR,
         })
       : '',
+    shortDescription:
+      p.description.length > 99
+        ? `${p.description.slice(0, 99)}...`
+        : p.description,
   }));
 
   return (
@@ -44,12 +49,16 @@ export function ProjectsSection() {
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <div className="aspect-video relative">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-gray-200" />
+                )}
                 <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                   <span className="px-2 sm:px-3 py-1 bg-[var(--reino-green-c)] text-white text-xs sm:text-sm rounded-full">
                     {project.status}
@@ -62,7 +71,7 @@ export function ProjectsSection() {
                   {project.title}
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
-                  {project.description}
+                  {project.shortDescription}
                 </p>
                 
                 <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">

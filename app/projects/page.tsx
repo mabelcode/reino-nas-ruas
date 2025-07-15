@@ -24,7 +24,7 @@ export default function WhatWeDoPage() {
           locale: ptBR,
         })
       : '',
-    image: p.cover_image ? `/api/assets/${p.cover_image}` : '',
+    image: p.cover_image ? `/api/assets/${p.cover_image}` : undefined,
     status: p.status,
   }));
 
@@ -101,13 +101,18 @@ export default function WhatWeDoPage() {
                 </div>
                 
                 <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''} animate-slide-in-right`}>
-                  <Image
-                    src={program.image}
-                    alt={program.title}
-                    width={800}
-                    height={600}
-                    className="rounded-3xl shadow-lg w-full object-cover"
-                  />
+                  {program.image ? (
+                    <div className="aspect-video relative">
+                      <Image
+                        src={program.image}
+                        alt={program.title}
+                        fill
+                        className="rounded-3xl shadow-lg object-cover w-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-video rounded-3xl shadow-lg bg-gray-200" />
+                  )}
                 </div>
               </div>
             ))}

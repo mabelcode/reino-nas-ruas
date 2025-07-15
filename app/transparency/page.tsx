@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
+import { useProjectStats } from '@/hooks/use-project-stats';
 
 export default function TransparencyPage() {
   const [selectedYear, setSelectedYear] = useState('2024');
+  const { totalPeople } = useProjectStats();
 
   const years = ['2024', '2023', '2022', '2021'];
 
@@ -14,7 +16,7 @@ export default function TransparencyPage() {
     projects: 315000,
     infrastructure: 85000,
     administration: 25000,
-    beneficiaries: 512,
+    beneficiaries: totalPeople,
     events: 24
   };
 

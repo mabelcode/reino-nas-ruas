@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Calendar, Eye, Tag, ArrowRight } from 'lucide-react';
 import { MediaModal } from '@/components/media/MediaModal';
 
@@ -192,10 +193,11 @@ export default function MediaPage() {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="aspect-video relative">
-                  <img 
-                    src={item.image} 
+                  <Image
+                    src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">

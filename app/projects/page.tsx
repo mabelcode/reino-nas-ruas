@@ -1,84 +1,38 @@
 'use client';
 
-import { Zap, Music, BookOpen, Users, Target, Calendar, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import { Zap, Users, Calendar, Star, ClipboardList } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { useProjects } from '@/hooks/use-projects';
+import { useTestimonials } from '@/hooks/use-testimonials';
 
 export default function WhatWeDoPage() {
-  const programs = [
-    {
-      icon: Zap,
-      title: "Futuro Campeão - Jiu-Jitsu",
-      description: "Programa esportivo que desenvolve disciplina, autoestima e valores através da prática do Jiu-Jitsu.",
-      details: [
-        "Aulas 3x por semana",
-        "Faixas etárias: 6 a 17 anos",
-        "Filosofia e valores marciais",
-        "Competições e eventos"
-      ],
-      participants: 60,
-      duration: "12 meses",
-      image: "https://images.pexels.com/photos/7045859/pexels-photo-7045859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: Music,
-      title: "Ritmo e Rima - RAP e Cultura",
-      description: "Desenvolvimento da expressão artística e consciência social através da música e cultura hip-hop.",
-      details: [
-        "Oficinas de rap e beatbox",
-        "Produção musical",
-        "Apresentações públicas",
-        "Letras com consciência social"
-      ],
-      participants: 35,
-      duration: "10 meses",
-      image: "https://images.pexels.com/photos/7034369/pexels-photo-7034369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: BookOpen,
-      title: "Educação Transformadora",
-      description: "Programa de reforço escolar e desenvolvimento educacional personalizado.",
-      details: [
-        "Acompanhamento pedagógico",
-        "Reforço em matemática e português",
-        "Desenvolvimento da leitura",
-        "Preparação para vestibulares"
-      ],
-      participants: 80,
-      duration: "12 meses",
-      image: "https://images.pexels.com/photos/8613097/pexels-photo-8613097.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      icon: Users,
-      title: "Mulheres Empreendedoras",
-      description: "Programa de empoderamento feminino com foco em capacitação profissional e empreendedorismo.",
-      details: [
-        "Cursos de capacitação profissional",
-        "Workshops de empreendedorismo",
-        "Mentoria empresarial",
-        "Microcrédito e apoio financeiro"
-      ],
-      participants: 25,
-      duration: "8 meses",
-      image: "https://images.pexels.com/photos/7551677/pexels-photo-7551677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
-  ];
+  const projects = useProjects();
+  const testimonials = useTestimonials();
 
-  const testimonials = [
-    {
-      name: "Ana, 16 anos",
-      text: "O projeto mudou minha vida. Aprendi disciplina no Jiu-Jitsu e hoje sou faixa azul. Meus pais ficam orgulhosos!",
-      program: "Futuro Campeão"
-    },
-    {
-      name: "Carlos, 14 anos",
-      text: "Através do rap, consegui expressar meus sentimentos e ajudar outros jovens da comunidade.",
-      program: "Ritmo e Rima"
-    },
-    {
-      name: "Maria, mãe de participante",
-      text: "Minha filha melhorou muito na escola depois que começou a participar do reforço. Obrigada Reino nas Ruas!",
-      program: "Educação Transformadora"
-    }
-  ];
+  const projectMap = projects.reduce<Record<string, string>>((acc, p) => {
+    acc[p.id] = p.title;
+    return acc;
+  }, {});
+
+  const programs = projects.map((p) => ({
+    id: p.id,
+    icon: p.highlighted ? Star : ClipboardList,
+    title: p.title,
+    description: p.description,
+    details: p.keywords || [],
+    participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
+    duration: p.start_date
+      ? formatDistanceToNow(new Date(p.start_date), {
+          addSuffix: true,
+          locale: ptBR,
+        })
+      : '',
+    image: p.cover_image ? `/api/assets/${p.cover_image}` : undefined,
+    status: p.status,
+  }));
+
 
   return (
     <div className="pt-20">
@@ -97,7 +51,7 @@ export default function WhatWeDoPage() {
       </section>
 
       {/* Programas */}
-      <section className="section-padding bg-white">
+      <section id="programs" className="section-padding bg-white">
         <div className="container-max">
           <div className="text-center mb-16">
             <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
@@ -110,8 +64,9 @@ export default function WhatWeDoPage() {
 
           <div className="space-y-16">
             {programs.map((program, index) => (
-              <div 
+              <div
                 key={program.title}
+                id={program.id}
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
                   index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
                 }`}
@@ -151,11 +106,18 @@ export default function WhatWeDoPage() {
                 </div>
                 
                 <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''} animate-slide-in-right`}>
-                  <img 
-                    src={program.image} 
-                    alt={program.title}
-                    className="rounded-3xl shadow-lg w-full"
-                  />
+                  {program.image ? (
+                    <div className="aspect-video relative">
+                      <Image
+                        src={program.image}
+                        alt={program.title}
+                        fill
+                        className="rounded-3xl shadow-lg object-cover w-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-video rounded-3xl shadow-lg bg-gray-200" />
+                  )}
                 </div>
               </div>
             ))}
@@ -177,7 +139,7 @@ export default function WhatWeDoPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div 
+              <div
                 key={testimonial.name}
                 className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
                 style={{ animationDelay: `${index * 0.2}s` }}
@@ -185,12 +147,14 @@ export default function WhatWeDoPage() {
                 <div className="mb-4">
                   <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
                   <p className="text-gray-600 leading-relaxed mb-4">
-                    {testimonial.text}
+                    {testimonial.testimony}
                   </p>
                 </div>
                 <div className="border-t border-gray-200 pt-4">
                   <div className="font-semibold text-[var(--reino-green-e)]">{testimonial.name}</div>
-                  <div className="text-sm text-[var(--reino-orange)]">{testimonial.program}</div>
+                  <div className="text-sm text-[var(--reino-orange)]">
+                    {testimonial.project ? projectMap[testimonial.project] : ''}
+                  </div>
                 </div>
               </div>
             ))}

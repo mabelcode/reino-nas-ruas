@@ -16,13 +16,17 @@ export default function DonatePage() {
   };
 
   const handleShare = async () => {
-    if (navigator.share) {
+    if ('share' in navigator) {
+      const shareData = {
+        title: 'Reino nas Ruas',
+        text: 'Conheça o trabalho incrível da ONG Reino nas Ruas! Vi no site e achei inspirador.',
+        url: window.location.href,
+      };
       try {
-        await navigator.share({
-          title: 'Reino nas Ruas',
-          text: 'Conheça o trabalho incrível da ONG Reino nas Ruas! Vi no site e achei inspirador.',
-          url: window.location.href,
-        });
+        if (navigator.canShare && !navigator.canShare(shareData)) {
+          throw new Error('Dados de compartilhamento não suportados.');
+        }
+        await navigator.share(shareData);
       } catch (err) {
         console.error('Erro ao compartilhar', err);
       }

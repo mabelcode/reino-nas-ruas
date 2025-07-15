@@ -4,6 +4,7 @@ import { Award, Users, Target, Calendar, Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useInfo } from '@/hooks/use-info';
+import { useProjectStats } from '@/hooks/use-project-stats';
 
 interface AboutData {
   history: string;
@@ -31,6 +32,7 @@ interface TeamMember {
 
 export default function AboutPage() {
   const info = useInfo();
+  const { totalKids, activeProjects } = useProjectStats();
 
   const [about, setAbout] = useState<AboutData | null>(null);
   const [team, setTeam] = useState<TeamMember[]>([]);
@@ -111,11 +113,11 @@ export default function AboutPage() {
                   <div className="text-sm text-gray-600">Fundação</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[var(--reino-green-c)]">500+</div>
+                  <div className="text-3xl font-bold text-[var(--reino-green-c)]">{totalKids}</div>
                   <div className="text-sm text-gray-600">Jovens atendidos</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[var(--reino-yellow)]">15</div>
+                  <div className="text-3xl font-bold text-[var(--reino-yellow)]">{activeProjects}</div>
                   <div className="text-sm text-gray-600">Projetos ativos</div>
                 </div>
               </div>

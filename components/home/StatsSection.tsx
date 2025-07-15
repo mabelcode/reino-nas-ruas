@@ -2,16 +2,18 @@
 
 import { Users, Calendar, Trophy, Heart } from 'lucide-react';
 import { useInfo } from '@/hooks/use-info';
+import { useProjectStats } from '@/hooks/use-project-stats';
 
 export function StatsSection() {
   const info = useInfo();
+  const { totalKids, activeProjects } = useProjectStats();
   const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   const stats = [
     {
       icon: Users,
-      number: "500+",
-      label: "Crianças e Adolescentes Atendidos",
-      color: "text-[var(--reino-orange)]"
+      number: String(totalKids),
+      label: 'Crianças e Adolescentes Atendidos',
+      color: 'text-[var(--reino-orange)]'
     },
     {
       icon: Calendar,
@@ -21,7 +23,7 @@ export function StatsSection() {
     },
     {
       icon: Trophy,
-      number: "15",
+      number: String(activeProjects),
       label: "Projetos Ativos",
       color: "text-[var(--reino-yellow)]"
     },

@@ -14,7 +14,7 @@ export function StatsSection() {
   const stats = [
     {
       icon: Users,
-      number: String(totalPeople),
+      number: String(totalPeople) + '+',
       label: 'Pessoas Atendidas',
       color: 'text-[var(--reino-orange)]'
     },
@@ -52,7 +52,7 @@ export function StatsSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {stats.map((stat, index) => (
-            <div 
+            <div
               key={stat.label}
               className={`text-center animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}

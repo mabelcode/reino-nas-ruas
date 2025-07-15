@@ -11,6 +11,11 @@ export default function WhatWeDoPage() {
   const projects = useProjects();
   const testimonials = useTestimonials();
 
+  const projectMap = projects.reduce<Record<string, string>>((acc, p) => {
+    acc[p.id] = p.title;
+    return acc;
+  }, {});
+
   const programs = projects.map((p) => ({
     id: p.id,
     icon: p.highlighted ? Star : ClipboardList,
@@ -134,7 +139,7 @@ export default function WhatWeDoPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div 
+              <div
                 key={testimonial.name}
                 className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
                 style={{ animationDelay: `${index * 0.2}s` }}
@@ -142,12 +147,14 @@ export default function WhatWeDoPage() {
                 <div className="mb-4">
                   <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
                   <p className="text-gray-600 leading-relaxed mb-4">
-                    {testimonial.text}
+                    {testimonial.testimony}
                   </p>
                 </div>
                 <div className="border-t border-gray-200 pt-4">
                   <div className="font-semibold text-[var(--reino-green-e)]">{testimonial.name}</div>
-                  <div className="text-sm text-[var(--reino-orange)]">{testimonial.program}</div>
+                  <div className="text-sm text-[var(--reino-orange)]">
+                    {testimonial.project ? projectMap[testimonial.project] : ''}
+                  </div>
                 </div>
               </div>
             ))}

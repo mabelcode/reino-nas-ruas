@@ -254,8 +254,8 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
                         className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${index === currentImageIndex
-                            ? 'border-[var(--reino-orange)] scale-105'
-                            : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-[var(--reino-orange)] scale-105'
+                          : 'border-gray-200 hover:border-gray-300'
                           }`}
                       >
                         <Image

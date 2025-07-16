@@ -4,18 +4,18 @@ export interface ApiEvent {
   id: string;
   title: string;
   description?: string;
-  date?: string;
-  views?: number;
+  date: string;
+  views: number;
   video_url?: string;
-  cover_image?: string;
-  impact?: string;
-  highlights?: string[];
-  participants?: number;
-  duration?: string;
-  location?: string;
-  organizer?: string;
-  filter_tags?: string[];
-  related_projects?: { projects_id: string }[];
+  cover_image: string;
+  impact: string;
+  highlights: string[];
+  participants: number;
+  duration: string;
+  location: string;
+  organizer: string;
+  filter_tags: string[];
+  related_projects: { projects_id: string }[];
   gallery?: { directus_files_id: string }[];
 }
 

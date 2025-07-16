@@ -5,10 +5,7 @@ export const dynamic = 'force-dynamic';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export async function PATCH(
-  req: Request,
-  context: { params: { id: string } },
-) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   if (!DIRECTUS_URL || !TOKEN) {
     return NextResponse.json(
       { error: 'Server misconfiguration' },
@@ -16,10 +13,10 @@ export async function PATCH(
     );
   }
 
-  const { id } = context.params;
+  const { id } = await params;
   const body = await req.json();
 
-  const res = await fetch(`${DIRECTUS_URL}/items/events/${id}`, {
+  const res = await fetch(`${DIRECTUS_URL}/items/events/${id}?fields=*,related_projects.projects_id,filter_tags.event_tags_id,gallery.directus_files_id`, {
     method: 'PATCH',
     headers: {
       Authorization: `Bearer ${TOKEN}`,

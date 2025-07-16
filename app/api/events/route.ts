@@ -5,8 +5,6 @@ export const dynamic = 'force-dynamic';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export const revalidate = 0;
-
 export async function GET(req: Request) {
   if (!DIRECTUS_URL) {
     return NextResponse.json(
@@ -31,7 +29,6 @@ export async function GET(req: Request) {
 
   const res = await fetch(url, {
     headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
-    next: { revalidate },
   });
 
   if (!res.ok) {
@@ -47,9 +44,6 @@ export async function GET(req: Request) {
     { data: data.data, meta: data.meta },
     {
       status: 200,
-      headers: {
-        'Cache-Control': `public, max-age=${revalidate}`,
-      },
     },
   );
 }

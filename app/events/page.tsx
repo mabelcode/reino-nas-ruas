@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Calendar, Eye, ArrowRight } from 'lucide-react';
 import { EventModal } from '@/components/events/EventModal';
-import { useEventsStore } from '@/stores/events-store';
+import { ApiEvent, useEventsStore } from '@/stores/events-store';
 import { useEvents } from '@/hooks/use-events';
 
 interface EventItem {
@@ -32,7 +32,7 @@ interface EventItem {
   };
 }
 
-function transformEvent(api: any): EventItem {
+function transformEvent(api: ApiEvent): EventItem {
   const plain = api.description ? api.description.replace(/<[^>]+>/g, '') : '';
   const today = new Date().toLocaleDateString('sv-SE', {
     timeZone: 'America/Sao_Paulo',
@@ -69,7 +69,6 @@ export default function EventsPage() {
   const [selectedItem, setSelectedItem] = useState<EventItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
 
   const { events, totalPages } = useEvents(currentPage - 1);
   const updateEvent = useEventsStore((state) => state.updateEvent);
@@ -153,11 +152,10 @@ export default function EventsPage() {
                     setActiveCategory(category.id);
                     setCurrentPage(1);
                   }}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                    activeCategory === category.id
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${activeCategory === category.id
                       ? 'bg-[var(--reino-orange)] text-white shadow-lg'
                       : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
+                    }`}
                 >
                   {category.name}
                 </button>
@@ -166,63 +164,66 @@ export default function EventsPage() {
 
             {/* Grid de Eventos */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {formattedEvents.map((item, index) => (
-                <article
-                  key={item.id}
-                  className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="aspect-video relative">
-                    <Image src={item.image} alt={item.title} fill className="object-cover" />
-                    <div className="absolute top-4 left-4 space-x-2">
-                      {item.categories.map((cat) => (
-                        <span
-                          key={cat}
-                          className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize"
+              {formattedEvents.map((item, index) => {
+                const originalEvent = events.find(e => e.id === item.id);
+                return (
+                  <article
+                    key={item.id}
+                    className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="aspect-video relative">
+                      <Image src={item.image} alt={item.title} fill className="object-cover" />
+                      <div className="absolute top-4 left-4 space-x-2">
+                        {item.categories.map((cat) => (
+                          <span
+                            key={cat}
+                            className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize"
+                          >
+                            {categoryOptions.find((c) => c.id === cat)?.name || cat}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
+
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {formatDate(item.date)}
+                        </div>
+                        <div className="flex items-center">
+                          <Eye className="w-4 h-4 mr-1" />
+                          {item.views}
+                        </div>
+                      </div>
+
+                      {item.fullContent && !item.future ? (
+                        <button
+                          onClick={() => handleReadMore(originalEvent)}
+                          className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
                         >
-                          {categoryOptions.find((c) => c.id === cat)?.name || cat}
-                        </span>
-                      ))}
+                          Ver Mais
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
+                          title="Mais detalhes em breve"
+                        >
+                          Em breve
+                        </button>
+                      )}
                     </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
-
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(item.date)}
-                      </div>
-                      <div className="flex items-center">
-                        <Eye className="w-4 h-4 mr-1" />
-                        {item.views}
-                      </div>
-                    </div>
-
-                    {item.fullContent && !item.future ? (
-                      <button
-                        onClick={() => handleReadMore(apiEventFrom(item))}
-                        className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
-                      >
-                        Ler Mais
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </button>
-                    ) : (
-                      <button
-                        disabled
-                        className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
-                        title="Mais detalhes em breve"
-                      >
-                        Em breve
-                      </button>
-                    )}
-                  </div>
-                </article>
-              ))}
+                  </article>
+                );
+              })}
             </div>
 
             {totalPages > 1 && (
@@ -231,11 +232,10 @@ export default function EventsPage() {
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                      currentPage === page
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${currentPage === page
                         ? 'bg-[var(--reino-orange)] text-white'
                         : 'bg-white text-gray-600 hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>
@@ -255,8 +255,4 @@ export default function EventsPage() {
       </div>
     </>
   );
-}
-
-function apiEventFrom(item: EventItem): any {
-  return useEventsStore.getState().events.find((e) => e.id === item.id);
 }

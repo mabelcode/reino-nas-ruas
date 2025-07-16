@@ -5,8 +5,6 @@ export const dynamic = 'force-dynamic';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export const revalidate = 86400;
-
 interface DonateInfo {
   id: string;
   date_created?: string;
@@ -22,8 +20,7 @@ export async function GET() {
   }
 
   const res = await fetch(`${DIRECTUS_URL}/items/donate`, {
-    headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
-    next: { revalidate },
+    headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}
   });
 
   if (!res.ok) {
@@ -33,15 +30,18 @@ export async function GET() {
     );
   }
 
-  const data = (await res.json()).data as DonateInfo;
+  const response = await res.json();
+  const data = response.data as DonateInfo;
+
+  if (!data || !data.pix || !data.suggested_values) {
+    return NextResponse.json(
+      { error: 'Invalid donation data format' },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json(
     { data },
-    {
-      status: 200,
-      headers: {
-        'Cache-Control': `public, max-age=${revalidate}`,
-      },
-    }
+    { status: 200 }
   );
 }

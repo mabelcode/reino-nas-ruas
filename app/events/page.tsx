@@ -15,6 +15,7 @@ interface EventItem {
   category: string;
   image: string;
   views: number;
+  future: boolean;
   fullContent?: {
     description: string;
     details: {
@@ -32,6 +33,10 @@ interface EventItem {
 
 function transformEvent(api: any): EventItem {
   const plain = api.description ? api.description.replace(/<[^>]+>/g, '') : '';
+  const today = new Date().toLocaleDateString('sv-SE', {
+    timeZone: 'America/Sao_Paulo',
+  });
+  const future = new Date(api.date) > new Date(today);
   return {
     id: api.id,
     title: api.title,
@@ -40,6 +45,7 @@ function transformEvent(api: any): EventItem {
     category: api.filter_tags?.[0] || 'ALL',
     image: api.cover_image ? `/api/assets/${api.cover_image}` : '',
     views: api.views || 0,
+    future,
     fullContent: {
       description: api.description || '',
       details: {
@@ -190,7 +196,7 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    {item.fullContent ? (
+                    {item.fullContent && !item.future ? (
                       <button
                         onClick={() => handleReadMore(apiEventFrom(item))}
                         className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"

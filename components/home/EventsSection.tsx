@@ -2,9 +2,19 @@
 
 import Image from 'next/image';
 import { Calendar, MapPin, Clock } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+interface HomeEvent {
+  title: string;
+  date: string;
+  time?: string;
+  location?: string;
+  description: string;
+  image: string;
+}
 
 export function EventsSection() {
-  const events = [
+  const [events, setEvents] = useState<HomeEvent[]>([
     {
       title: "Festival de Talentos",
       date: "15 de Dezembro",
@@ -29,7 +39,34 @@ export function EventsSection() {
       description: "Exposição dos produtos e serviços desenvolvidos pelas mulheres empreendedoras.",
       image: "https://images.pexels.com/photos/7551677/pexels-photo-7551677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
     }
-  ];
+  ]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch('/api/events?limit=3&upcoming=true');
+        if (!res.ok) return;
+        const data = await res.json();
+        const upcoming = data.data.map((e: any) => ({
+          title: e.title,
+          date: new Date(e.date).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+          }),
+          time: e.duration ?? '',
+          location: e.location ?? '',
+          description: e.description
+            ? e.description.replace(/<[^>]+>/g, '').slice(0, 80) + '...'
+            : '',
+          image: e.cover_image ? `/api/assets/${e.cover_image}` : '',
+        }));
+        setEvents(upcoming);
+      } catch {
+        // fallback to default events on error
+      }
+    }
+    load();
+  }, []);
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">

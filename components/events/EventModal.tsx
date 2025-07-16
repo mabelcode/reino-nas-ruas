@@ -56,13 +56,13 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
   const { fullContent } = item;
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === fullContent.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => 
+    setCurrentImageIndex((prev) =>
       prev === 0 ? fullContent.images.length - 1 : prev - 1
     );
   };
@@ -82,7 +82,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs">
-      <div className="relative w-full h-full max-w-6xl mx-4 my-4 bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl">
+      <div className="relative w-full max-w-6xl max-h-[90vh] mx-4 my-8 bg-white rounded-2xl lg:rounded-3xl overflow-auto shadow-2xl">
         {/* Header */}
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
@@ -199,7 +199,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                 <h2 className="text-xl lg:text-2xl font-bold text-[var(--reino-green-e)] mb-4">
                   Galeria de Fotos ({fullContent.images.length})
                 </h2>
-                
+
                 {/* Main Image */}
                 <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
                   <Image
@@ -208,7 +208,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                     fill
                     className="object-cover"
                   />
-                  
+
                   {/* Navigation Arrows */}
                   {fullContent.images.length > 1 && (
                     <>
@@ -226,7 +226,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                       </button>
                     </>
                   )}
-                  
+
                   {/* Image Counter */}
                   <div className="absolute bottom-2 lg:bottom-4 right-2 lg:right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                     {currentImageIndex + 1} / {fullContent.images.length}
@@ -240,17 +240,17 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                          index === currentImageIndex 
-                            ? 'border-[var(--reino-orange)] scale-105' 
+                        className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${index === currentImageIndex
+                            ? 'border-[var(--reino-orange)] scale-105'
                             : 'border-gray-200 hover:border-gray-300'
-                        }`}
+                          }`}
                       >
                         <Image
                           src={image}
                           alt={`Miniatura ${index + 1}`}
-                          fill
-                          className="object-cover"
+                          width={80}
+                          height={80}
+                          className="object-cover w-full h-full"
                         />
                       </button>
                     ))}
@@ -266,7 +266,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                   Vídeo do Evento
                 </h2>
                 {!showVideo ? (
-                  <div 
+                  <div
                     className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-pointer group"
                     onClick={() => setShowVideo(true)}
                   >

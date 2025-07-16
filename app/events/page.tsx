@@ -13,6 +13,7 @@ interface EventItem {
   excerpt: string;
   date: string;
   category: string;
+  categories: string[];
   image: string;
   views: number;
   future: boolean;
@@ -43,6 +44,7 @@ function transformEvent(api: any): EventItem {
     excerpt: plain.slice(0, 120) + (plain.length > 120 ? '...' : ''),
     date: api.date,
     category: api.filter_tags?.[0] || 'ALL',
+    categories: api.filter_tags ?? [],
     image: api.cover_image ? `/api/assets/${api.cover_image}` : '',
     views: api.views || 0,
     future,
@@ -76,7 +78,7 @@ export default function EventsPage() {
     setCurrentPage(1);
   }, [activeCategory]);
 
-  const categories = [
+  const categoryOptions = [
     { id: 'ACHIEVEMENTS', name: 'Conquistas' },
     { id: 'COMMUNITY', name: 'Comunidade' },
     { id: 'PROJECT', name: 'Projetos' },
@@ -144,7 +146,7 @@ export default function EventsPage() {
         <section className="section-padding bg-gray-50">
           <div className="container-max">
             <div className="flex flex-wrap justify-center gap-4 mb-12">
-              {categories.map((category) => (
+              {categoryOptions.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => {
@@ -172,10 +174,15 @@ export default function EventsPage() {
                 >
                   <div className="aspect-video relative">
                     <Image src={item.image} alt={item.title} fill className="object-cover" />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
-                        {categories.find((cat) => cat.id === item.category)?.name}
-                      </span>
+                    <div className="absolute top-4 left-4 space-x-2">
+                      {item.categories.map((cat) => (
+                        <span
+                          key={cat}
+                          className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize"
+                        >
+                          {categoryOptions.find((c) => c.id === cat)?.name || cat}
+                        </span>
+                      ))}
                     </div>
                   </div>
 

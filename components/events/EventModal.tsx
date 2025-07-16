@@ -4,12 +4,20 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, Calendar, Eye, Play, Users, MapPin, Clock } from 'lucide-react';
 
+const categoryLabels = {
+  ACHIEVEMENTS: 'Conquistas',
+  COMMUNITY: 'Comunidade',
+  PROJECT: 'Projetos',
+  PARTNERSHIPS: 'Parcerias',
+} as const;
+
 interface EventItem {
-  id: number;
+  id: string;
   title: string;
   excerpt: string;
   date: string;
   category: string;
+  categories: string[];
   image: string;
   views: number;
   fullContent?: {
@@ -54,6 +62,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
   if (!isOpen || !item || !item.fullContent) return null;
 
   const { fullContent } = item;
+  const thumbnail = fullContent.images[0] || item.image;
 
   const nextImage = () => {
     setCurrentImageIndex((prev) =>
@@ -87,9 +96,14 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
         <div className="sticky top-0 z-10 bg-white border-b border-gray-200 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
-                {item.category}
-              </span>
+              {item.categories.map((cat) => (
+                <span
+                  key={cat}
+                  className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize mr-2 last:mr-0"
+                >
+                  {categoryLabels[cat as keyof typeof categoryLabels] ?? cat}
+                </span>
+              ))}
               <div className="flex items-center text-sm text-gray-500">
                 <Calendar className="w-4 h-4 mr-1" />
                 {formatDate(item.date)}
@@ -158,11 +172,10 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
             )}
 
             {/* Description */}
-            <div className="mb-6 lg:mb-8">
-              <p className="text-base lg:text-lg text-gray-700 leading-relaxed">
-                {fullContent.description}
-              </p>
-            </div>
+            <div
+              className="mb-6 lg:mb-8 text-base lg:text-lg text-gray-700 leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: fullContent.description }}
+            />
 
             {/* Highlights */}
             {fullContent.highlights.length > 0 && (
@@ -270,12 +283,14 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                     className="relative aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-pointer group"
                     onClick={() => setShowVideo(true)}
                   >
-                    <Image
-                      src={fullContent.images[0]}
-                      alt="Video thumbnail"
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                    {thumbnail && (
+                      <Image
+                        src={thumbnail}
+                        alt="Video thumbnail"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                       <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[var(--reino-orange)] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <Play className="w-8 h-8 lg:w-10 lg:h-10 text-white ml-1" />

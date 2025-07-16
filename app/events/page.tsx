@@ -151,7 +151,7 @@ export default function EventsPage() {
     });
   };
 
-  const handleReadMore = (item: EventItem) => { 
+  const handleReadMore = (item: EventItem) => {
     if (!item.fullContent) return;
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -185,15 +185,14 @@ export default function EventsPage() {
             {categories.map((category) => (
               <button
                 key={category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id);
-                    setCurrentPage(1);
-                  }}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  activeCategory === category.id
-                    ? 'bg-[var(--reino-orange)] text-white shadow-lg'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
-                }`}
+                onClick={() => {
+                  setActiveCategory(category.id);
+                  setCurrentPage(1);
+                }}
+                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${activeCategory === category.id
+                  ? 'bg-[var(--reino-orange)] text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+                  }`}
               >
                 {category.name}
               </button>
@@ -221,7 +220,7 @@ export default function EventsPage() {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
                     {item.title}
@@ -229,7 +228,7 @@ export default function EventsPage() {
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {item.excerpt}
                   </p>
-                  
+
                   <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
@@ -240,9 +239,9 @@ export default function EventsPage() {
                       {item.views}
                     </div>
                   </div>
-                  
+
                   {item.fullContent ? (
-                    <button 
+                    <button
                       onClick={() => handleReadMore(item)}
                       className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
                     >
@@ -269,11 +268,10 @@ export default function EventsPage() {
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                    currentPage === page
-                      ? 'bg-[var(--reino-orange)] text-white'
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${currentPage === page
+                    ? 'bg-[var(--reino-orange)] text-white'
+                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    }`}
                 >
                   {page}
                 </button>

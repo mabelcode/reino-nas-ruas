@@ -14,38 +14,18 @@ interface HomeEvent {
 }
 
 export function EventsSection() {
-  const [events, setEvents] = useState<HomeEvent[]>([
-    {
-      title: "Festival de Talentos",
-      date: "15 de Dezembro",
-      time: "14:00",
-      location: "Centro Cultural",
-      description: "Apresentação dos talentos artísticos desenvolvidos pelos jovens em nossos projetos.",
-      image: "https://images.pexels.com/photos/7034369/pexels-photo-7034369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Campeonato de Jiu-Jitsu",
-      date: "20 de Janeiro",
-      time: "09:00",
-      location: "Quadra Poliesportiva",
-      description: "Competição amistosa entre os alunos do projeto Futuro Campeão.",
-      image: "https://images.pexels.com/photos/7045859/pexels-photo-7045859.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    },
-    {
-      title: "Feira de Empreendedorismo",
-      date: "10 de Fevereiro",
-      time: "10:00",
-      location: "Praça Central",
-      description: "Exposição dos produtos e serviços desenvolvidos pelas mulheres empreendedoras.",
-      image: "https://images.pexels.com/photos/7551677/pexels-photo-7551677.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    }
-  ]);
+  const [events, setEvents] = useState<HomeEvent[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
       try {
+        setLoading(true);
         const res = await fetch('/api/events?limit=3&upcoming=true');
-        if (!res.ok) return;
+        if (!res.ok) {
+          setLoading(false);
+          return;
+        }
         const data = await res.json();
         const upcoming = data.data.map((e: any) => ({
           title: e.title,
@@ -61,12 +41,19 @@ export function EventsSection() {
           image: e.cover_image ? `/api/assets/${e.cover_image}` : '',
         }));
         setEvents(upcoming);
-      } catch {
-        // fallback to default events on error
+      } catch (error) {
+        console.error('Erro ao carregar eventos:', error);
+      } finally {
+        setLoading(false);
       }
     }
     load();
   }, []);
+
+  // Se não há eventos e não está carregando, não renderiza a seção
+  if (!loading && events.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
@@ -80,53 +67,75 @@ export function EventsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {events.map((event, index) => (
-            <div 
-              key={event.title}
-              className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className="aspect-video relative">
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                  <div className="bg-[var(--reino-orange)] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
-                    Próximo
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[1, 2, 3].map((index) => (
+              <div 
+                key={index}
+                className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg animate-pulse"
+              >
+                <div className="aspect-video bg-gray-200"></div>
+                <div className="p-4 sm:p-6">
+                  <div className="h-6 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-3"></div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded"></div>
                   </div>
                 </div>
               </div>
-              
-              <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold text-[var(--reino-green-e)] mb-2 sm:mb-3">
-                  {event.title}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
-                  {event.description}
-                </p>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {events.map((event, index) => (
+              <div 
+                key={event.title}
+                className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
+                style={{ animationDelay: `${index * 0.2}s` }}
+              >
+                <div className="aspect-video relative">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
+                    <div className="bg-[var(--reino-orange)] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
+                      Próximo
+                    </div>
+                  </div>
+                </div>
                 
-                <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
-                    <span>{event.date}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
-                    <span>{event.time}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
-                    <span>{event.location}</span>
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-[var(--reino-green-e)] mb-2 sm:mb-3">
+                    {event.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
+                    {event.description}
+                  </p>
+                  
+                  <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-gray-500">
+                    <div className="flex items-center">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
+                      <span>{event.date}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
+                      <span>{event.time}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-[var(--reino-orange)] shrink-0" />
+                      <span>{event.location}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

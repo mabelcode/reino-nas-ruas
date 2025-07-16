@@ -1,13 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Heart, Copy, CheckCircle, Users, BookOpen, Trophy, Home } from 'lucide-react';
+import { useDonate } from '@/hooks/use-donate';
+import QRCode from 'react-qr-code';
+import { QrCodePix } from 'qrcode-pix';
 
 export default function DonatePage() {
   const [copiedPix, setCopiedPix] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState('');
 
-  const pixKey = "reinonasruas@pix.com.br";
+  const donateInfo = useDonate();
+  const pixKey = donateInfo.pix;
+
+  const qrPayload = useMemo(() => {
+    const qr = QrCodePix({
+      version: '01',
+      key: pixKey,
+      name: 'REINO NAS RUAS',
+      city: 'SAO PAULO',
+      value: selectedAmount ? Number(selectedAmount) : undefined,
+    });
+    return qr.payload();
+  }, [pixKey, selectedAmount]);
 
   const handleCopyPix = () => {
     navigator.clipboard.writeText(pixKey);
@@ -62,7 +77,7 @@ export default function DonatePage() {
     }
   ];
 
-  const suggestedAmounts = ['30', '50', '100', '250', '500'];
+  const suggestedAmounts = donateInfo.suggested_values;
 
   return (
     <div className="pt-20">
@@ -142,15 +157,8 @@ export default function DonatePage() {
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-6">
                   QR Code PIX
                 </h3>
-                <div className="bg-gray-100 rounded-2xl p-8 mb-6">
-                  <div className="w-48 h-48 bg-white rounded-xl mx-auto flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-32 h-32 bg-black rounded-lg mb-4 mx-auto"></div>
-                      <p className="text-sm text-gray-600">
-                        QR Code PIX
-                      </p>
-                    </div>
-                  </div>
+                <div className="bg-gray-100 rounded-2xl p-8 mb-6 flex items-center justify-center">
+                  <QRCode value={qrPayload} size={192} />
                 </div>
                 <p className="text-gray-600 text-sm">
                   Escaneie o QR Code acima com seu aplicativo bancário para fazer a doação instantaneamente.

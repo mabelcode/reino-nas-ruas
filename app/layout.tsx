@@ -222,9 +222,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
                         timeToFirstByte: perfData.responseStart - perfData.requestStart,
                         domInteractive: perfData.domInteractive - perfData.fetchStart,
                         totalLoadTime: perfData.loadEventEnd - perfData.fetchStart
-                      };
-                      
-                      console.log('Performance Metrics:', performanceMetrics);
+                      }; 
                       
                       // Log para analytics (quando disponível)
                       if (typeof gtag !== 'undefined') {
@@ -278,7 +276,6 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
                 document.addEventListener(event, function() {
                   if (!userInteraction) {
                     userInteraction = true;
-                    console.log('User Interaction Detected');
                     
                     // Log para analytics (quando disponível)
                     if (typeof gtag !== 'undefined') {

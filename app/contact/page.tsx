@@ -38,8 +38,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Contact form submitted:', formData);
+    // Here you would typically send the data to your backend 
     setIsSubmitted(true);
 
     // Reset form after 3 seconds

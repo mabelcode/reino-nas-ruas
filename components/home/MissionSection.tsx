@@ -52,10 +52,9 @@ export function MissionSection() {
               Missão
             </h3>
             {about && (
-              <div
-                className="text-sm sm:text-base text-gray-600 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: about.mission }}
-              />
+              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                {about.mission}
+              </div>
             )}
           </div>
 
@@ -70,10 +69,9 @@ export function MissionSection() {
               Visão
             </h3>
             {about && (
-              <div
-                className="text-sm sm:text-base text-gray-600 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: about.vision }}
-              />
+              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                {about.vision}
+              </div>
             )}
           </div>
 
@@ -88,10 +86,9 @@ export function MissionSection() {
               Valores
             </h3>
             {about && (
-              <div
-                className="text-sm sm:text-base text-gray-600 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: about.values }}
-              />
+              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                {about.values}
+              </div>
             )}
           </div>
         </div>

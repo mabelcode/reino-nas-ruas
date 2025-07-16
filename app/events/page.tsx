@@ -163,131 +163,134 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="pt-20">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-c)] to-[var(--reino-green-e)] text-white">
-        <div className="container-max">
-          <div className="text-center">
-            <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
-              Eventos
-            </h1>
-            <p className="text-xl max-w-3xl mx-auto">
-              Confira nossos eventos mais recentes e saiba como participar das próximas ações da Reino nas Ruas.
-            </p>
+    <>
+      <title>EVENTOS | Reino nas Ruas</title>
+      <div className="pt-16 sm:pt-18 lg:pt-20">
+        {/* Hero Section */}
+        <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-c)] to-[var(--reino-green-e)] text-white">
+          <div className="container-max">
+            <div className="text-center">
+              <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
+                Eventos
+              </h1>
+              <p className="text-xl max-w-3xl mx-auto">
+                Confira nossos eventos mais recentes e saiba como participar das próximas ações da Reino nas Ruas.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Filtros */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-max">
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => {
-                  setActiveCategory(category.id);
-                  setCurrentPage(1);
-                }}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${activeCategory === category.id
-                  ? 'bg-[var(--reino-orange)] text-white shadow-lg'
-                  : 'bg-white text-gray-600 hover:bg-gray-100'
-                  }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Grid de Eventos */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {paginatedNews.map((item, index) => (
-              <article
-                key={item.id}
-                className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="aspect-video relative">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
-                      {categories.find(cat => cat.id === item.category)?.name}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 line-clamp-3">
-                    {item.excerpt}
-                  </p>
-
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(item.date)}
-                    </div>
-                    <div className="flex items-center">
-                      <Eye className="w-4 h-4 mr-1" />
-                      {item.views}
-                    </div>
-                  </div>
-
-                  {item.fullContent ? (
-                    <button
-                      onClick={() => handleReadMore(item)}
-                      className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
-                    >
-                      Ler Mais
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
-                      title="Mais detalhes em breve"
-                    >
-                      Em breve
-                    </button>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-8 space-x-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+        {/* Filtros */}
+        <section className="section-padding bg-gray-50">
+          <div className="container-max">
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {categories.map((category) => (
                 <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${currentPage === page
-                    ? 'bg-[var(--reino-orange)] text-white'
+                  key={category.id}
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    setCurrentPage(1);
+                  }}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${activeCategory === category.id
+                    ? 'bg-[var(--reino-orange)] text-white shadow-lg'
                     : 'bg-white text-gray-600 hover:bg-gray-100'
                     }`}
                 >
-                  {page}
+                  {category.name}
                 </button>
               ))}
             </div>
-          )}
-        </div>
-      </section>
 
-      {/* Modal */}
-      <EventModal
-        key={selectedItem?.id || 'modal'}
-        item={selectedItem}
-        isOpen={isModalOpen}
-        onClose={closeModal}
-      />
-    </div>
+            {/* Grid de Eventos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {paginatedNews.map((item, index) => (
+                <article
+                  key={item.id}
+                  className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="aspect-video relative">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize">
+                        {categories.find(cat => cat.id === item.category)?.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {item.excerpt}
+                    </p>
+
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {formatDate(item.date)}
+                      </div>
+                      <div className="flex items-center">
+                        <Eye className="w-4 h-4 mr-1" />
+                        {item.views}
+                      </div>
+                    </div>
+
+                    {item.fullContent ? (
+                      <button
+                        onClick={() => handleReadMore(item)}
+                        className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
+                      >
+                        Ler Mais
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
+                        title="Mais detalhes em breve"
+                      >
+                        Em breve
+                      </button>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-8 space-x-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${currentPage === page
+                      ? 'bg-[var(--reino-orange)] text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-100'
+                      }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Modal */}
+        <EventModal
+          key={selectedItem?.id || 'modal'}
+          item={selectedItem}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
+      </div>
+    </>
   );
 }

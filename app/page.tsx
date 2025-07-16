@@ -10,15 +10,18 @@ import { WhatsAppButton } from '@/components/WhatsAppButton';
 export default function Home() {
 
   return (
-    <div className="min-h-screen">
-      <HeroSection />
-      <MissionSection />
-      <ProjectsSection />
-      <StatsSection />
-      <PartnersShowcase />
-      <EventsSection />
-      <DonationCTA />
-      <WhatsAppButton fixed color="#25D366" />
-    </div>
+    <>
+      <title>HOME | Reino nas Ruas</title>
+      <div className="min-h-screen">
+        <HeroSection />
+        <MissionSection />
+        <ProjectsSection />
+        <StatsSection />
+        <PartnersShowcase />
+        <EventsSection />
+        <DonationCTA />
+        <WhatsAppButton fixed color="#25D366" />
+      </div>
+    </>
   );
 }

@@ -130,35 +130,6 @@ export default function EventsPage() {
       category: "eventos",
       image: "https://images.pexels.com/photos/6995247/pexels-photo-6995247.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       views: 1123
-    },
-    {
-      id: 7,
-      title: "Evento Teste Modal Completo",
-      excerpt: "Resumo do evento teste para modal.",
-      date: "2024-11-30",
-      category: "eventos",
-      image: "https://images.pexels.com/photos/7034369/pexels-photo-7034369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      views: 321,
-      fullContent: {
-        description: "Descrição completa do evento teste para modal. Aqui você pode ver todos os campos renderizados corretamente.",
-        details: {
-          participants: 42,
-          location: "Auditório Central",
-          duration: "2 horas",
-          organizer: "ONG Reino nas Ruas"
-        },
-        images: [
-          "https://images.pexels.com/photos/7034369/pexels-photo-7034369.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-          "https://images.pexels.com/photos/8613224/pexels-photo-8613224.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        ],
-        videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        highlights: [
-          "Abertura com apresentação musical",
-          "Palestra sobre impacto social",
-          "Oficina de arte para crianças"
-        ],
-        impact: "O evento proporcionou integração entre as famílias e arrecadou doações para novos projetos."
-      }
     }
   ];
 
@@ -180,8 +151,7 @@ export default function EventsPage() {
     });
   };
 
-  const handleReadMore = (item: EventItem) => {
-    console.log('Evento selecionado:', item);
+  const handleReadMore = (item: EventItem) => { 
     if (!item.fullContent) return;
     setSelectedItem(item);
     setIsModalOpen(true);

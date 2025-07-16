@@ -33,7 +33,7 @@ export function Header() {
     { name: 'Início', href: '/' },
     { name: 'Sobre Nós', href: '/about' },
     { name: 'Projetos', href: '/projects' },
-    { name: 'Mídia', href: '/media' },
+    { name: 'Eventos', href: '/events' },
     { name: 'Transparência', href: '/transparency' },
     { name: 'Contato', href: '/contact' },
   ];

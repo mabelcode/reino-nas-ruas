@@ -19,4 +19,4 @@ Allow: /projects/
 Allow: /contact/
 Allow: /donate/
 Allow: /transparency/
-Allow: /media/ 
+Allow: /events/

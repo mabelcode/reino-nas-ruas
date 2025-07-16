@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Calendar, Eye, Tag, ArrowRight } from 'lucide-react';
-import { MediaModal } from '@/components/media/MediaModal';
+import { Calendar, Eye, ArrowRight } from 'lucide-react';
+import { EventModal } from '@/components/events/EventModal';
 
-interface MediaItem {
+interface EventItem {
   id: number;
   title: string;
   excerpt: string;
@@ -28,20 +28,26 @@ interface MediaItem {
   };
 }
 
-export default function MediaPage() {
+export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<EventItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory]);
 
   const categories = [
-    { id: 'all', name: 'Todas' },
+    { id: 'comunidade', name: 'Comunidade' },
+    { id: 'conquistas', name: 'Conquistas' },
     { id: 'eventos', name: 'Eventos' },
     { id: 'projetos', name: 'Projetos' },
-    { id: 'conquistas', name: 'Conquistas' },
-    { id: 'comunidade', name: 'Comunidade' }
+    { id: 'all', name: 'Todas' }
   ];
 
-  const newsItems: MediaItem[] = [
+  const newsItems: EventItem[] = [
     {
       id: 1,
       title: "Festival de Talentos 2024 - Um Sucesso Absoluto",
@@ -127,9 +133,15 @@ export default function MediaPage() {
     }
   ];
 
-  const filteredNews = activeCategory === 'all' 
-    ? newsItems 
+  const filteredNews = activeCategory === 'all'
+    ? newsItems
     : newsItems.filter(item => item.category === activeCategory);
+
+  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
+  const paginatedNews = filteredNews.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -139,7 +151,8 @@ export default function MediaPage() {
     });
   };
 
-  const handleReadMore = (item: MediaItem) => {
+  const handleReadMore = (item: EventItem) => {
+    if (!item.fullContent) return;
     setSelectedItem(item);
     setIsModalOpen(true);
   };
@@ -156,10 +169,10 @@ export default function MediaPage() {
         <div className="container-max">
           <div className="text-center">
             <h1 className="heading-font text-4xl sm:text-5xl lg:text-6xl mb-6">
-              Mídia e Notícias
+              Eventos
             </h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Acompanhe as últimas novidades, eventos e conquistas da Associação Reino nas Ruas.
+              Confira nossos eventos mais recentes e saiba como participar das próximas ações da Reino nas Ruas.
             </p>
           </div>
         </div>
@@ -172,7 +185,10 @@ export default function MediaPage() {
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setActiveCategory(category.id)}
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    setCurrentPage(1);
+                  }}
                 className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
                   activeCategory === category.id
                     ? 'bg-[var(--reino-orange)] text-white shadow-lg'
@@ -184,10 +200,10 @@ export default function MediaPage() {
             ))}
           </div>
 
-          {/* Grid de Notícias */}
+          {/* Grid de Eventos */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredNews.map((item, index) => (
-              <article 
+            {paginatedNews.map((item, index) => (
+              <article
                 key={item.id}
                 className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -236,35 +252,29 @@ export default function MediaPage() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Newsletter */}
-      <section className="section-padding bg-[var(--reino-orange)] text-white">
-        <div className="container-max text-center">
-          <h2 className="heading-font text-3xl sm:text-4xl mb-6">
-            Receba Nossas Novidades
-          </h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Cadastre-se em nossa newsletter e fique por dentro de todas as atividades, eventos e conquistas da Reino nas Ruas.
-          </p>
-          <div className="max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <input
-                type="email"
-                placeholder="Seu melhor e-mail"
-                className="flex-1 px-6 py-3 rounded-full text-gray-700 placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-white"
-              />
-              <button className="bg-white text-[var(--reino-orange)] px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300">
-                Inscrever-se
-              </button>
+          {totalPages > 1 && (
+            <div className="flex justify-center mt-8 space-x-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${
+                    currentPage === page
+                      ? 'bg-[var(--reino-orange)] text-white'
+                      : 'bg-white text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* Modal */}
-      <MediaModal 
+      <EventModal
         item={selectedItem}
         isOpen={isModalOpen}
         onClose={closeModal}

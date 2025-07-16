@@ -75,8 +75,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/media" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
-                  Mídia
+                <Link href="/events" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                  Eventos
                 </Link>
               </li>
               <li>

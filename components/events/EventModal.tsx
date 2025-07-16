@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, Calendar, Eye, Play, Users, MapPin, Clock } from 'lucide-react';
 
-interface MediaItem {
+interface EventItem {
   id: number;
   title: string;
   excerpt: string;
@@ -27,13 +27,13 @@ interface MediaItem {
   };
 }
 
-interface MediaModalProps {
-  item: MediaItem | null;
+interface EventModalProps {
+  item: EventItem | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
+export function EventModal({ item, isOpen, onClose }: EventModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
 

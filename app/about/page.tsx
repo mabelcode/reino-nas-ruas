@@ -104,10 +104,9 @@ export default function AboutPage() {
                   Como Tudo Começou
                 </h2>
                 {about && (
-                  <div
-                    className="text-gray-600 mb-6 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: about.history }}
-                  />
+                  <div className="text-gray-600 mb-6 leading-relaxed">
+                    {about.history}
+                  </div>
                 )}
                 <div className="flex items-center space-x-4">
                   <div className="text-center">
@@ -145,10 +144,9 @@ export default function AboutPage() {
                 <Target className="w-12 h-12 text-[var(--reino-orange)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Missão</h3>
                 {about && (
-                  <div
-                    className="text-gray-600 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: about.mission }}
-                  />
+                  <div className="text-gray-600 leading-relaxed">
+                    {about.mission}
+                  </div>
                 )}
               </div>
 
@@ -156,10 +154,9 @@ export default function AboutPage() {
                 <Star className="w-12 h-12 text-[var(--reino-green-c)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Visão</h3>
                 {about && (
-                  <div
-                    className="text-gray-600 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: about.vision }}
-                  />
+                  <div className="text-gray-600 leading-relaxed">
+                    {about.vision}
+                  </div>
                 )}
               </div>
 
@@ -167,10 +164,9 @@ export default function AboutPage() {
                 <Users className="w-12 h-12 text-[var(--reino-yellow)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Valores</h3>
                 {about && (
-                  <div
-                    className="text-gray-600 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: about.values }}
-                  />
+                  <div className="text-gray-600 leading-relaxed">
+                    {about.values}
+                  </div>
                 )}
               </div>
             </div>

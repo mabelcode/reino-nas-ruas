@@ -147,10 +147,9 @@ export default function Projects() {
                 >
                   <div className="mb-4">
                     <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
-                    <div
-                      className="text-gray-600 leading-relaxed mb-4"
-                      dangerouslySetInnerHTML={{ __html: testimonial.testimony }}
-                    />
+                    <div className="text-gray-600 leading-relaxed mb-4">
+                      {testimonial.testimony}
+                    </div>
                   </div>
                   <div className="border-t border-gray-200 pt-4">
                     <div className="font-semibold text-[var(--reino-green-e)]">

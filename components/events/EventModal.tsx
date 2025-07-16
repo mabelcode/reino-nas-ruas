@@ -172,10 +172,9 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
             )}
 
             {/* Description */}
-            <div
-              className="mb-6 lg:mb-8 text-base lg:text-lg text-gray-700 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: fullContent.description }}
-            />
+            <div className="mb-6 lg:mb-8 text-base lg:text-lg text-gray-700 leading-relaxed">
+              {fullContent.description}
+            </div>
 
             {/* Highlights */}
             {fullContent.highlights.length > 0 && (

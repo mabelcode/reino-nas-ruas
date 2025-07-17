@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 export const revalidate = 1209600;
 
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
@@ -12,14 +11,6 @@ interface Transaction {
   date: string;
   category?: string;
 }
-
-const categoryMap: Record<string, 'projects' | 'infrastructure' | 'administration'> = {
-  PROJECTS: 'projects',
-  SPORTS_EQUIPMENT: 'projects',
-  EQUIPMENT: 'infrastructure',
-  INSFRASTRUCTURE: 'infrastructure',
-  ADMINISTRATION: 'administration',
-};
 
 export async function GET(req: Request) {
   if (!DIRECTUS_URL || !TOKEN) {
@@ -46,17 +37,12 @@ export async function GET(req: Request) {
   const json = await res.json();
   const transactions: Transaction[] = json.data || [];
 
-  const totals = {
-    projects: 0,
-    infrastructure: 0,
-    administration: 0,
-  };
+  const totals: Record<string, number> = {};
 
   for (const t of transactions) {
     if ((t.type || '').toLowerCase() !== 'out' && (t.type || '').toLowerCase() !== 'saida') continue;
-    const group = categoryMap[(t.category || '').toUpperCase()];
-    if (!group) continue;
-    totals[group] += parseFloat(t.amount);
+    const category = (t.category || 'UNKNOWN').toUpperCase();
+    totals[category] = (totals[category] || 0) + parseFloat(t.amount);
   }
 
   return NextResponse.json(

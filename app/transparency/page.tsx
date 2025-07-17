@@ -1,92 +1,72 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
 import { useProjectStats } from '@/hooks/use-project-stats';
+import { useFinance } from '@/hooks/use-finance';
+
+const categoryGroup: Record<string, 'projects' | 'infrastructure' | 'administration'> = {
+  PROJECTS: 'projects',
+  SPORTS_EQUIPMENT: 'projects',
+  FOOD: 'projects',
+  TRANSPORT: 'projects',
+  EDUCATIONAL_MATERIALS: 'projects',
+  UNIFORMS: 'projects',
+  PROMOTION: 'projects',
+  EQUIPMENT: 'infrastructure',
+  MAINTENANCE_INFRASTRUCTURE: 'infrastructure',
+  INFRASTRUCTURE: 'infrastructure',
+  INSFRASTRUCTURE: 'infrastructure',
+  PROFESSIONAL_FEES: 'administration',
+  ADMINISTRATION: 'administration',
+  OTHER_EXPENSES: 'administration',
+};
 
 export default function TransparencyPage() {
-  const [selectedYear, setSelectedYear] = useState('2024');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [projPage, setProjPage] = useState(1);
+  const [repPage, setRepPage] = useState(1);
+  const [downloading, setDownloading] = useState(false);
   const { totalPeople } = useProjectStats();
 
-  const years = ['2025', '2024', '2023', '2022'];
-
-  const [summary, setSummary] = useState<Record<string, { total_received: number; total_spent: number }> | null>(null);
-  const [distribution, setDistribution] = useState({ projects: 0, infrastructure: 0, administration: 0 });
-  const [projects, setProjects] = useState<{ id: number; title: string; received: number; spent: number }[]>([]);
-  const [projPage, setProjPage] = useState(1);
-  const [projTotal, setProjTotal] = useState(1);
-  const [reports, setReports] = useState<any[]>([]);
-  const [repPage, setRepPage] = useState(1);
-  const [repTotal, setRepTotal] = useState(1);
-
-  useEffect(() => {
-    async function fetchSummary() {
-      try {
-        const res = await fetch('/api/finance/summary');
-        if (res.ok) {
-          const data = await res.json();
-          setSummary(data.data);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    fetchSummary();
-  }, []);
+  const {
+    summary,
+    years,
+    distribution,
+    projects,
+    projectsPages,
+    reports,
+    reportsPages,
+    loading,
+  } = useFinance(selectedYear, projPage, repPage);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const distRes = await fetch(`/api/finance/distribution?year=${selectedYear}`);
-        if (distRes.ok) {
-          const d = await distRes.json();
-          setDistribution(d.data);
-        }
-
-        const projRes = await fetch(`/api/finance/projects?year=${selectedYear}&page=${projPage}&limit=4`);
-        if (projRes.ok) {
-          const d = await projRes.json();
-          setProjects(d.data);
-          setProjTotal(d.meta?.total_pages ?? 1);
-        }
-
-        const repRes = await fetch(`/api/financial-reports?year=${selectedYear}&page=${repPage}&limit=4`);
-        if (repRes.ok) {
-          const d = await repRes.json();
-          const mapped = (d.data || []).map((r: any) => ({
-            id: r.id,
-            title: r.title,
-            type: r.type,
-            date: r.date,
-            downloads: 0,
-            size: r.file?.filesize ? `${(Number(r.file.filesize) / 1024).toFixed(0)} KB` : ''
-          }));
-          setReports(mapped);
-          setRepTotal(d.meta?.total_pages ?? 1);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+    if (!selectedYear && years.length) {
+      setSelectedYear(years[0]);
     }
-
-    fetchData();
-  }, [selectedYear, projPage, repPage]);
+  }, [years, selectedYear]);
 
   const financialData = {
     totalReceived: summary?.[selectedYear]?.total_received ?? 0,
     totalSpent: summary?.[selectedYear]?.total_spent ?? 0,
-    projects: distribution.projects,
-    infrastructure: distribution.infrastructure,
-    administration: distribution.administration,
+    projects: 0,
+    infrastructure: 0,
+    administration: 0,
     beneficiaries: totalPeople,
     events: 0,
   };
 
-  const totalOut = distribution.projects + distribution.infrastructure + distribution.administration;
-  const percProjects = totalOut ? (distribution.projects / totalOut) * 100 : 0;
-  const percInfra = totalOut ? (distribution.infrastructure / totalOut) * 100 : 0;
-  const percAdmin = totalOut ? (distribution.administration / totalOut) * 100 : 0;
+  for (const [cat, value] of Object.entries(distribution)) {
+    const group = categoryGroup[cat as keyof typeof categoryGroup];
+    if (group) {
+      financialData[group] += value as number;
+    }
+  }
+
+  const totalOut = financialData.projects + financialData.infrastructure + financialData.administration;
+  const percProjects = totalOut ? (financialData.projects / totalOut) * 100 : 0;
+  const percInfra = totalOut ? (financialData.infrastructure / totalOut) * 100 : 0;
+  const percAdmin = totalOut ? (financialData.administration / totalOut) * 100 : 0;
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -103,10 +83,35 @@ export default function TransparencyPage() {
     });
   };
 
+  const handleDownload = async (report: { fileId: string; title: string }) => {
+    setDownloading(true);
+    try {
+      const res = await fetch(`/api/financial-reports/${report.fileId}`);
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${report.title}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   return (
     <>
       <title>TRANSPARÊNCIA | Reino nas Ruas</title>
       <div className="pt-16 sm:pt-18 lg:pt-20">
+        {downloading && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-xl shadow-xl">Baixando...</div>
+          </div>
+        )}
         {/* Hero Section */}
         <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-e)] to-[var(--reino-green-c)] text-white">
           <div className="container-max">
@@ -287,8 +292,8 @@ export default function TransparencyPage() {
                 Anterior
               </button>
               <button
-                onClick={() => setProjPage((p) => Math.min(projTotal, p + 1))}
-                disabled={projPage === projTotal}
+                onClick={() => setProjPage((p) => Math.min(projectsPages, p + 1))}
+                disabled={projPage === projectsPages}
                 className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
               >
                 Próxima
@@ -335,7 +340,10 @@ export default function TransparencyPage() {
                     </div>
                   </div>
 
-                  <button className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center">
+                  <button
+                    onClick={() => handleDownload(report)}
+                    className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center"
+                  >
                     <Download className="w-5 h-5 mr-2" />
                     Baixar Relatório
                   </button>
@@ -351,8 +359,8 @@ export default function TransparencyPage() {
                 Anterior
               </button>
               <button
-                onClick={() => setRepPage((p) => Math.min(repTotal, p + 1))}
-                disabled={repPage === repTotal}
+                onClick={() => setRepPage((p) => Math.min(reportsPages, p + 1))}
+                disabled={repPage === reportsPages}
                 className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
               >
                 Próxima

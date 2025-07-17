@@ -160,7 +160,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Users className="w-10 h-10 text-[var(--reino-yellow)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.beneficiaries}
+                  {financialData.beneficiaries}+
                 </div>
                 <div className="text-sm text-gray-600">Beneficiários</div>
               </div>

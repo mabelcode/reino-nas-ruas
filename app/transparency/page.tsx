@@ -1,24 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
-import { useProjectStats } from '@/hooks/use-project-stats';
+import { useFinancialYears } from '@/hooks/use-financial-year';
 
 export default function TransparencyPage() {
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const { totalPeople } = useProjectStats();
+  const financialYears = useFinancialYears();
+  const yearOptions = financialYears.map((y) => y.year.toString());
+  const [selectedYear, setSelectedYear] = useState(yearOptions[0] ?? '');
 
-  const years = ['2024', '2023', '2022', '2021'];
+  useEffect(() => {
+    if (!selectedYear && yearOptions.length) {
+      setSelectedYear(yearOptions[0]);
+    }
+  }, [yearOptions, selectedYear]);
 
-  const financialData = {
-    totalReceived: 450000,
-    totalSpent: 425000,
-    projects: 315000,
-    infrastructure: 85000,
-    administration: 25000,
-    beneficiaries: totalPeople,
-    events: 24
-  };
+  const selectedData = financialYears.find(
+    (fy) => fy.year.toString() === selectedYear,
+  );
+  const financialData = selectedData ?? financialYears[0];
 
   const reports = [
     {
@@ -124,7 +124,7 @@ export default function TransparencyPage() {
                 Dados Financeiros
               </h2>
               <div className="flex justify-center gap-4 mb-8">
-                {years.map((year) => (
+                {yearOptions.map((year) => (
                   <button
                     key={year}
                     onClick={() => setSelectedYear(year)}
@@ -144,7 +144,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <DollarSign className="w-10 h-10 text-[var(--reino-green-c)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.totalReceived)}
+                  {formatCurrency(financialData.amount_received)}
                 </div>
                 <div className="text-sm text-gray-600">Total Recebido</div>
               </div>
@@ -152,7 +152,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <TrendingUp className="w-10 h-10 text-[var(--reino-orange)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.totalSpent)}
+                  {formatCurrency(financialData.amount_invested)}
                 </div>
                 <div className="text-sm text-gray-600">Total Investido</div>
               </div>
@@ -160,7 +160,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Users className="w-10 h-10 text-[var(--reino-yellow)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.beneficiaries}+
+                  {financialData.amount_beneficiaries}+
                 </div>
                 <div className="text-sm text-gray-600">Beneficiários</div>
               </div>
@@ -168,7 +168,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Calendar className="w-10 h-10 text-[var(--reino-green-e)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.events}
+                  {financialData.amount_events}
                 </div>
                 <div className="text-sm text-gray-600">Eventos Realizados</div>
               </div>
@@ -186,7 +186,7 @@ export default function TransparencyPage() {
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {formatCurrency(financialData.projects)}
+                    {formatCurrency(financialData.projetcs)}
                   </p>
                   <p className="text-xs text-gray-500">
                     Atividades educativas, esportivas e culturais

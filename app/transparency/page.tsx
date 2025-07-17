@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
 import { useProjectStats } from '@/hooks/use-project-stats';
 import { useFinance } from '@/hooks/use-finance';
+import type { ReportItem } from '@/stores/finance-store';
 
 interface FinancialData {
   totalReceived: number;
@@ -93,7 +94,7 @@ export default function TransparencyPage() {
     });
   };
 
-  const handleDownload = async (report: { fileId: string; title: string }) => {
+  const handleDownload = async (report: Pick<ReportItem, 'fileId' | 'title'>) => {
     setDownloading(true);
     try {
       const res = await fetch(`/api/financial-reports/${report.fileId}`);

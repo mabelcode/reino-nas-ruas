@@ -19,6 +19,7 @@ export interface ReportItem {
   date: string;
   size: string;
   fileId: string;
+  downloads?: number;
 }
 
 interface FinanceState {
@@ -70,6 +71,7 @@ export const useFinanceStore = create<FinanceState>((set) => ({
         date: r.date,
         size: r.file?.filesize ? `${(Number(r.file.filesize) / 1024).toFixed(0)} KB` : '',
         fileId: r.file?.id ?? '',
+        downloads: r.downloads ?? 0,
       }));
       set({
         distribution: distData,

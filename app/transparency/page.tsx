@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
 import { useProjectStats } from '@/hooks/use-project-stats';
 
@@ -8,79 +8,85 @@ export default function TransparencyPage() {
   const [selectedYear, setSelectedYear] = useState('2024');
   const { totalPeople } = useProjectStats();
 
-  const years = ['2024', '2023', '2022', '2021'];
+  const years = ['2025', '2024', '2023', '2022'];
+
+  const [summary, setSummary] = useState<Record<string, { total_received: number; total_spent: number }> | null>(null);
+  const [distribution, setDistribution] = useState({ projects: 0, infrastructure: 0, administration: 0 });
+  const [projects, setProjects] = useState<{ id: number; title: string; received: number; spent: number }[]>([]);
+  const [projPage, setProjPage] = useState(1);
+  const [projTotal, setProjTotal] = useState(1);
+  const [reports, setReports] = useState<any[]>([]);
+  const [repPage, setRepPage] = useState(1);
+  const [repTotal, setRepTotal] = useState(1);
+
+  useEffect(() => {
+    async function fetchSummary() {
+      try {
+        const res = await fetch('/api/finance/summary');
+        if (res.ok) {
+          const data = await res.json();
+          setSummary(data.data);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    fetchSummary();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const distRes = await fetch(`/api/finance/distribution?year=${selectedYear}`);
+        if (distRes.ok) {
+          const d = await distRes.json();
+          setDistribution(d.data);
+        }
+
+        const projRes = await fetch(`/api/finance/projects?year=${selectedYear}&page=${projPage}&limit=4`);
+        if (projRes.ok) {
+          const d = await projRes.json();
+          setProjects(d.data);
+          setProjTotal(d.meta?.total_pages ?? 1);
+        }
+
+        const repRes = await fetch(`/api/financial-reports?year=${selectedYear}&page=${repPage}&limit=4`);
+        if (repRes.ok) {
+          const d = await repRes.json();
+          const mapped = (d.data || []).map((r: any) => ({
+            id: r.id,
+            title: r.title,
+            type: r.type,
+            date: r.date,
+            downloads: 0,
+            size: r.file?.filesize ? `${(Number(r.file.filesize) / 1024).toFixed(0)} KB` : ''
+          }));
+          setReports(mapped);
+          setRepTotal(d.meta?.total_pages ?? 1);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    fetchData();
+  }, [selectedYear, projPage, repPage]);
 
   const financialData = {
-    totalReceived: 450000,
-    totalSpent: 425000,
-    projects: 315000,
-    infrastructure: 85000,
-    administration: 25000,
+    totalReceived: summary?.[selectedYear]?.total_received ?? 0,
+    totalSpent: summary?.[selectedYear]?.total_spent ?? 0,
+    projects: distribution.projects,
+    infrastructure: distribution.infrastructure,
+    administration: distribution.administration,
     beneficiaries: totalPeople,
-    events: 24
+    events: 0,
   };
 
-  const reports = [
-    {
-      title: "Relatório Anual 2024",
-      type: "Relatório Completo",
-      date: "2024-12-01",
-      size: "2.5 MB",
-      downloads: 847
-    },
-    {
-      title: "Prestação de Contas - Novembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-11-30",
-      size: "1.2 MB",
-      downloads: 423
-    },
-    {
-      title: "Prestação de Contas - Outubro 2024",
-      type: "Relatório Mensal",
-      date: "2024-10-31",
-      size: "1.1 MB",
-      downloads: 356
-    },
-    {
-      title: "Prestação de Contas - Setembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-09-30",
-      size: "1.3 MB",
-      downloads: 289
-    }
-  ];
-
-  const projects = [
-    {
-      name: "Futuro Campeão",
-      budget: 120000,
-      spent: 118500,
-      beneficiaries: 60,
-      progress: 98.8
-    },
-    {
-      name: "Educação Transformadora",
-      budget: 95000,
-      spent: 89200,
-      beneficiaries: 80,
-      progress: 93.9
-    },
-    {
-      name: "Mulheres Empreendedoras",
-      budget: 65000,
-      spent: 62300,
-      beneficiaries: 25,
-      progress: 95.8
-    },
-    {
-      name: "Ritmo e Rima",
-      budget: 35000,
-      spent: 33800,
-      beneficiaries: 35,
-      progress: 96.6
-    }
-  ];
+  const totalOut = distribution.projects + distribution.infrastructure + distribution.administration;
+  const percProjects = totalOut ? (distribution.projects / totalOut) * 100 : 0;
+  const percInfra = totalOut ? (distribution.infrastructure / totalOut) * 100 : 0;
+  const percAdmin = totalOut ? (distribution.administration / totalOut) * 100 : 0;
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -182,7 +188,7 @@ export default function TransparencyPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">74%</span>
+                    <span className="text-white font-bold text-lg">{percProjects.toFixed(0)}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -195,7 +201,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">20%</span>
+                    <span className="text-white font-bold text-lg">{percInfra.toFixed(0)}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Infraestrutura</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -208,7 +214,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">6%</span>
+                    <span className="text-white font-bold text-lg">{percAdmin.toFixed(0)}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Administração</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -238,19 +244,19 @@ export default function TransparencyPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project, index) => (
                 <div
-                  key={project.name}
+                  key={project.id}
                   className={`bg-gray-50 rounded-3xl p-6 animate-slide-up`}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-[var(--reino-green-e)]">{project.name}</h3>
-                    <span className="text-sm text-gray-600">{project.beneficiaries} beneficiários</span>
+                    <h3 className="text-xl font-bold text-[var(--reino-green-e)]">{project.title}</h3>
+                    <span className="text-sm text-gray-600">{formatCurrency(project.received)}</span>
                   </div>
 
                   <div className="space-y-3">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Orçamento</span>
-                      <span className="font-semibold">{formatCurrency(project.budget)}</span>
+                      <span className="font-semibold">{formatCurrency(project.received)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Executado</span>
@@ -259,16 +265,34 @@ export default function TransparencyPage() {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-[var(--reino-orange)] h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.progress}%` }}
+                        style={{ width: `${project.received ? (project.spent / project.received) * 100 : 0}%` }}
                       ></div>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Execução</span>
-                      <span className="font-semibold text-[var(--reino-orange)]">{project.progress}%</span>
+                      <span className="font-semibold text-[var(--reino-orange)]">
+                        {project.received ? ((project.spent / project.received) * 100).toFixed(1) : '0'}%
+                      </span>
                     </div>
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="flex justify-center mt-6 gap-4">
+              <button
+                onClick={() => setProjPage((p) => Math.max(1, p - 1))}
+                disabled={projPage === 1}
+                className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+              >
+                Anterior
+              </button>
+              <button
+                onClick={() => setProjPage((p) => Math.min(projTotal, p + 1))}
+                disabled={projPage === projTotal}
+                className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+              >
+                Próxima
+              </button>
             </div>
           </div>
         </section>
@@ -288,7 +312,7 @@ export default function TransparencyPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {reports.map((report, index) => (
                 <div
-                  key={report.title}
+                  key={report.id}
                   className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -307,7 +331,7 @@ export default function TransparencyPage() {
                     <span>{formatDate(report.date)}</span>
                     <div className="flex items-center">
                       <Eye className="w-4 h-4 mr-1" />
-                      {report.downloads} downloads
+                      {report.downloads ?? 0} downloads
                     </div>
                   </div>
 
@@ -317,6 +341,22 @@ export default function TransparencyPage() {
                   </button>
                 </div>
               ))}
+            </div>
+            <div className="flex justify-center mt-6 gap-4">
+              <button
+                onClick={() => setRepPage((p) => Math.max(1, p - 1))}
+                disabled={repPage === 1}
+                className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+              >
+                Anterior
+              </button>
+              <button
+                onClick={() => setRepPage((p) => Math.min(repTotal, p + 1))}
+                disabled={repPage === repTotal}
+                className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50"
+              >
+                Próxima
+              </button>
             </div>
           </div>
         </section>

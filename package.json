@@ -81,6 +81,7 @@
     "eslint": "^8.57.1",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4",
-    "ts-jest": "^29.4.0"
+    "ts-jest": "^29.4.0",
+    "whatwg-fetch": "^3.6.20"
   }
 }

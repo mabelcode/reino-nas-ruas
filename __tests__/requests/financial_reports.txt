@@ -1,0 +1,96 @@
+REQUEST: http://52.87.164.16:8050/items/financial_reports?fields=*,file.id,file.filesize
+RESPONSE:
+{
+	"data": [
+		{
+			"id": "17d678ce-6837-432f-970b-fe5aaeadb8d7",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:36:11.073Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Julho 2025",
+			"type": "MONTHLY",
+			"date": "2025-07-31",
+			"notes": "Arrecadação digital via campanhas online: R$ 2.000,00\nManutenção geral da sede: R$ 1.100,00\nContinuidade dos projetos com saldo próprio",
+			"file": {
+				"id": "0cf12d32-28c9-41c1-99e2-b4696f7f2460",
+				"filesize": "5659"
+			}
+		},
+		{
+			"id": "2a29a4fc-2db9-4194-ba0a-f8ac3310e033",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:34:12.322Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Novembro 2024",
+			"type": "MONTHLY",
+			"date": "2024-11-30",
+			"notes": "Resumo financeiro com foco na preparação do Festival de Talentos.\n- Recebido: R$ 2.500,00 em patrocínio\n- Gasto: R$ 1.200,00 em uniformes e divulgação\n- Evento arrecadou R$ 1.800,00 com venda de produtos",
+			"file": {
+				"id": "0cf12d32-28c9-41c1-99e2-b4696f7f2460",
+				"filesize": "5659"
+			}
+		},
+		{
+			"id": "4d6f1b90-17c4-4e79-a2ff-696d49a73ec1",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:34:41.023Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Janeiro 2025",
+			"type": "MONTHLY",
+			"date": "2025-01-31",
+			"notes": "Doações espontâneas somaram R$ 3.500,00.\nPrincipais despesas:\n- Compra de materiais para oficinas: R$ 890,00\n- Reforma da sala de reforço escolar: R$ 1.200,00",
+			"file": {
+				"id": "1fb1a2f5-0df6-4d08-945f-5a73fbe2b844",
+				"filesize": "1474"
+			}
+		},
+		{
+			"id": "6f4f4ab3-ed0b-4610-8b96-47a45d19394d",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:35:52.118Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Maio 2025",
+			"type": "MONTHLY",
+			"date": "2025-05-31",
+			"notes": "Destaques:\n- Repasse mensal de parceiro: R$ 1.500,00\n- Despesas administrativas: R$ 750,00\n- Compra de papelaria e certificados: R$ 310,00",
+			"file": {
+				"id": "1fb1a2f5-0df6-4d08-945f-5a73fbe2b844",
+				"filesize": "1474"
+			}
+		},
+		{
+			"id": "70b76cd5-b3df-40df-ada9-8d3dd3faaabe",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:33:41.653Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Março 2024",
+			"type": "MONTHLY",
+			"date": "2024-03-31",
+			"notes": "Prestação de contas referente às ações sociais realizadas no primeiro trimestre de 2024.\nDestaques:\n- R$ 3.000,00 em doações espontâneas\n- R$ 980,00 em compra de materiais esportivos\n- Investimento em manutenção elétrica da sede",
+			"file": {
+				"id": "1fb1a2f5-0df6-4d08-945f-5a73fbe2b844",
+				"filesize": "1474"
+			}
+		},
+		{
+			"id": "f558dfbc-cb07-4e3f-bf8d-3ce7c7338f9d",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:35:27.399Z",
+			"user_updated": null,
+			"date_updated": null,
+			"title": "Relatório Mensal - Abril 2025",
+			"type": "MONTHLY",
+			"date": "2025-04-30",
+			"notes": "- Entrada via Pix: R$ 300,00\n- Compra de microfone e caixa de som: R$ 2.900,00\n- Impressão de cartazes: R$ 650,00",
+			"file": {
+				"id": "0cf12d32-28c9-41c1-99e2-b4696f7f2460",
+				"filesize": "5659"
+			}
+		}
+	]
+}

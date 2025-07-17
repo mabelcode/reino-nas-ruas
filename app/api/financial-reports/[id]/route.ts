@@ -5,15 +5,14 @@ export const revalidate = 1209600;
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  if (!DIRECTUS_URL || !params.id) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  if (!DIRECTUS_URL || !params) {
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 
-  const url = `${DIRECTUS_URL}/assets/${params.id}`;
+  const { id } = await params;
+
+  const url = `${DIRECTUS_URL}/assets/${id}`;
   const res = await fetch(url, {
     headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
     next: { revalidate },

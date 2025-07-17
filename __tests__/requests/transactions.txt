@@ -1,0 +1,276 @@
+REQUEST: http://52.87.164.16:8050/items/transactions?fields=*,projects.projects_id
+RESPONSE:
+{
+	"data": [
+		{
+			"id": "05f02e82-527c-4e69-8f70-824c28b2403f",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:09:01.300Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "500.00",
+			"description": "Venda de camisetas no evento Festival de Talentos",
+			"category": "PRODUCT_SALES",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-03-05",
+			"projects": []
+		},
+		{
+			"id": "14407f3d-33ad-46e2-bba0-e6398d471115",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:19:51.390Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "OUT",
+			"amount": "2900.00",
+			"description": "Compra de caixa de som e microfone",
+			"category": "EQUIPMENT",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-04-02",
+			"projects": []
+		},
+		{
+			"id": "2124a337-37c3-4e29-8f0b-3844a41cf80a",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:12:34.731Z",
+			"user_updated": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_updated": "2025-07-17T06:13:07.849Z",
+			"type": "IN",
+			"amount": "2500.00",
+			"description": "Patrocínio destinado à compra de equipamentos de som",
+			"category": "SPONSORSHIP",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-05-01",
+			"projects": []
+		},
+		{
+			"id": "2b0ebe2a-6a87-408e-96d4-ebd6e4cca79c",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:17:39.653Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "OUT",
+			"amount": "1200.00",
+			"description": "Reparo elétrico e pintura da sede",
+			"category": "INSFRASTRUCTURE",
+			"event": null,
+			"attachment": null,
+			"date": "2025-01-28",
+			"projects": []
+		},
+		{
+			"id": "425a427a-f186-4181-8984-31a0252d46d7",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:15:25.343Z",
+			"user_updated": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_updated": "2025-07-17T06:26:21.710Z",
+			"type": "OUT",
+			"amount": "890.00",
+			"description": "Compra de materiais para oficina de arte",
+			"category": "PROJECTS",
+			"event": null,
+			"attachment": null,
+			"date": "2024-01-19",
+			"projects": [
+				{
+					"projects_id": "edd51b7c-922e-472c-a262-87dba97bf718"
+				}
+			]
+		},
+		{
+			"id": "65e970b1-5d25-4a4e-bf0b-62a00ce55a1e",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:11:33.271Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "300.00",
+			"description": "Doação via Pix recebida pelo Instagram",
+			"category": "DONATION_SPONTANEOUS",
+			"event": null,
+			"attachment": null,
+			"date": "2025-04-15",
+			"projects": []
+		},
+		{
+			"id": "6f49957f-eb96-4de9-8672-05f141bb4cef",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T05:28:56.158Z",
+			"user_updated": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_updated": "2025-07-17T06:25:33.839Z",
+			"type": "IN",
+			"amount": "1000.00",
+			"description": "Doacao para projetos jiu-jitsu e futebol.",
+			"category": "PROJECTS",
+			"event": null,
+			"attachment": null,
+			"date": "2024-07-16",
+			"projects": [
+				{
+					"projects_id": "273845e6-ff55-4f2c-9ed2-c7621f0ea2f7"
+				},
+				{
+					"projects_id": "016e7cb8-3604-46e5-a77f-8370b80b56d3"
+				}
+			]
+		},
+		{
+			"id": "a77f7814-94dd-4eeb-b702-9de4ea4a2eb9",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:10:22.420Z",
+			"user_updated": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_updated": "2025-07-17T06:25:14.127Z",
+			"type": "IN",
+			"amount": "2800.00",
+			"description": "Parceria institucional com ONG Aliada",
+			"category": "PARTNER_TRANSFER",
+			"event": null,
+			"attachment": null,
+			"date": "2024-03-29",
+			"projects": []
+		},
+		{
+			"id": "aa602292-3252-4191-aa5a-dafde577f7b5",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:11:09.310Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "4000.00",
+			"description": "Subvenção aprovada via edital municipal",
+			"category": "GRANT",
+			"event": null,
+			"attachment": null,
+			"date": "2025-04-10",
+			"projects": [
+				{
+					"projects_id": "2bb1b7bd-c07c-4ffe-9238-a1bf8452e3ba"
+				},
+				{
+					"projects_id": "edd51b7c-922e-472c-a262-87dba97bf718"
+				}
+			]
+		},
+		{
+			"id": "b03ff4d9-7feb-493c-acd7-4b992dc0d948",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:07:31.702Z",
+			"user_updated": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_updated": "2025-07-17T06:25:57.336Z",
+			"type": "IN",
+			"amount": "1500.00",
+			"description": "Contribuição mensal de apoiador fixo",
+			"category": "DONATION_RECURRING",
+			"event": null,
+			"attachment": null,
+			"date": "2024-02-01",
+			"projects": []
+		},
+		{
+			"id": "b3ec3fa5-8b47-4094-890a-2312f1b7042e",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:06:49.657Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "3500.00",
+			"description": "Doação recebida durante o Festival de Talentos 2024",
+			"category": "DONATION_SPONTANEOUS",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-01-15",
+			"projects": [
+				{
+					"projects_id": "273845e6-ff55-4f2c-9ed2-c7621f0ea2f7"
+				}
+			]
+		},
+		{
+			"id": "bcfd99c9-bb11-4e80-9f89-187e745c1356",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:12:06.159Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "1500.00",
+			"description": "Repasse automático via plataforma de crowdfunding",
+			"category": "DONATION_RECURRING",
+			"event": null,
+			"attachment": null,
+			"date": "2025-04-20",
+			"projects": []
+		},
+		{
+			"id": "c87251a0-e0f1-4528-8eea-3277e88ad889",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:09:41.136Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "1800.00",
+			"description": "\tArrecadação durante evento de Páscoa Solidária",
+			"category": "FUNDRAISING_EVENT",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-03-24",
+			"projects": []
+		},
+		{
+			"id": "d111353a-a89b-4bf3-b0ef-6ff8cb298dd3",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:18:09.062Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "OUT",
+			"amount": "750.00",
+			"description": "Pagamento do contador + emissão de certificados",
+			"category": "ADMINISTRATION",
+			"event": null,
+			"attachment": null,
+			"date": "2025-02-02",
+			"projects": []
+		},
+		{
+			"id": "e51b45cf-52fa-469c-b747-f760ea851bcc",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:08:23.421Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "IN",
+			"amount": "2200.00",
+			"description": "Patrocínio recebido da empresa LocalTech para projeto Jiu-Jitsu",
+			"category": "SPONSORSHIP",
+			"event": null,
+			"attachment": null,
+			"date": "2025-02-10",
+			"projects": [
+				{
+					"projects_id": "016e7cb8-3604-46e5-a77f-8370b80b56d3"
+				}
+			]
+		},
+		{
+			"id": "f32e3958-2e86-4194-975b-0495ab1e9911",
+			"user_created": "ed85d4b6-1347-4d2c-9651-2a2c7967eaad",
+			"date_created": "2025-07-17T06:19:13.914Z",
+			"user_updated": null,
+			"date_updated": null,
+			"type": "OUT",
+			"amount": "980.00",
+			"description": "Compra de tatames e luvas para aulas de jiu-jitsu",
+			"category": "SPORTS_EQUIPMENT",
+			"event": "f098bcf0-ac3a-4ae8-b783-9d54b8f6eba4",
+			"attachment": null,
+			"date": "2025-03-12",
+			"projects": [
+				{
+					"projects_id": "273845e6-ff55-4f2c-9ed2-c7621f0ea2f7"
+				}
+			]
+		}
+	]
+}

@@ -1,9 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useFinanceStore } from '@/stores/finance-store';
+import { useFinanceStore, ProjectTotals, ReportItem } from '@/stores/finance-store';
 
-export function useFinance(year: string, projPage = 1, repPage = 1) {
+export interface UseFinanceReturn {
+  summary: Record<string, { total_received: number; total_spent: number }> | null;
+  years: string[];
+  distribution: Record<string, number>;
+  projects: ProjectTotals[];
+  projectsPages: number;
+  reports: ReportItem[];
+  reportsPages: number;
+  loading: boolean;
+}
+
+export function useFinance(year: string, projPage = 1, repPage = 1): UseFinanceReturn {
   const fetchSummary = useFinanceStore((s) => s.fetchSummary);
   const fetchYear = useFinanceStore((s) => s.fetchYear);
   const summary = useFinanceStore((s) => s.summary);

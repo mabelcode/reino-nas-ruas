@@ -1,9 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
 import { useProjectStats } from '@/hooks/use-project-stats';
 import { useFinance } from '@/hooks/use-finance';
+
+interface FinancialData {
+  totalReceived: number;
+  totalSpent: number;
+  projects: number;
+  infrastructure: number;
+  administration: number;
+  beneficiaries: number;
+  events: number;
+}
 
 const categoryGroup: Record<string, 'projects' | 'infrastructure' | 'administration'> = {
   PROJECTS: 'projects',
@@ -46,7 +56,7 @@ export default function TransparencyPage() {
     }
   }, [years, selectedYear]);
 
-  const financialData = {
+  const financialData: FinancialData = {
     totalReceived: summary?.[selectedYear]?.total_received ?? 0,
     totalSpent: summary?.[selectedYear]?.total_spent ?? 0,
     projects: 0,

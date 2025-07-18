@@ -21,11 +21,12 @@ export default function TransparencyPage() {
   const [isDownloading, setIsDownloading] = useState<string | null>(null);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedYear, setSelectedYear] = useState<string>('');
 
+  // Ordenar anos naturalmente (crescente) e criar opções
   const yearOptions = financialYears
     .map((y) => y.year.toString())
-    .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar por ano decrescente
-  const [selectedYear, setSelectedYear] = useState(yearOptions[0] ?? '');
+    .sort((a, b) => parseInt(a) - parseInt(b)); // Ordenar por ano crescente
 
   // Configuração da paginação
   const itemsPerPage = 4;
@@ -34,11 +35,12 @@ export default function TransparencyPage() {
   const endIndex = startIndex + itemsPerPage;
   const currentReports = reports.slice(startIndex, endIndex);
 
+  // Inicializar com o primeiro ano disponível (mais antigo)
   useEffect(() => {
-    if (!selectedYear && yearOptions.length) {
+    if (yearOptions.length > 0 && !selectedYear) {
       setSelectedYear(yearOptions[0]);
     }
-  }, [yearOptions, selectedYear]);
+  }, [yearOptions]);
 
   // Resetar página quando os relatórios mudarem
   useEffect(() => {
@@ -169,18 +171,21 @@ export default function TransparencyPage() {
                 Dados Financeiros
               </h2>
               <div className="flex justify-center gap-4 mb-8">
-                {yearOptions.map((year) => (
-                  <button
-                    key={year}
-                    onClick={() => setSelectedYear(year)}
-                    className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${selectedYear === year
-                      ? 'bg-[var(--reino-orange)] text-white shadow-lg'
-                      : 'bg-white text-gray-600 hover:bg-gray-100'
-                      }`}
-                  >
-                    {year}
-                  </button>
-                ))}
+                {yearOptions.map((year) => {
+                  const isSelected = selectedYear === year;
+                  return (
+                    <button
+                      key={year}
+                      onClick={() => setSelectedYear(year)}
+                      className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${isSelected
+                        ? 'bg-[var(--reino-orange)] text-white shadow-lg'
+                        : 'bg-white text-gray-600 hover:bg-gray-100'
+                        }`}
+                    >
+                      {year}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

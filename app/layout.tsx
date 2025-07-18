@@ -8,6 +8,7 @@ import { generateKeywordsString } from '@/lib/keywords';
 
 const inter = Inter({ subsets: ['latin'] });
 
+
 export const metadata: Metadata = {
   description: 'ONG brasileira que trabalha com crianças e adolescentes em situação de vulnerabilidade, promovendo transformação social através de atividades educativas e esportivas.',
   keywords: generateKeywordsString(),

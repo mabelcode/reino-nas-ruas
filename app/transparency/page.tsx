@@ -1,9 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Loader2 } from 'lucide-react';
+import {
+  Download,
+  BarChart3,
+  FileText,
+  TrendingUp,
+  DollarSign,
+  Users,
+  Calendar,
+  Loader2,
+} from 'lucide-react';
 import { useFinancialYears } from '@/hooks/use-financial-year';
 import { useFinancialReports } from '@/hooks/use-financial-reports';
+import { CertificationsCarousel } from '@/components/transparency/CertificationsCarousel';
 
 export default function TransparencyPage() {
   const financialYears = useFinancialYears();
@@ -30,7 +40,7 @@ export default function TransparencyPage() {
     if (yearOptions.length > 0 && !selectedYear) {
       setSelectedYear(yearOptions[0]);
     }
-  }, [yearOptions]);
+  }, [yearOptions, selectedYear]);
 
   // Resetar página quando os relatórios mudarem
   useEffect(() => {
@@ -357,38 +367,7 @@ export default function TransparencyPage() {
                 Nossa transparência e eficiência são reconhecidas por diversos órgãos e instituições.
               </p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="w-8 h-8 text-[var(--reino-green-e)]" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">CNPJ Ativo</h3>
-                <p className="text-gray-300 text-sm">
-                  Organização devidamente registrada e em conformidade com a legislação brasileira.
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Auditoria Externa</h3>
-                <p className="text-gray-300 text-sm">
-                  Contas auditadas anualmente por empresa independente especializada.
-                </p>
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Selo de Transparência</h3>
-                <p className="text-gray-300 text-sm">
-                  Reconhecimento por boas práticas de governança e prestação de contas.
-                </p>
-              </div>
-            </div>
+            <CertificationsCarousel />
           </div>
         </section>
       </div>

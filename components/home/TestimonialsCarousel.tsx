@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-interface Testimonial {
-  id: string;
-  testimony: string;
-  name: string;
-  age?: number;
-  project?: string;
-}
+import { Testimonial } from '@/stores/testimonials-store';
 
 interface TestimonialsCarouselProps {
   testimonials: Testimonial[];
@@ -118,7 +111,7 @@ export default function TestimonialsCarousel({ testimonials, projectMap }: Testi
                     {testimonial.age ? `, ${testimonial.age} anos` : ''}
                   </div>
                   <div className="text-sm text-[var(--reino-orange)]">
-                    {testimonial.project ? projectMap[testimonial.project] : ''}
+                    {testimonial.project && projectMap[testimonial.project] ? projectMap[testimonial.project] : ''}
                   </div>
                 </div>
               </div>

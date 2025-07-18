@@ -1,6 +1,6 @@
 'use client';
 
-import { ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 
@@ -11,8 +11,16 @@ function getSlidesToShow() {
   return 4;
 }
 
+export interface Partner {
+  id: string;
+  name: string;
+  category: string;
+  website: string;
+  logo: string;
+}
+
 export function PartnersShowcase() {
-  const [partners, setPartners] = useState<any[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -86,7 +94,7 @@ export function PartnersShowcase() {
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg rounded-full p-2 transition disabled:opacity-30 disabled:pointer-events-none"
                 style={{ marginLeft: '-24px' }}
               >
-                <svg width="24" height="24" fill="none" stroke="var(--reino-orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                <ChevronLeft className="w-6 h-6 text-[var(--reino-orange)]" />
               </button>
               <button
                 aria-label="Próximo"
@@ -95,7 +103,7 @@ export function PartnersShowcase() {
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg rounded-full p-2 transition disabled:opacity-30 disabled:pointer-events-none"
                 style={{ marginRight: '-24px' }}
               >
-                <svg width="24" height="24" fill="none" stroke="var(--reino-orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                <ChevronRight className="w-6 h-6 text-[var(--reino-orange)]" />
               </button>
             </>
           )}
@@ -105,7 +113,7 @@ export function PartnersShowcase() {
             onTouchEnd={onTouchEnd}
           >
             <div className="flex justify-center gap-4 transition-all duration-500">
-              {getPagePartners().map((partner: any, index: number) => (
+              {getPagePartners().map((partner: Partner, index: number) => (
                 <a
                   key={partner.id || partner.name}
                   href={

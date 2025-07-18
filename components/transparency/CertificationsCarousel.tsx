@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { FileText, CalendarClock, Handshake, FileBarChart, HeartHandshake, Award, UsersRound, SearchCheck } from 'lucide-react';
 
 interface Certification {
@@ -114,12 +114,12 @@ export function CertificationsCarousel() {
     return indices;
   };
 
-  const next = () => {
+  const next = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % totalCertifications);
     setIsAutoPlaying(false);
     // Reinicia o autoplay após interação manual
     setTimeout(() => setIsAutoPlaying(true), 5000);
-  };
+  }, [totalCertifications]);
 
   const prev = () => {
     setCurrentIndex((prev) => (prev - 1 + totalCertifications) % totalCertifications);
@@ -161,7 +161,7 @@ export function CertificationsCarousel() {
         clearTimeout(autoPlayRef.current);
       }
     };
-  }, [currentIndex, isAutoPlaying]);
+  }, [currentIndex, isAutoPlaying, next]);
 
   // Pausa o autoplay quando o mouse está sobre o carrossel
   const handleMouseEnter = () => setIsAutoPlaying(false);

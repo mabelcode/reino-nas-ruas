@@ -40,7 +40,7 @@ export default function TransparencyPage() {
     if (yearOptions.length > 0 && !selectedYear) {
       setSelectedYear(yearOptions[0]);
     }
-  }, [yearOptions]);
+  }, [yearOptions, selectedYear]);
 
   // Resetar página quando os relatórios mudarem
   useEffect(() => {

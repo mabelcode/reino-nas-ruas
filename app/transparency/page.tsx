@@ -1,7 +1,23 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Loader2 } from 'lucide-react';
+import {
+  Download,
+  BarChart3,
+  FileText,
+  TrendingUp,
+  DollarSign,
+  Users,
+  Calendar,
+  Loader2,
+  CalendarClock,
+  Handshake,
+  FileBarChart,
+  HeartHandshake,
+  Award,
+  UsersRound,
+  SearchCheck,
+} from 'lucide-react';
 import { useFinancialYears } from '@/hooks/use-financial-year';
 import { useFinancialReports } from '@/hooks/use-financial-reports';
 
@@ -355,7 +371,7 @@ export default function TransparencyPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
                 <div className="w-16 h-16 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
                   <FileText className="w-8 h-8 text-[var(--reino-green-e)]" />
                 </div>
@@ -365,23 +381,73 @@ export default function TransparencyPage() {
                 </p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-white" />
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <CalendarClock className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Auditoria Externa</h3>
+                <h3 className="text-xl font-bold mb-2">Mais de X anos de atuação</h3>
                 <p className="text-gray-300 text-sm">
-                  Contas auditadas anualmente por empresa independente especializada.
+                  Trabalhando com dedicação e amor desde [ano]. Impacto constante e reconhecido.
                 </p>
               </div>
 
-              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center">
-                <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-white" />
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Handshake className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-2">Selo de Transparência</h3>
+                <h3 className="text-xl font-bold mb-2">Parcerias com instituições</h3>
                 <p className="text-gray-300 text-sm">
-                  Reconhecimento por boas práticas de governança e prestação de contas.
+                  Atuamos com igrejas, escolas, empresas e voluntários da região.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FileBarChart className="w-8 h-8 text-[var(--reino-green-e)]" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Prestação de contas anual</h3>
+                <p className="text-gray-300 text-sm">
+                  Relatórios financeiros e de impacto abertos à comunidade.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <HeartHandshake className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Equipe totalmente voluntária</h3>
+                <p className="text-gray-300 text-sm">
+                  Cada ação é fruto da doação de tempo e talento dos nossos voluntários.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Apoio da comunidade local</h3>
+                <p className="text-gray-300 text-sm">
+                  Elogios e reconhecimento constantes de moradores e líderes locais.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <UsersRound className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">+X pessoas impactadas</h3>
+                <p className="text-gray-300 text-sm">
+                  Crianças, famílias e comunidades alcançadas com amor e dignidade.
+                </p>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-xs rounded-3xl p-6 text-center card-hover">
+                <div className="w-16 h-16 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
+                  <SearchCheck className="w-8 h-8 text-[var(--reino-green-e)]" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Presença em plataformas sociais</h3>
+                <p className="text-gray-300 text-sm">
+                  Projetos publicados em sites como Atados, Prosas e outros.
                 </p>
               </div>
             </div>

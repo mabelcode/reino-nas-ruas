@@ -22,9 +22,6 @@ const getSlidesToShow = () => {
 };
 
 export default function TestimonialsCarousel({ testimonials, projectMap }: TestimonialsCarouselProps) {
-  // Não renderiza nada se não houver depoimentos
-  if (!testimonials || testimonials.length === 0) return null;
-
   const [currentPage, setCurrentPage] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
   const touchStartX = useRef<number | null>(null);
@@ -34,6 +31,9 @@ export default function TestimonialsCarousel({ testimonials, projectMap }: Testi
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Não renderiza nada se não houver depoimentos
+  if (!testimonials || testimonials.length === 0) return null;
 
   const totalPages = Math.max(1, Math.ceil(testimonials.length / slidesToShow));
 

@@ -10,6 +10,7 @@ export function HeroSection() {
   const info = useInfo();
   const { totalPeople, activeProjects } = useProjectStats();
   const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}

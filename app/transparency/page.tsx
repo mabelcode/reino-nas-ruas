@@ -1,86 +1,53 @@
 'use client';
 
-import { useState } from 'react';
-import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
-import { useProjectStats } from '@/hooks/use-project-stats';
+import { useEffect, useState } from 'react';
+import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Loader2 } from 'lucide-react';
+import { useFinancialYears } from '@/hooks/use-financial-year';
+import { useFinancialReports } from '@/hooks/use-financial-reports';
 
 export default function TransparencyPage() {
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const { totalPeople } = useProjectStats();
+  const financialYears = useFinancialYears();
+  const { reports, loading: reportsLoading } = useFinancialReports();
+  const [isDownloading, setIsDownloading] = useState<string | null>(null);
+  const [globalLoading, setGlobalLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const yearOptions = financialYears
+    .map((y) => y.year.toString())
+    .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar por ano decrescente
+  const [selectedYear, setSelectedYear] = useState(yearOptions[0] ?? '');
 
-  const years = ['2024', '2023', '2022', '2021'];
+  // Configuração da paginação
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(reports.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReports = reports.slice(startIndex, endIndex);
 
-  const financialData = {
-    totalReceived: 450000,
-    totalSpent: 425000,
-    projects: 315000,
-    infrastructure: 85000,
-    administration: 25000,
-    beneficiaries: totalPeople,
-    events: 24
+  useEffect(() => {
+    if (!selectedYear && yearOptions.length) {
+      setSelectedYear(yearOptions[0]);
+    }
+  }, [yearOptions, selectedYear]);
+
+  // Resetar página quando os relatórios mudarem
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reports.length]);
+
+  const selectedData = financialYears.find(
+    (fy) => fy.year.toString() === selectedYear,
+  );
+  const financialData = selectedData ?? financialYears[0];
+
+  // Calcular percentuais baseados no total investido
+  const calculatePercentage = (value: number, total: number) => {
+    return total > 0 ? Math.round((value / total) * 100) : 0;
   };
 
-  const reports = [
-    {
-      title: "Relatório Anual 2024",
-      type: "Relatório Completo",
-      date: "2024-12-01",
-      size: "2.5 MB",
-      downloads: 847
-    },
-    {
-      title: "Prestação de Contas - Novembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-11-30",
-      size: "1.2 MB",
-      downloads: 423
-    },
-    {
-      title: "Prestação de Contas - Outubro 2024",
-      type: "Relatório Mensal",
-      date: "2024-10-31",
-      size: "1.1 MB",
-      downloads: 356
-    },
-    {
-      title: "Prestação de Contas - Setembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-09-30",
-      size: "1.3 MB",
-      downloads: 289
-    }
-  ];
-
-  const projects = [
-    {
-      name: "Futuro Campeão",
-      budget: 120000,
-      spent: 118500,
-      beneficiaries: 60,
-      progress: 98.8
-    },
-    {
-      name: "Educação Transformadora",
-      budget: 95000,
-      spent: 89200,
-      beneficiaries: 80,
-      progress: 93.9
-    },
-    {
-      name: "Mulheres Empreendedoras",
-      budget: 65000,
-      spent: 62300,
-      beneficiaries: 25,
-      progress: 95.8
-    },
-    {
-      name: "Ritmo e Rima",
-      budget: 35000,
-      spent: 33800,
-      beneficiaries: 35,
-      progress: 96.6
-    }
-  ];
+  const projectsPercentage = calculatePercentage(financialData.projetcs, financialData.amount_invested);
+  const infrastructurePercentage = calculatePercentage(financialData.infrastructure, financialData.amount_invested);
+  const administrationPercentage = calculatePercentage(financialData.administration, financialData.amount_invested);
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -97,10 +64,78 @@ export default function TransparencyPage() {
     });
   };
 
+  const formatFileSize = (bytes: string) => {
+    const size = parseInt(bytes);
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const handleDownload = async (fileId: string, title: string) => {
+    try {
+      setIsDownloading(fileId);
+      setGlobalLoading(true);
+
+      const response = await fetch(`/api/assets/${fileId}`);
+      
+      if (!response.ok) {
+        throw new Error('Falha ao baixar arquivo');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Erro ao baixar arquivo:', error);
+      alert('Erro ao baixar o arquivo. Tente novamente.');
+    } finally {
+      setIsDownloading(null);
+      setGlobalLoading(false);
+    }
+  };
+
+  const getReportTypeLabel = (type: string) => {
+    switch (type) {
+      case 'MONTHLY':
+        return 'Relatório Mensal';
+      case 'ANNUAL':
+        return 'Relatório Anual';
+      case 'QUARTERLY':
+        return 'Relatório Trimestral';
+      default:
+        return 'Relatório';
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll suave para o topo da seção de relatórios
+    const reportsSection = document.getElementById('reports-section');
+    if (reportsSection) {
+      reportsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <title>TRANSPARÊNCIA | Reino nas Ruas</title>
       <div className="pt-16 sm:pt-18 lg:pt-20">
+        {/* Loading Overlay */}
+        {globalLoading && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-3xl p-8 flex flex-col items-center">
+              <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)] mb-4" />
+              <p className="text-gray-600">Baixando arquivo...</p>
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
         <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-e)] to-[var(--reino-green-c)] text-white">
           <div className="container-max">
@@ -124,7 +159,7 @@ export default function TransparencyPage() {
                 Dados Financeiros
               </h2>
               <div className="flex justify-center gap-4 mb-8">
-                {years.map((year) => (
+                {yearOptions.map((year) => (
                   <button
                     key={year}
                     onClick={() => setSelectedYear(year)}
@@ -144,7 +179,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <DollarSign className="w-10 h-10 text-[var(--reino-green-c)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.totalReceived)}
+                  {formatCurrency(financialData.amount_received)}
                 </div>
                 <div className="text-sm text-gray-600">Total Recebido</div>
               </div>
@@ -152,7 +187,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <TrendingUp className="w-10 h-10 text-[var(--reino-orange)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.totalSpent)}
+                  {formatCurrency(financialData.amount_invested)}
                 </div>
                 <div className="text-sm text-gray-600">Total Investido</div>
               </div>
@@ -160,7 +195,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Users className="w-10 h-10 text-[var(--reino-yellow)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.beneficiaries}+
+                  {financialData.amount_beneficiaries}+
                 </div>
                 <div className="text-sm text-gray-600">Beneficiários</div>
               </div>
@@ -168,7 +203,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Calendar className="w-10 h-10 text-[var(--reino-green-e)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.events}
+                  {financialData.amount_events}
                 </div>
                 <div className="text-sm text-gray-600">Eventos Realizados</div>
               </div>
@@ -182,11 +217,11 @@ export default function TransparencyPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">74%</span>
+                    <span className="text-white font-bold text-lg">{projectsPercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {formatCurrency(financialData.projects)}
+                    {formatCurrency(financialData.projetcs)}
                   </p>
                   <p className="text-xs text-gray-500">
                     Atividades educativas, esportivas e culturais
@@ -195,7 +230,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">20%</span>
+                    <span className="text-white font-bold text-lg">{infrastructurePercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Infraestrutura</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -208,7 +243,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">6%</span>
+                    <span className="text-white font-bold text-lg">{administrationPercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Administração</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -223,58 +258,8 @@ export default function TransparencyPage() {
           </div>
         </section>
 
-        {/* Detalhamento por Projeto */}
-        <section className="section-padding bg-white">
-          <div className="container-max">
-            <div className="text-center mb-12">
-              <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
-                Investimento por Projeto
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Veja como os recursos são distribuídos entre nossos diferentes projetos e programas.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <div
-                  key={project.name}
-                  className={`bg-gray-50 rounded-3xl p-6 animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-[var(--reino-green-e)]">{project.name}</h3>
-                    <span className="text-sm text-gray-600">{project.beneficiaries} beneficiários</span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Orçamento</span>
-                      <span className="font-semibold">{formatCurrency(project.budget)}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Executado</span>
-                      <span className="font-semibold">{formatCurrency(project.spent)}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-[var(--reino-orange)] h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.progress}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Execução</span>
-                      <span className="font-semibold text-[var(--reino-orange)]">{project.progress}%</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Relatórios para Download */}
-        <section className="section-padding bg-gray-50">
+        <section id="reports-section" className="section-padding bg-white">
           <div className="container-max">
             <div className="text-center mb-12">
               <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
@@ -285,39 +270,75 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {reports.map((report, index) => (
-                <div
-                  key={report.title}
-                  className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center">
-                      <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
-                      <div>
-                        <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
-                        <p className="text-sm text-gray-600">{report.type}</p>
+            {reportsLoading ? (
+              <div className="flex justify-center items-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)]" />
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  {currentReports.map((report, index) => (
+                    <div
+                      key={report.id}
+                      className={`bg-gray-50 rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center">
+                          <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
+                          <div>
+                            <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
+                            <p className="text-sm text-gray-600">{getReportTypeLabel(report.type)}</p>
+                          </div>
+                        </div>
+                        <span className="text-xs text-gray-500">{formatFileSize(report.file.filesize)}</span>
                       </div>
-                    </div>
-                    <span className="text-xs text-gray-500">{report.size}</span>
-                  </div>
 
-                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                    <span>{formatDate(report.date)}</span>
-                    <div className="flex items-center">
-                      <Eye className="w-4 h-4 mr-1" />
-                      {report.downloads} downloads
-                    </div>
-                  </div>
+                      <div className="text-sm text-gray-600 mb-4">
+                        <span>{formatDate(report.date)}</span>
+                      </div>
 
-                  <button className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center">
-                    <Download className="w-5 h-5 mr-2" />
-                    Baixar Relatório
-                  </button>
+                      <button 
+                        onClick={() => handleDownload(report.file.id, report.title)}
+                        disabled={isDownloading === report.file.id}
+                        className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isDownloading === report.file.id ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Baixando...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-5 h-5 mr-2" />
+                            Baixar Relatório
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
+                {/* Paginação */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center gap-2 mt-8">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${
+                          currentPage === page
+                            ? 'bg-[var(--reino-orange)] text-white'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </section>
 

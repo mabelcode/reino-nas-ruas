@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { useInfo } from '@/hooks/use-info';
 import { useSocials } from '@/hooks/use-socials';
@@ -14,11 +13,13 @@ import {
   Youtube,
 } from 'lucide-react';
 import { FooterLogo } from '@/components/ui/Logo';
+import { useSmartLink } from '@/hooks/use-smart-link';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const info = useInfo();
   const socials = useSocials();
+  const { handleSmartNavigation } = useSmartLink();
 
   const iconMap = {
     facebook: Facebook,
@@ -26,18 +27,19 @@ export function Footer() {
     linkedin: Linkedin,
     youtube: Youtube,
   } as const;
+
   return (
     <footer className="bg-[var(--reino-green-e)] text-white">
       <div className="max-w-7xl mx-auto py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <Link href="/" className="flex items-center space-x-3 mb-4 sm:mb-6">
+            <a href="/" onClick={e => { e.preventDefault(); handleSmartNavigation('/'); }} className="flex items-center space-x-3 mb-4 sm:mb-6 cursor-pointer">
               <FooterLogo />
               <h2 className="heading-font text-xl sm:text-2xl text-white">
                 Reino nas Ruas
               </h2>
-            </Link>
+            </a>
             <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6 max-w-md leading-relaxed">
               Transformando vidas através da educação e do esporte. Trabalhamos com crianças e adolescentes em situação de vulnerabilidade, promovendo inclusão social e oportunidades de crescimento.
             </p>
@@ -65,29 +67,29 @@ export function Footer() {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Links Rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                <a href="/about" onClick={e => { e.preventDefault(); handleSmartNavigation('/about'); }} className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200 cursor-pointer">
                   Sobre Nós
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/projects" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                <a href="/projects" onClick={e => { e.preventDefault(); handleSmartNavigation('/projects'); }} className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200 cursor-pointer">
                   Projetos
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/events" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                <a href="/events" onClick={e => { e.preventDefault(); handleSmartNavigation('/events'); }} className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200 cursor-pointer">
                   Eventos
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/transparency" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                <a href="/transparency" onClick={e => { e.preventDefault(); handleSmartNavigation('/transparency'); }} className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200 cursor-pointer">
                   Transparência
-                </Link>
+                </a>
               </li>
               <li>
-                <Link href="/contact" className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200">
+                <a href="/contact" onClick={e => { e.preventDefault(); handleSmartNavigation('/contact'); }} className="text-sm sm:text-base text-gray-300 hover:text-[var(--reino-yellow)] transition-colors duration-200 cursor-pointer">
                   Contato
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

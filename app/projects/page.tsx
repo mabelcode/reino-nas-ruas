@@ -141,7 +141,7 @@ export default function Projects() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
                 <div
-                  key={testimonial.name}
+                  key={testimonial.id}
                   className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >

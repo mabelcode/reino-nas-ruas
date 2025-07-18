@@ -1,21 +1,39 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Eye } from 'lucide-react';
+import { Download, BarChart3, FileText, TrendingUp, DollarSign, Users, Calendar, Loader2 } from 'lucide-react';
 import { useFinancialYears } from '@/hooks/use-financial-year';
+import { useFinancialReports } from '@/hooks/use-financial-reports';
 
 export default function TransparencyPage() {
   const financialYears = useFinancialYears();
+  const { reports, loading: reportsLoading } = useFinancialReports();
+  const [isDownloading, setIsDownloading] = useState<string | null>(null);
+  const [globalLoading, setGlobalLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  
   const yearOptions = financialYears
     .map((y) => y.year.toString())
     .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar por ano decrescente
   const [selectedYear, setSelectedYear] = useState(yearOptions[0] ?? '');
+
+  // Configuração da paginação
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(reports.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentReports = reports.slice(startIndex, endIndex);
 
   useEffect(() => {
     if (!selectedYear && yearOptions.length) {
       setSelectedYear(yearOptions[0]);
     }
   }, [yearOptions, selectedYear]);
+
+  // Resetar página quando os relatórios mudarem
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [reports.length]);
 
   const selectedData = financialYears.find(
     (fy) => fy.year.toString() === selectedYear,
@@ -30,37 +48,6 @@ export default function TransparencyPage() {
   const projectsPercentage = calculatePercentage(financialData.projetcs, financialData.amount_invested);
   const infrastructurePercentage = calculatePercentage(financialData.infrastructure, financialData.amount_invested);
   const administrationPercentage = calculatePercentage(financialData.administration, financialData.amount_invested);
-
-  const reports = [
-    {
-      title: "Relatório Anual 2024",
-      type: "Relatório Completo",
-      date: "2024-12-01",
-      size: "2.5 MB",
-      downloads: 847
-    },
-    {
-      title: "Prestação de Contas - Novembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-11-30",
-      size: "1.2 MB",
-      downloads: 423
-    },
-    {
-      title: "Prestação de Contas - Outubro 2024",
-      type: "Relatório Mensal",
-      date: "2024-10-31",
-      size: "1.1 MB",
-      downloads: 356
-    },
-    {
-      title: "Prestação de Contas - Setembro 2024",
-      type: "Relatório Mensal",
-      date: "2024-09-30",
-      size: "1.3 MB",
-      downloads: 289
-    }
-  ];
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -77,10 +64,78 @@ export default function TransparencyPage() {
     });
   };
 
+  const formatFileSize = (bytes: string) => {
+    const size = parseInt(bytes);
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  const handleDownload = async (fileId: string, title: string) => {
+    try {
+      setIsDownloading(fileId);
+      setGlobalLoading(true);
+
+      const response = await fetch(`/api/assets/${fileId}`);
+      
+      if (!response.ok) {
+        throw new Error('Falha ao baixar arquivo');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Erro ao baixar arquivo:', error);
+      alert('Erro ao baixar o arquivo. Tente novamente.');
+    } finally {
+      setIsDownloading(null);
+      setGlobalLoading(false);
+    }
+  };
+
+  const getReportTypeLabel = (type: string) => {
+    switch (type) {
+      case 'MONTHLY':
+        return 'Relatório Mensal';
+      case 'ANNUAL':
+        return 'Relatório Anual';
+      case 'QUARTERLY':
+        return 'Relatório Trimestral';
+      default:
+        return 'Relatório';
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll suave para o topo da seção de relatórios
+    const reportsSection = document.getElementById('reports-section');
+    if (reportsSection) {
+      reportsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <title>TRANSPARÊNCIA | Reino nas Ruas</title>
       <div className="pt-16 sm:pt-18 lg:pt-20">
+        {/* Loading Overlay */}
+        {globalLoading && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-3xl p-8 flex flex-col items-center">
+              <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)] mb-4" />
+              <p className="text-gray-600">Baixando arquivo...</p>
+            </div>
+          </div>
+        )}
+
         {/* Hero Section */}
         <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-e)] to-[var(--reino-green-c)] text-white">
           <div className="container-max">
@@ -204,7 +259,7 @@ export default function TransparencyPage() {
         </section>
 
         {/* Relatórios para Download */}
-        <section className="section-padding bg-white">
+        <section id="reports-section" className="section-padding bg-white">
           <div className="container-max">
             <div className="text-center mb-12">
               <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
@@ -215,39 +270,75 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {reports.map((report, index) => (
-                <div
-                  key={report.title}
-                  className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center">
-                      <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
-                      <div>
-                        <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
-                        <p className="text-sm text-gray-600">{report.type}</p>
+            {reportsLoading ? (
+              <div className="flex justify-center items-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)]" />
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  {currentReports.map((report, index) => (
+                    <div
+                      key={report.id}
+                      className={`bg-gray-50 rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-center">
+                          <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
+                          <div>
+                            <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
+                            <p className="text-sm text-gray-600">{getReportTypeLabel(report.type)}</p>
+                          </div>
+                        </div>
+                        <span className="text-xs text-gray-500">{formatFileSize(report.file.filesize)}</span>
                       </div>
-                    </div>
-                    <span className="text-xs text-gray-500">{report.size}</span>
-                  </div>
 
-                  <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
-                    <span>{formatDate(report.date)}</span>
-                    <div className="flex items-center">
-                      <Eye className="w-4 h-4 mr-1" />
-                      {report.downloads} downloads
-                    </div>
-                  </div>
+                      <div className="text-sm text-gray-600 mb-4">
+                        <span>{formatDate(report.date)}</span>
+                      </div>
 
-                  <button className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center">
-                    <Download className="w-5 h-5 mr-2" />
-                    Baixar Relatório
-                  </button>
+                      <button 
+                        onClick={() => handleDownload(report.file.id, report.title)}
+                        disabled={isDownloading === report.file.id}
+                        className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isDownloading === report.file.id ? (
+                          <>
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            Baixando...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-5 h-5 mr-2" />
+                            Baixar Relatório
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+
+                {/* Paginação */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center gap-2 mt-8">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${
+                          currentPage === page
+                            ? 'bg-[var(--reino-orange)] text-white'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </section>
 

@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <title>HOME | Reino nas Ruas</title>
+      <title>Reino nas Ruas</title>
       <div className="min-h-screen">
         <HeroSection />
         <MissionSection />

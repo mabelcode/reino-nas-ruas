@@ -11,9 +11,9 @@ import {
   Calendar,
   Loader2,
 } from 'lucide-react';
-import RecognitionsCarousel from '@/components/transparency/RecognitionsCarousel';
 import { useFinancialYears } from '@/hooks/use-financial-year';
 import { useFinancialReports } from '@/hooks/use-financial-reports';
+import { CertificationsCarousel } from '@/components/transparency/CertificationsCarousel';
 
 export default function TransparencyPage() {
   const financialYears = useFinancialYears();
@@ -21,7 +21,7 @@ export default function TransparencyPage() {
   const [isDownloading, setIsDownloading] = useState<string | null>(null);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  
+
   const yearOptions = financialYears
     .map((y) => y.year.toString())
     .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar por ano decrescente
@@ -87,7 +87,7 @@ export default function TransparencyPage() {
       setGlobalLoading(true);
 
       const response = await fetch(`/api/assets/${fileId}`);
-      
+
       if (!response.ok) {
         throw new Error('Falha ao baixar arquivo');
       }
@@ -308,7 +308,7 @@ export default function TransparencyPage() {
                         <span>{formatDate(report.date)}</span>
                       </div>
 
-                      <button 
+                      <button
                         onClick={() => handleDownload(report.file.id, report.title)}
                         disabled={isDownloading === report.file.id}
                         className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
@@ -336,11 +336,10 @@ export default function TransparencyPage() {
                       <button
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${
-                          currentPage === page
-                            ? 'bg-[var(--reino-orange)] text-white'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }`}
+                        className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${currentPage === page
+                          ? 'bg-[var(--reino-orange)] text-white'
+                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          }`}
                       >
                         {page}
                       </button>
@@ -363,8 +362,7 @@ export default function TransparencyPage() {
                 Nossa transparência e eficiência são reconhecidas por diversos órgãos e instituições.
               </p>
             </div>
-
-            <RecognitionsCarousel />
+            <CertificationsCarousel />
           </div>
         </section>
       </div>

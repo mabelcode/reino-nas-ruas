@@ -5,8 +5,6 @@ export const dynamic = 'force-dynamic';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export const revalidate = 0;
-
 export async function GET() {
     if (!DIRECTUS_URL || !TOKEN) {
         return NextResponse.json(
@@ -21,8 +19,7 @@ export async function GET() {
             {
                 headers: {
                     Authorization: `Bearer ${TOKEN}`,
-                },
-                next: { revalidate },
+                }
             }
         );
 

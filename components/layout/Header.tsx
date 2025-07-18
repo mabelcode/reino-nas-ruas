@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { HeaderLogo } from '@/components/ui/Logo';
 import { useSmartLink } from '@/hooks/use-smart-link';

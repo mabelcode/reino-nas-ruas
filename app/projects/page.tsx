@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useProjects } from '@/hooks/use-projects';
 import { useTestimonials } from '@/hooks/use-testimonials';
+import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
 
 export default function Projects() {
   const projects = useProjects();
@@ -138,31 +139,7 @@ export default function Projects() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={testimonial.id}
-                  className={`bg-white rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="mb-4">
-                    <div className="text-4xl text-[var(--reino-orange)] mb-2">&quot;</div>
-                    <div className="text-gray-600 leading-relaxed mb-4">
-                      {testimonial.testimony}
-                    </div>
-                  </div>
-                  <div className="border-t border-gray-200 pt-4">
-                    <div className="font-semibold text-[var(--reino-green-e)]">
-                      {testimonial.name}
-                      {testimonial.age ? `, ${testimonial.age} anos` : ''}
-                    </div>
-                    <div className="text-sm text-[var(--reino-orange)]">
-                      {testimonial.project ? projectMap[testimonial.project] : ''}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <TestimonialsCarousel testimonials={testimonials} projectMap={projectMap} />
           </div>
         </section>
 

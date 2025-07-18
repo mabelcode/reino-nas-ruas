@@ -3,5 +3,8 @@
   "parserOptions": {
     "ecmaVersion": 2023,
     "sourceType": "module"
+  },
+  "rules": {
+    "@next/next/no-page-custom-font": "off"
   }
 }

@@ -86,17 +86,22 @@ export function CertificationsCarousel() {
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   const totalCertifications = certifications.length;
-  
+
   // Função para determinar quantos slides mostrar baseado no tamanho da tela
   const getSlidesToShow = () => {
     if (typeof window === 'undefined') return 1;
-    if (window.innerWidth < 768) return 1; // mobile
-    if (window.innerWidth < 1024) return 2; // tablet
+    const width = window.innerWidth;
+    if (width < 768) return 1; // mobile
+    if (width < 1024) return 2; // tablet
     return 3; // desktop
   };
-  
-  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
-  
+
+  const [slidesToShow, setSlidesToShow] = useState(1);
+
+  useEffect(() => {
+    setSlidesToShow(getSlidesToShow());
+  }, []);
+
   // Atualizar slidesToShow quando a tela for redimensionada
   useEffect(() => {
     const handleResize = () => setSlidesToShow(getSlidesToShow());
@@ -170,7 +175,7 @@ export function CertificationsCarousel() {
   const visibleIndices = getVisibleIndices();
 
   return (
-    <div 
+    <div
       className="relative px-2 sm:px-6 lg:px-12"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -186,7 +191,7 @@ export function CertificationsCarousel() {
           {visibleIndices.map((index, position) => {
             const certification = certifications[index];
             const isCenter = slidesToShow === 3 ? position === 1 : position === 0; // Card central ou único
-            
+
             // Função para navegar ao clicar nos cards laterais
             const handleCardClick = () => {
               if (!isCenter) {
@@ -204,26 +209,24 @@ export function CertificationsCarousel() {
                 }
               }
             };
-            
+
             return (
               <div
                 key={`${certification.id}-${index}`}
-                className={`transition-all duration-500 ${
-                  isCenter 
-                    ? 'scale-110 z-20 transform -translate-y-2 sm:-translate-y-4' 
+                className={`transition-all duration-500 ${isCenter
+                    ? 'scale-110 z-20 transform -translate-y-2 sm:-translate-y-4'
                     : 'scale-90 z-10 opacity-70 cursor-pointer hover:scale-95 hover:opacity-90'
-                }`}
+                  }`}
                 style={{
-                  transform: isCenter 
-                    ? `scale(1.1) translateY(${slidesToShow === 1 ? '0' : '-8px'})` 
+                  transform: isCenter
+                    ? `scale(1.1) translateY(${slidesToShow === 1 ? '0' : '-8px'})`
                     : 'scale(0.9)',
                   filter: isCenter ? 'none' : 'brightness(0.8)',
                 }}
                 onClick={handleCardClick}
               >
-                <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-4 sm:p-6 text-center card-hover min-w-[250px] sm:min-w-[280px] max-w-[320px] h-[180px] sm:h-[200px] flex flex-col justify-between ${
-                  !isCenter ? 'hover:bg-white/15 hover:shadow-lg' : ''
-                }`}>
+                <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-4 sm:p-6 text-center card-hover min-w-[250px] sm:min-w-[280px] max-w-[320px] h-[180px] sm:h-[200px] flex flex-col justify-between ${!isCenter ? 'hover:bg-white/15 hover:shadow-lg' : ''
+                  }`}>
                   <div className={`w-12 h-12 sm:w-16 sm:h-16 ${certification.bgColor} rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 ${certification.iconColor}`}>
                     {certification.icon}
                   </div>
@@ -243,12 +246,13 @@ export function CertificationsCarousel() {
         {Array.from({ length: totalCertifications }).map((_, idx) => (
           <button
             key={idx}
+            role="tab"
+            aria-current={currentIndex === idx ? 'true' : 'false'}
             aria-label={`Ir para certificação ${idx + 1}`}
-            className={`w-1 h-1 sm:w-3 sm:h-3 rounded-full border border-white transition-all duration-300 ${
-              currentIndex === idx 
-                ? 'bg-white scale-100 sm:scale-125' 
+            className={`w-1 h-1 sm:w-3 sm:h-3 rounded-full border border-white transition-all duration-300 ${currentIndex === idx
+                ? 'bg-white scale-100 sm:scale-125'
                 : 'bg-transparent hover:bg-white/50'
-            }`}
+              }`}
             onClick={() => goTo(idx)}
           />
         ))}

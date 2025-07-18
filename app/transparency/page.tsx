@@ -6,7 +6,9 @@ import { useFinancialYears } from '@/hooks/use-financial-year';
 
 export default function TransparencyPage() {
   const financialYears = useFinancialYears();
-  const yearOptions = financialYears.map((y) => y.year.toString());
+  const yearOptions = financialYears
+    .map((y) => y.year.toString())
+    .sort((a, b) => parseInt(b) - parseInt(a)); // Ordenar por ano decrescente
   const [selectedYear, setSelectedYear] = useState(yearOptions[0] ?? '');
 
   useEffect(() => {
@@ -19,6 +21,15 @@ export default function TransparencyPage() {
     (fy) => fy.year.toString() === selectedYear,
   );
   const financialData = selectedData ?? financialYears[0];
+
+  // Calcular percentuais baseados no total investido
+  const calculatePercentage = (value: number, total: number) => {
+    return total > 0 ? Math.round((value / total) * 100) : 0;
+  };
+
+  const projectsPercentage = calculatePercentage(financialData.projetcs, financialData.amount_invested);
+  const infrastructurePercentage = calculatePercentage(financialData.infrastructure, financialData.amount_invested);
+  const administrationPercentage = calculatePercentage(financialData.administration, financialData.amount_invested);
 
   const reports = [
     {
@@ -48,37 +59,6 @@ export default function TransparencyPage() {
       date: "2024-09-30",
       size: "1.3 MB",
       downloads: 289
-    }
-  ];
-
-  const projects = [
-    {
-      name: "Futuro Campeão",
-      budget: 120000,
-      spent: 118500,
-      beneficiaries: 60,
-      progress: 98.8
-    },
-    {
-      name: "Educação Transformadora",
-      budget: 95000,
-      spent: 89200,
-      beneficiaries: 80,
-      progress: 93.9
-    },
-    {
-      name: "Mulheres Empreendedoras",
-      budget: 65000,
-      spent: 62300,
-      beneficiaries: 25,
-      progress: 95.8
-    },
-    {
-      name: "Ritmo e Rima",
-      budget: 35000,
-      spent: 33800,
-      beneficiaries: 35,
-      progress: 96.6
     }
   ];
 
@@ -182,7 +162,7 @@ export default function TransparencyPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-orange)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">74%</span>
+                    <span className="text-white font-bold text-lg">{projectsPercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -195,7 +175,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-green-c)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">20%</span>
+                    <span className="text-white font-bold text-lg">{infrastructurePercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Infraestrutura</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -208,7 +188,7 @@ export default function TransparencyPage() {
 
                 <div className="text-center">
                   <div className="w-24 h-24 bg-[var(--reino-yellow)] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-lg">6%</span>
+                    <span className="text-white font-bold text-lg">{administrationPercentage}%</span>
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Administração</h4>
                   <p className="text-gray-600 text-sm mb-2">
@@ -223,58 +203,8 @@ export default function TransparencyPage() {
           </div>
         </section>
 
-        {/* Detalhamento por Projeto */}
-        <section className="section-padding bg-white">
-          <div className="container-max">
-            <div className="text-center mb-12">
-              <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">
-                Investimento por Projeto
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Veja como os recursos são distribuídos entre nossos diferentes projetos e programas.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {projects.map((project, index) => (
-                <div
-                  key={project.name}
-                  className={`bg-gray-50 rounded-3xl p-6 animate-slide-up`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-xl font-bold text-[var(--reino-green-e)]">{project.name}</h3>
-                    <span className="text-sm text-gray-600">{project.beneficiaries} beneficiários</span>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Orçamento</span>
-                      <span className="font-semibold">{formatCurrency(project.budget)}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Executado</span>
-                      <span className="font-semibold">{formatCurrency(project.spent)}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-[var(--reino-orange)] h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.progress}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Execução</span>
-                      <span className="font-semibold text-[var(--reino-orange)]">{project.progress}%</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Relatórios para Download */}
-        <section className="section-padding bg-gray-50">
+        <section className="section-padding bg-white">
           <div className="container-max">
             <div className="text-center mb-12">
               <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-4">

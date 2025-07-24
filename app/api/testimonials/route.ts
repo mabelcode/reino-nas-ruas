@@ -2,17 +2,17 @@ import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
+export async function GET(request: Request, context: { env?: { DIRECTUS_URL?: string, DIRECTUS_TOKEN?: string } } = {}) {
+  const DIRECTUS_URL = context.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
+  const DIRECTUS_TOKEN = context.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
 
-export async function GET() {
   if (!DIRECTUS_URL) {
     return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
   }
 
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/testimonials`, {
-      headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
+      headers: DIRECTUS_TOKEN ? { Authorization: `Bearer ${DIRECTUS_TOKEN}` } : {},
     });
     if (!res.ok) {
       const errorText = await res.text();

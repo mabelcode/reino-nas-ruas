@@ -1,12 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { VolunteerModal } from '@/components/volunteer/VolunteerModal';
 import { generateKeywordsString } from '@/lib/keywords';
-
-const inter = Inter({ subsets: ['latin'] });
 
 
 export const metadata: Metadata = {
@@ -111,10 +108,6 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
         {/* Favicon */}
         <link rel="icon" type="image/x-icon" href="/assets/images/icons/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.ico" />
@@ -292,7 +285,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <Header />
         <main className="min-h-screen">
           {children}

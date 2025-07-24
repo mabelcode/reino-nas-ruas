@@ -1,4 +1,4 @@
-name = "reinonasruas"
+name = 'reino-nas-ruas'
 compatibility_date = "2025-07-24"
 main = ".vercel/output/static/_worker.js"
 

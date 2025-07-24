@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
+export const runtime = 'edge';
+
 export const revalidate = 1209600; // cache for 2 weeks
 
 export async function GET() {

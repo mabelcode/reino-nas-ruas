@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
 export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;

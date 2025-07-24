@@ -9,6 +9,7 @@ bucket = ".vercel/output/static"
 command = "npm run build"
 
 [env.production]
+name = "reino-nas-ruas"
 routes = [
   "reinonasruas.org.br/*",
   "www.reinonasruas.org.br/*"

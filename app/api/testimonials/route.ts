@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-export async function GET(request: Request, context: { env?: { DIRECTUS_URL?: string, DIRECTUS_TOKEN?: string } } = {}) {
-  const DIRECTUS_URL = context.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+export async function GET(request: Request, context: any) {
+  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
+  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
 
   if (!DIRECTUS_URL) {
     return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });

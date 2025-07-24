@@ -16,9 +16,9 @@ interface Partner {
 
 export const revalidate = 86400;
 
-export async function GET(request: Request, context: { env?: { DIRECTUS_URL?: string, DIRECTUS_TOKEN?: string } } = {}) {
-    const DIRECTUS_URL = context.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-    const DIRECTUS_TOKEN = context.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+export async function GET(request: Request, context: any) {
+    const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
+    const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
 
     if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
         return NextResponse.json(

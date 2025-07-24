@@ -25,8 +25,9 @@ interface ONGInfo {
   working_days_3?: string | null;
 }
 
-export async function GET(request: Request, context: { env: { DIRECTUS_URL: string, DIRECTUS_TOKEN: string } }) {
-  const { DIRECTUS_URL, DIRECTUS_TOKEN } = context.env;
+export async function GET(request: Request, context: any) {
+  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
+  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
 
   if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
     return NextResponse.json(

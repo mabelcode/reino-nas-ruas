@@ -65,4 +65,12 @@ describe('PartnersShowcase', () => {
     await screen.findByText('P1');
     expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
   });
+
+  it('prefixes partner website with https', async () => {
+    global.fetch = jest.fn().mockResolvedValue({ ok: true, json: async () => ({ data: partners }) });
+    render(<PartnersShowcase />);
+    const link = await screen.findByRole('link', { name: /p1/i });
+    expect(link).toHaveAttribute('href', 'https://a.com');
+  });
+
 });

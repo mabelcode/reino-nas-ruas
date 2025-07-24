@@ -19,4 +19,11 @@ describe('DonationCTA', () => {
     expect(handler).toHaveBeenCalled();
     window.removeEventListener('openVolunteerModal', handler);
   });
+
+  it('displays suggested donation amounts', () => {
+    render(<DonationCTA />);
+    expect(screen.getByText('R$ 30')).toBeInTheDocument();
+    expect(screen.getByText('R$ 100')).toBeInTheDocument();
+    expect(screen.getByText('R$ 500')).toBeInTheDocument();
+  });
 });

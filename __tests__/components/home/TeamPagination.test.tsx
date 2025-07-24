@@ -32,4 +32,10 @@ describe('TeamPagination', () => {
     fireEvent.click(screen.getByRole('button', { name: '2' }));
     expect(prev).not.toBeDisabled();
   });
+
+  it('hides pagination when one page', () => {
+    render(<TeamPagination team={team.slice(0, 4)} />);
+    expect(screen.queryByText('Próxima')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument();
+  });
 });

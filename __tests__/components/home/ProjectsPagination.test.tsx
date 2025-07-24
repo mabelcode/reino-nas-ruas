@@ -36,4 +36,11 @@ describe('ProjectsPagination', () => {
     expect(screen.queryByLabelText(/página anterior/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /próxima página/i })).not.toBeInTheDocument();
   });
+
+  it('navigates to page from location hash', async () => {
+    window.location.hash = '#p5';
+    const { findByText } = render(<ProjectsPagination programs={programs} />);
+    expect(await findByText('P5')).toBeInTheDocument();
+    expect(screen.queryByText('P1')).not.toBeInTheDocument();
+  });
 });

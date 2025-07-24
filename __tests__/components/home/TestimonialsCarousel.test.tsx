@@ -36,4 +36,16 @@ describe('TestimonialsCarousel', () => {
     expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /ir para o slide/i })).not.toBeInTheDocument();
   });
+
+  it('disables previous arrow on first page', () => {
+    render(<TestimonialsCarousel testimonials={testimonials} projectMap={map} />);
+    expect(screen.getByRole('button', { name: /anterior/i })).toBeDisabled();
+  });
+
+  it('hides navigation when slides match width', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 700, writable: true });
+    render(<TestimonialsCarousel testimonials={testimonials.slice(0, 2)} projectMap={map} />);
+    expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /ir para o slide/i })).not.toBeInTheDocument();
+  });
 });

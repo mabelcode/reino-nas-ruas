@@ -25,4 +25,11 @@ describe('StatsSection', () => {
     expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText(String(new Date().getFullYear() - 2020))).toBeInTheDocument();
   });
+
+  it('always shows love stat', () => {
+    const { StatsSection } = require('@/components/home/StatsSection');
+    render(<StatsSection />);
+    expect(screen.getByText('100%')).toBeInTheDocument();
+    expect(screen.getByText('Amor e Dedicação')).toBeInTheDocument();
+  });
 });

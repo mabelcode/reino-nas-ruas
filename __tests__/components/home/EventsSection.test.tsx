@@ -24,4 +24,10 @@ describe('EventsSection', () => {
     const { container } = render(<EventsSection />);
     await waitFor(() => expect(container.innerHTML).toBe(''));
   });
+
+  it('handles fetch rejection gracefully', async () => {
+    global.fetch = jest.fn().mockRejectedValue(new Error('fail'));
+    const { container } = render(<EventsSection />);
+    await waitFor(() => expect(container.innerHTML).toBe(''));
+  });
 });

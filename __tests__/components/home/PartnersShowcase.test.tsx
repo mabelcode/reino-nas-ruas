@@ -40,4 +40,29 @@ describe('PartnersShowcase', () => {
     fireEvent.click(next);
     expect(screen.getByRole('button', { name: /anterior/i })).not.toBeDisabled();
   });
+
+  it('dot navigation switches pages', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: partners }),
+    });
+    Object.defineProperty(window, 'innerWidth', { value: 1200, writable: true });
+    render(<PartnersShowcase />);
+    await screen.findByText('P1');
+    const dots = screen.getAllByRole('button', { name: /ir para o slide/i });
+    fireEvent.click(dots[1]);
+    await waitFor(() => expect(screen.queryByText('P1')).not.toBeInTheDocument());
+    expect(screen.getByText('P5')).toBeInTheDocument();
+  });
+
+  it('hides navigation when few partners', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: partners.slice(0, 2) }),
+    });
+    Object.defineProperty(window, 'innerWidth', { value: 1200, writable: true });
+    render(<PartnersShowcase />);
+    await screen.findByText('P1');
+    expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
+  });
 });

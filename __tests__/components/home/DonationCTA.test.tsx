@@ -10,4 +10,13 @@ describe('DonationCTA', () => {
     fireEvent.click(button);
     // Event dispatch should not throw
   });
+
+  it('dispatches custom event when volunteer button clicked', () => {
+    const handler = jest.fn();
+    window.addEventListener('openVolunteerModal', handler);
+    render(<DonationCTA />);
+    fireEvent.click(screen.getByRole('button', { name: /seja voluntário/i }));
+    expect(handler).toHaveBeenCalled();
+    window.removeEventListener('openVolunteerModal', handler);
+  });
 });

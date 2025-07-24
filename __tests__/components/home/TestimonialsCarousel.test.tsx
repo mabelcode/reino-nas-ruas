@@ -19,4 +19,21 @@ describe('TestimonialsCarousel', () => {
     fireEvent.click(next);
     expect(screen.getByRole('button', { name: /anterior/i })).not.toBeDisabled();
   });
+
+  it('dot navigation works', () => {
+    Object.defineProperty(window, 'innerWidth', { value: 700, writable: true });
+    render(<TestimonialsCarousel testimonials={testimonials} projectMap={map} />);
+    const dots = screen.getAllByRole('button', { name: /ir para o slide/i });
+    fireEvent.click(dots[1]);
+    expect(screen.getByText('t3')).toBeInTheDocument();
+    expect(screen.queryByText('t1')).not.toBeInTheDocument();
+  });
+
+  it('hides navigation with one testimonial', () => {
+    render(
+      <TestimonialsCarousel testimonials={[testimonials[0]]} projectMap={map} />
+    );
+    expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /ir para o slide/i })).not.toBeInTheDocument();
+  });
 });

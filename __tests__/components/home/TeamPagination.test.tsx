@@ -21,4 +21,15 @@ describe('TeamPagination', () => {
     fireEvent.click(screen.getByRole('button', { name: '2' }));
     expect(screen.getByText('Gustavo')).toBeInTheDocument();
   });
+
+  it('sorts members and toggles arrows', () => {
+    const unsorted = [...team].reverse();
+    render(<TeamPagination team={unsorted} />);
+    const prev = screen.getByRole('button', { name: 'Anterior' });
+    expect(prev).toBeDisabled();
+    const cards = screen.getAllByRole('heading', { level: 3 });
+    expect(cards[0]).toHaveTextContent('Ana');
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    expect(prev).not.toBeDisabled();
+  });
 });

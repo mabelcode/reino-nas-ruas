@@ -28,7 +28,8 @@ interface ONGInfo {
 export async function GET(request: Request, context: any) {
   const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
   const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
-  
+
+  console.log('env var test:', context?.env?.DIRECTUS_URL, context?.env?.DIRECTUS_TOKEN);
   console.log('DIRECTUS_URL', DIRECTUS_URL);
   console.log('DIRECTUS_TOKEN', DIRECTUS_TOKEN);
 
@@ -53,7 +54,10 @@ export async function GET(request: Request, context: any) {
     );
   }
 
-  const info: ONGInfo = (await infoRes.json()).data;
+  const raw = await infoRes.json();
+  console.log('raw response:', raw);
+
+  const info: ONGInfo = raw.data;
 
   return NextResponse.json(
     { data: info },

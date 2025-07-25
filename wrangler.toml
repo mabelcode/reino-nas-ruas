@@ -1,10 +1,7 @@
 name = "reino-nas-ruas"
 compatibility_date = "2025-07-24"
-main = ".vercel/output/static/_worker.js"
-keep_vars = true
 
-[site]
-bucket = ".vercel/output/static"
+keep_vars = true
 
 [build]
 command = "npm run build"

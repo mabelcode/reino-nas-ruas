@@ -1,16 +1,13 @@
 import { NextResponse } from 'next/server';
+import { getEnv } from '@/lib/env';
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
+const { DIRECTUS_URL, DIRECTUS_TOKEN: TOKEN } = getEnv();
 
 export const runtime = 'edge';
 
 export const revalidate = 1209600; // cache for 2 weeks
 
 export async function GET() {
-  if (!DIRECTUS_URL) {
-    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
-  }
 
   const res = await fetch(`${DIRECTUS_URL}/items/financial_year`, {
     headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},

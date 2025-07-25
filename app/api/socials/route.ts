@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { getEnv } from '@/lib/env';
 
 export const runtime = 'edge';
 
@@ -13,15 +14,7 @@ interface Social {
 }
 
 export async function GET(request: Request, context: any) {
-  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
-
-  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 }
-    );
-  }
+  const { DIRECTUS_URL, DIRECTUS_TOKEN } = getEnv(context);
 
   try {
     const res = await fetch(`${DIRECTUS_URL}/items/social_media`, {

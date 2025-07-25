@@ -6,13 +6,13 @@
  * @returns Response com a imagem ou NextResponse com erro
  */
 import { NextResponse } from 'next/server';
+import { getEnv } from './env';
 
 export async function fetchDirectusAsset(
   id: string,
   context: Record<string, any>
 ): Promise<Response | NextResponse> {
-  const DIRECTUS_URL: string | undefined = context?.env?.DIRECTUS_URL ?? process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN: string | undefined = context?.env?.DIRECTUS_TOKEN ?? process.env.DIRECTUS_TOKEN;
+  const { DIRECTUS_URL, DIRECTUS_TOKEN } = getEnv(context);
 
   if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
     return NextResponse.json(

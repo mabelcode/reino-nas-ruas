@@ -13,13 +13,10 @@ interface DonateInfo {
   suggested_values: string[];
 }
 
-export async function GET(request: Request, context: any) {
-  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+import { getEnv } from '@/lib/env';
 
-  if (!DIRECTUS_URL) {
-    return NextResponse.json({ error: 'Server misconfiguration' }, { status: 500 });
-  }
+export async function GET(request: Request, context: any) {
+  const { DIRECTUS_URL, DIRECTUS_TOKEN } = getEnv(context);
 
   const res = await fetch(`${DIRECTUS_URL}/items/donate`, {
     headers: DIRECTUS_TOKEN ? { Authorization: `Bearer ${DIRECTUS_TOKEN}` } : {}

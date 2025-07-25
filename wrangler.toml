@@ -6,9 +6,15 @@ keep_vars = true
 [build]
 command = "npx @cloudflare/next-on-pages@1"
 
+[vars]
+DIRECTUS_URL = "https://directus.example.com"
+DIRECTUS_TOKEN = "REPLACE_ME"
+
 [env.production]
 name = "reino-nas-ruas"
 routes = ["reinonasruas.org.br/*", "www.reinonasruas.org.br/*"]
 
 [env.production.vars]
 LOG_LEVEL = "error"
+DIRECTUS_URL = "https://directus.example.com"
+DIRECTUS_TOKEN = "REPLACE_ME"

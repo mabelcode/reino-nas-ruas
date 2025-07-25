@@ -1,17 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getEnv } from '@/lib/env';
 
 export const runtime = 'edge';
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
+const { DIRECTUS_URL, DIRECTUS_TOKEN: TOKEN } = getEnv();
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  if (!DIRECTUS_URL || !TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 },
-    );
-  }
 
   const { id } = await params;
   const body = await req.json();

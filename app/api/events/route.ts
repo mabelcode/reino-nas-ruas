@@ -1,17 +1,11 @@
 import { NextResponse } from 'next/server';
+import { getEnv } from '@/lib/env';
 
 export const runtime = 'edge';
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
+const { DIRECTUS_URL, DIRECTUS_TOKEN: TOKEN } = getEnv();
 
 export async function GET(req: Request) {
-  if (!DIRECTUS_URL) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 },
-    );
-  }
 
   const { searchParams } = new URL(req.url);
   const page = searchParams.get('page') ?? '0';

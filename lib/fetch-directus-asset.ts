@@ -33,7 +33,7 @@ export async function fetchDirectusAsset(
     });
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch asset', details: (error as Error).message },
+      { error: 'Failed to fetch asset' },
       { status: 502 }
     );
   }

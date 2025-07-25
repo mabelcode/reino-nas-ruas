@@ -30,7 +30,7 @@ export default function Projects() {
         locale: ptBR,
       })
       : '',
-    image: p.cover_image ? `/api/assets/${p.cover_image}` : undefined,
+    image: p.cover_image || undefined,
     status: p.status,
   }));
 

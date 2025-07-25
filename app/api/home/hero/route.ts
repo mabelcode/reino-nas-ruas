@@ -2,11 +2,10 @@ import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 const DIRECTUS_URL = process.env.DIRECTUS_URL;
 const TOKEN = process.env.DIRECTUS_TOKEN;
 
-export const revalidate = 86400; // cache for 24 hours
+export const revalidate = 604800; // cache for 1 week
 
 interface DirectusHeroResponse {
   data?: {
@@ -22,11 +21,12 @@ export async function GET() {
     );
   }
 
+  // Buscar o id da imagem do Directus
   const itemRes = await fetch(`${DIRECTUS_URL}/items/hero`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
-    next: { revalidate },
+    // Não usar next: { revalidate } aqui
   });
 
   if (!itemRes.ok) {
@@ -46,11 +46,11 @@ export async function GET() {
     );
   }
 
+  // Buscar a imagem binária
   const imageRes = await fetch(`${DIRECTUS_URL}/assets/${imageId}`, {
     headers: {
       Authorization: `Bearer ${TOKEN}`,
     },
-    next: { revalidate },
   });
 
   if (!imageRes.ok) {
@@ -60,5 +60,12 @@ export async function GET() {
     );
   }
 
-  return NextResponse.redirect(`${BASE_URL}/api/assets/${imageId}`, { status: 307 });
+  const contentType = imageRes.headers.get('content-type') || 'image/jpeg';
+
+  return new Response(imageRes.body, {
+    headers: {
+      'Content-Type': contentType,
+      'Cache-Control': 'public, max-age=604800, immutable',
+    },
+  });
 }

@@ -29,7 +29,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         headers: {
             Authorization: `Bearer ${DIRECTUS_TOKEN}`,
         },
-        next: { revalidate },
+        // next: { revalidate }, // Remover pois não é usado para cache de imagens
     });
 
     if (!imageRes.ok) {
@@ -41,10 +41,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     const contentType = imageRes.headers.get('content-type') || 'application/octet-stream';
 
+    // Cache de 1 semana (604800 segundos)
     return new Response(imageRes.body, {
         headers: {
             'Content-Type': contentType,
-            'Cache-Control': `public, max-age=${revalidate}`,
+            'Cache-Control': 'public, max-age=604800, immutable',
         },
     });
 }

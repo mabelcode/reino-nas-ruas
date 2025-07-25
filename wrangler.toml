@@ -1,5 +1,7 @@
 name = "reino-nas-ruas"
 compatibility_date = "2025-07-24"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "./.vercel/output/static"
 
 keep_vars = true
 

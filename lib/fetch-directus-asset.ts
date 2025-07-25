@@ -12,7 +12,12 @@ export async function fetchDirectusAsset(
   id: string,
   context: Record<string, any>
 ): Promise<Response | NextResponse> {
-  const { DIRECTUS_URL, DIRECTUS_TOKEN } = getEnv(context);
+  const {
+    DIRECTUS_URL,
+    DIRECTUS_TOKEN,
+    NEXT_PUBLIC_IMAGE_FORMAT,
+    NEXT_PUBLIC_IMAGE_QUALITY,
+  } = getEnv(context);
 
   if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
     return NextResponse.json(
@@ -21,9 +26,15 @@ export async function fetchDirectusAsset(
     );
   }
 
+  const params = new URLSearchParams();
+  if (NEXT_PUBLIC_IMAGE_FORMAT) params.set('format', NEXT_PUBLIC_IMAGE_FORMAT);
+  if (NEXT_PUBLIC_IMAGE_QUALITY) params.set('quality', NEXT_PUBLIC_IMAGE_QUALITY);
+
+  const url = `${DIRECTUS_URL}/assets/${encodeURIComponent(id)}${params.toString() ? `?${params}` : ''}`;
+
   let imageRes: Response;
   try {
-    imageRes = await fetch(`${DIRECTUS_URL}/assets/${encodeURIComponent(id)}`, {
+    imageRes = await fetch(url, {
       headers: {
         Authorization: `Bearer ${DIRECTUS_TOKEN}`,
       },

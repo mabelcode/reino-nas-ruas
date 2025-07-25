@@ -48,4 +48,9 @@ describe('TestimonialsCarousel', () => {
     expect(screen.queryByRole('button', { name: /próximo/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /ir para o slide/i })).not.toBeInTheDocument();
   });
+
+  it('shows project names from map', () => {
+    render(<TestimonialsCarousel testimonials={testimonials.slice(0, 1)} projectMap={map} />);
+    expect(screen.getByText('Proj A')).toBeInTheDocument();
+  });
 });

@@ -43,4 +43,10 @@ describe('ProjectsPagination', () => {
     expect(await findByText('P5')).toBeInTheDocument();
     expect(screen.queryByText('P1')).not.toBeInTheDocument();
   });
+
+  it('ignores unknown hash', () => {
+    window.location.hash = '#other';
+    render(<ProjectsPagination programs={programs} />);
+    expect(screen.getByText('P1')).toBeInTheDocument();
+  });
 });

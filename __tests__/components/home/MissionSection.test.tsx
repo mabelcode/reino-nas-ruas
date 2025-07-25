@@ -27,4 +27,17 @@ describe('MissionSection', () => {
     await screen.findAllByRole('heading', { level: 3 });
     expect(screen.queryByText('M')).not.toBeInTheDocument();
   });
+
+  it('only fetches once on rerender', async () => {
+    const fetchMock = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ data: { mission: 'M', vision: 'V', values: 'X' } }),
+    });
+    global.fetch = fetchMock;
+    const { rerender } = render(<MissionSection />);
+    await screen.findByText('M');
+    rerender(<MissionSection />);
+    await screen.findByText('M');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
 });

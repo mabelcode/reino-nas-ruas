@@ -30,4 +30,27 @@ describe('EventsSection', () => {
     const { container } = render(<EventsSection />);
     await waitFor(() => expect(container.innerHTML).toBe(''));
   });
+
+  it('formats and displays event data', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            title: 'Formatação',
+            date: '2024-08-15T00:00:00.000Z',
+            duration: '2h',
+            location: 'Aqui',
+            description: '<p>desc</p>',
+            cover_image: 'img.png',
+          },
+        ],
+      }),
+    });
+    render(<EventsSection />);
+    expect(await screen.findByText('Formatação')).toBeInTheDocument();
+    expect(screen.getByText(/15 de agosto/i)).toBeInTheDocument();
+    expect(screen.getByText('2h')).toBeInTheDocument();
+    expect(screen.getByText('Aqui')).toBeInTheDocument();
+  });
 });

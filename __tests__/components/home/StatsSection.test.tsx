@@ -32,4 +32,14 @@ describe('StatsSection', () => {
     expect(screen.getByText('100%')).toBeInTheDocument();
     expect(screen.getByText('Amor e Dedicação')).toBeInTheDocument();
   });
+
+  it('renders icons with correct colors', () => {
+    const { StatsSection } = require('@/components/home/StatsSection');
+    const { container } = render(<StatsSection />);
+    const svgIcons = container.querySelectorAll('svg');
+    const colors = Array.from(svgIcons).map((icon) => icon.getAttribute('class'));
+    expect(colors.some((c) => c?.includes('text-[var(--reino-orange)]'))).toBe(true);
+    expect(colors.some((c) => c?.includes('text-[var(--reino-green-c)]'))).toBe(true);
+    expect(colors.some((c) => c?.includes('text-[var(--reino-yellow)]'))).toBe(true);
+  });
 });

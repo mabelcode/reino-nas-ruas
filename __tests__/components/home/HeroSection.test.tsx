@@ -26,4 +26,11 @@ describe('HeroSection', () => {
     expect(screen.getAllByText('1')).toHaveLength(2);
     expect(screen.getAllByText(String(new Date().getFullYear() - 2024)).length).toBeGreaterThan(0);
   });
+
+  it('renders hero image and scroll indicator', () => {
+    const { HeroSection } = require('@/components/home/HeroSection');
+    render(<HeroSection />);
+    expect(screen.getByAltText(/crianças sorrindo/i)).toBeInTheDocument();
+    expect(document.querySelector('.animate-bounce')).toBeInTheDocument();
+  });
 });

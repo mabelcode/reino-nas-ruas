@@ -73,4 +73,24 @@ describe('PartnersShowcase', () => {
     expect(link).toHaveAttribute('href', 'https://a.com');
   });
 
+  it('supports swipe gestures', async () => {
+    global.fetch = jest.fn().mockResolvedValue({ ok: true, json: async () => ({ data: partners }) });
+    render(<PartnersShowcase />);
+    await screen.findByText('P1');
+    const card = screen.getByText('P1');
+    fireEvent.touchStart(card, { touches: [{ clientX: 200 }] });
+    fireEvent.touchEnd(card, { changedTouches: [{ clientX: 50 }] });
+    expect(screen.getByRole('button', { name: /anterior/i })).not.toBeDisabled();
+  });
+
+  it('updates slides on resize', async () => {
+    global.fetch = jest.fn().mockResolvedValue({ ok: true, json: async () => ({ data: partners }) });
+    Object.defineProperty(window, 'innerWidth', { value: 500, writable: true });
+    render(<PartnersShowcase />);
+    await screen.findByText('P1');
+    Object.defineProperty(window, 'innerWidth', { value: 1300, writable: true });
+    fireEvent(window, new Event('resize'));
+    await waitFor(() => expect(screen.getByRole('button', { name: /próximo/i })).toBeInTheDocument());
+  });
+
 });

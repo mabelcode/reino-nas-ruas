@@ -38,4 +38,11 @@ describe('TeamPagination', () => {
     expect(screen.queryByText('Próxima')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument();
   });
+
+  it('disables next arrow on last page', () => {
+    render(<TeamPagination team={team} />);
+    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    const next = screen.getByRole('button', { name: 'Próxima' });
+    expect(next).toBeDisabled();
+  });
 });

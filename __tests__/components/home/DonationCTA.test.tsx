@@ -20,6 +20,17 @@ describe('DonationCTA', () => {
     window.removeEventListener('openVolunteerModal', handler);
   });
 
+  it('fires event each time the button is clicked', () => {
+    const handler = jest.fn();
+    window.addEventListener('openVolunteerModal', handler);
+    render(<DonationCTA />);
+    const btn = screen.getByRole('button', { name: /seja voluntário/i });
+    fireEvent.click(btn);
+    fireEvent.click(btn);
+    expect(handler).toHaveBeenCalledTimes(2);
+    window.removeEventListener('openVolunteerModal', handler);
+  });
+
   it('displays suggested donation amounts', () => {
     render(<DonationCTA />);
     expect(screen.getByText('R$ 30')).toBeInTheDocument();

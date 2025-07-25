@@ -30,4 +30,27 @@ describe('ProjectsSection', () => {
     expect(screen.getByText('B')).toBeInTheDocument();
     expect(screen.queryByText('A')).not.toBeInTheDocument();
   });
+
+  it('sums participants and shows placeholder image', () => {
+    const { useProjectsStore } = require('@/stores/projects-store');
+    useProjectsStore.setState({
+      projects: [
+        {
+          id: '1',
+          title: 'A',
+          description: 'd'.repeat(120),
+          keywords: [],
+          status: 'Em andamento',
+          kids: 1,
+          young: 2,
+          adult: 3,
+          elderly: 4,
+        },
+      ],
+      loading: false,
+    });
+    const { container } = render(<ProjectsSection />);
+    expect(screen.getByText('10 participantes')).toBeInTheDocument();
+    expect(container.querySelector('.bg-gray-200')).toBeInTheDocument();
+  });
 });

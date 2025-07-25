@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "rm -rf .next/cache && next build",
     "build:production": "rm -rf .next/cache && next build && next-on-pages",
+    "postbuild": "rm -rf .next/cache",
     "deploy": "wrangler deploy --env production",
     "start": "next start",
     "lint": "next lint",

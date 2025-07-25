@@ -56,7 +56,7 @@ function transformEvent(api: ApiEvent): EventItem {
         duration: api.duration,
         organizer: api.organizer,
       },
-      images: api.gallery?.map((g: any) => `/api/assets/${g.directus_files_id}`) || [],
+      images: api.gallery?.map((g: any) => g.directus_files_id) || [],
       videoUrl: api.video_url || undefined,
       highlights: api.highlights || [],
       impact: api.impact || '',

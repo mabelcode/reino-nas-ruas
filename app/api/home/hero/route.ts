@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server';
+import { fetchDirectusAsset } from '@/lib/fetch-directus-asset';
 
 export const runtime = 'edge';
-
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
-
-export const revalidate = 86400; // cache for 24 hours
 
 interface DirectusHeroResponse {
   data?: {
@@ -14,19 +9,22 @@ interface DirectusHeroResponse {
   };
 }
 
-export async function GET() {
-  if (!DIRECTUS_URL || !TOKEN) {
+export async function GET(context: any) {
+  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
+  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+
+  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
     return NextResponse.json(
       { error: 'Server misconfiguration' },
       { status: 500 }
     );
   }
 
+  // Buscar o id da imagem do Directus
   const itemRes = await fetch(`${DIRECTUS_URL}/items/hero`, {
     headers: {
-      Authorization: `Bearer ${TOKEN}`,
+      Authorization: `Bearer ${DIRECTUS_TOKEN}`,
     },
-    next: { revalidate },
   });
 
   if (!itemRes.ok) {
@@ -46,19 +44,5 @@ export async function GET() {
     );
   }
 
-  const imageRes = await fetch(`${DIRECTUS_URL}/assets/${imageId}`, {
-    headers: {
-      Authorization: `Bearer ${TOKEN}`,
-    },
-    next: { revalidate },
-  });
-
-  if (!imageRes.ok) {
-    return NextResponse.json(
-      { error: 'Failed to fetch hero image' },
-      { status: imageRes.status }
-    );
-  }
-
-  return NextResponse.redirect(`${BASE_URL}/api/assets/${imageId}`, { status: 307 });
+  return fetchDirectusAsset(imageId, context);
 }

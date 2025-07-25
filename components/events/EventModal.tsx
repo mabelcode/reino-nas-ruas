@@ -215,7 +215,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                 {/* Main Image */}
                 <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
                   <Image
-                    src={fullContent.images[currentImageIndex]}
+                    src={fullContent.images[currentImageIndex] ? `/api/assets/${fullContent.images[currentImageIndex]}` : ''}
                     alt={`Foto ${currentImageIndex + 1} do evento`}
                     fill
                     className="object-cover"
@@ -258,7 +258,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                           }`}
                       >
                         <Image
-                          src={image}
+                          src={image ? `/api/assets/${image}` : ''}
                           alt={`Miniatura ${index + 1}`}
                           width={80}
                           height={80}
@@ -284,7 +284,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                   >
                     {thumbnail && (
                       <Image
-                        src={thumbnail}
+                        src={thumbnail ? `/api/assets/${thumbnail}` : ''}
                         alt="Video thumbnail"
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

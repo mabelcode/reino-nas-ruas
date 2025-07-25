@@ -117,7 +117,7 @@ export function ProjectsPagination({ programs }: ProjectsPaginationProps) {
               {program.image ? (
                 <div className="aspect-video relative">
                   <Image
-                    src={program.image}
+                    src={`/api/assets/${program.image}`}
                     alt={program.title}
                     fill
                     className="rounded-3xl shadow-lg object-cover w-full"

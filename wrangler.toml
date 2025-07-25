@@ -4,7 +4,7 @@ compatibility_date = "2025-07-24"
 keep_vars = true
 
 [build]
-command = "npm run build"
+command = "npx @cloudflare/next-on-pages@1 --experimental-minify"
 
 [env.production]
 name = "reino-nas-ruas"

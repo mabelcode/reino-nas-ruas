@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "build:production": "next build && next-on-pages",
+    "build": "rm -rf .next/cache && next build",
+    "build:production": "rm -rf .next/cache && next build && next-on-pages",
     "deploy": "wrangler deploy --env production",
     "start": "next start",
     "lint": "next lint",

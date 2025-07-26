@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import Image from 'next/image';
 
 interface TeamMember {
   id: string;
@@ -28,13 +27,12 @@ export function TeamPagination({ team }: TeamPaginationProps) {
         {pageTeam.map((member) => (
           <div key={member.id} className="bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up">
             <div className="relative w-full" style={{ height: '340px' }}>
-              <Image
+              <img
                 src={`/api/assets/${member.cover}`}
                 alt={member.name}
                 className="w-full h-full object-cover"
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 style={{ objectFit: 'cover' }}
+                loading="lazy"
               />
             </div>
             <div className="p-6">

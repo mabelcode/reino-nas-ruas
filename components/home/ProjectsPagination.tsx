@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
-import Image from 'next/image';
 import { Users, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Program {
@@ -116,12 +115,12 @@ export function ProjectsPagination({ programs }: ProjectsPaginationProps) {
             <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''} animate-slide-in-right`}>
               {program.image ? (
                 <div className="aspect-video relative">
-                  <Image
+                  <img
                     src={`/api/assets/${program.image}`}
                     alt={program.title}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="rounded-3xl shadow-lg object-cover w-full"
+                    className="rounded-3xl shadow-lg object-cover w-full h-full"
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
                   />
                 </div>
               ) : (

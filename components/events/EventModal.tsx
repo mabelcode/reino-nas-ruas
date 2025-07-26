@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, Calendar, Eye, Play, Users, MapPin, Clock } from 'lucide-react';
 
 const categoryLabels = {
@@ -214,12 +213,12 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
 
                 {/* Main Image */}
                 <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
-                  <Image
+                  <img
                     src={fullContent.images[currentImageIndex] ? `/api/assets/${fullContent.images[currentImageIndex]}` : ''}
                     alt={`Foto ${currentImageIndex + 1} do evento`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
-                    className="object-cover"
+                    className="object-cover w-full h-full"
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
                   />
 
                   {/* Navigation Arrows */}
@@ -258,12 +257,14 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                           : 'border-gray-200 hover:border-gray-300'
                           }`}
                       >
-                        <Image
+                        <img
                           src={image ? `/api/assets/${image}` : ''}
                           alt={`Miniatura ${index + 1}`}
                           width={80}
                           height={80}
                           className="object-cover w-full h-full"
+                          style={{ objectFit: 'cover' }}
+                          loading="lazy"
                         />
                       </button>
                     ))}
@@ -284,12 +285,12 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                     onClick={() => setShowVideo(true)}
                   >
                     {thumbnail && (
-                      <Image
+                      <img
                         src={thumbnail ? `/api/assets/${thumbnail}` : ''}
                         alt="Video thumbnail"
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover w-full h-full"
+                        style={{ objectFit: 'cover' }}
+                        loading="lazy"
                       />
                     )}
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">

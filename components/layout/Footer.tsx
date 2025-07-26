@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useInfo } from '@/hooks/use-info';
 import { useSocials } from '@/hooks/use-socials';
 import {
@@ -156,13 +155,14 @@ export function Footer() {
               <span className="font-medium text-xs sm:text-sm text-gray-200 group-hover:text-white transition-colors tracking-wide" style={{ letterSpacing: '0.02em' }}>
                 Desenvolvido por <span className="font-bold">Mabel Code®</span>
               </span>
-              <Image
+              <img
                 src="/assets/images/logos/mabel-code-logo.png"
                 alt="Logo Mabel Code"
                 width={36}
                 height={36}
                 className="w-8 h-8 sm:w-9 sm:h-9 rounded-full shadow-md border border-white/20 bg-white object-contain"
-                style={{ background: '#fff' }}
+                style={{ background: '#fff', imageRendering: 'auto' }}
+                loading="lazy"
               />
             </a>
           </div>

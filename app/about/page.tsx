@@ -1,8 +1,7 @@
 'use client';
 
 import { Award, Users, Target, Star } from 'lucide-react';
-import { useEffect, useState, useMemo } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { useInfo } from '@/hooks/use-info';
 import { useProjectStats } from '@/hooks/use-project-stats';
 import { TeamPagination } from '@/components/home/TeamPagination';
@@ -91,12 +90,13 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-slide-in-left">
                 {about?.about_image && (
-                  <Image
+                  <img
                     src={`/api/assets/${about.about_image}`}
                     alt="Início da Reino nas Ruas"
                     className="rounded-3xl shadow-lg"
                     width={800}
                     height={600}
+                    loading="lazy"
                   />
                 )}
               </div>

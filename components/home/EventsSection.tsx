@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -96,12 +95,12 @@ export function EventsSection() {
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="aspect-video relative">
-                  <Image
+                  <img
                     src={event.image}
                     alt={event.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover"
+                    className="object-cover w-full h-full"
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
                   />
                   <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
                     <div className="bg-[var(--reino-orange)] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">

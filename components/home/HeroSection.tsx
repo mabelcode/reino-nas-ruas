@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { ChevronRight, Users, Heart, Target } from 'lucide-react';
-import Image from 'next/image';
 import { useInfo } from '@/hooks/use-info';
 import { useProjectStats } from '@/hooks/use-project-stats';
 
@@ -15,13 +14,14 @@ export function HeroSection() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image
+        <img
           src="/api/home/hero"
           alt="Crianças sorrindo em atividades esportivas"
           className="w-full h-full object-cover"
           loading="eager"
           width={1920}
           height={1080}
+          style={{ imageRendering: 'auto' }}
         />
         <div className="absolute inset-0 bg-black/40"></div>
       </div>

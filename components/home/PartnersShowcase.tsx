@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 
 function getSlidesToShow() {
@@ -127,12 +126,14 @@ export function PartnersShowcase() {
                   style={{ display: 'flex', flexDirection: 'column', animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 bg-gray-50 rounded-lg p-2 flex items-center justify-center">
-                    <Image
+                    <img
                       src={`/api/assets/${partner.logo}`}
                       alt={`Logo ${partner.name}`}
                       width={64}
                       height={64}
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                      style={{ imageRendering: 'auto' }}
+                      loading="lazy"
                     />
                   </div>
                   <h4 className="text-sm sm:text-base font-semibold text-[var(--reino-green-e)] mb-1 group-hover:text-[var(--reino-orange)] transition-colors duration-300">

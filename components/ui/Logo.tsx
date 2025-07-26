@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface LogoProps {
@@ -32,15 +31,15 @@ export function Logo({
 
   return (
     <div className={cn('relative', sizeClass, className)}>
-      <Image
+      <img
         src={logoPath}
         alt="Reino nas Ruas"
         width={64}
         height={64}
         className="w-full h-full object-contain"
-        priority={priority}
-        quality={90}
+        loading={priority ? 'eager' : 'lazy'}
         sizes="(max-width: 640px) 32px, (max-width: 768px) 48px, 64px"
+        style={{ imageRendering: 'auto' }}
       />
     </div>
   );
@@ -50,15 +49,15 @@ export function Logo({
 export function HeaderLogo() {
   return (
     <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18">
-      <Image
+      <img
         src="/assets/images/logos/logo-primary.png"
         alt="Reino nas Ruas"
         width={72}
         height={72}
         className="w-full h-full object-contain"
-        priority={true}
-        quality={100}
+        loading="eager"
         sizes="(max-width: 640px) 56px, (max-width: 1024px) 64px, 72px"
+        style={{ imageRendering: 'auto' }}
       />
     </div>
   );
@@ -68,15 +67,15 @@ export function HeaderLogo() {
 export function FooterLogo() {
   return (
     <div className="relative w-12 h-12 sm:w-14 sm:h-14">
-      <Image
+      <img
         src="/assets/images/logos/logo-primary.png"
         alt="Reino nas Ruas"
         width={64}
         height={64}
         className="w-full h-full object-contain"
-        priority={false}
-        quality={100}
+        loading="lazy"
         sizes="(max-width: 640px) 48px, 56px"
+        style={{ imageRendering: 'auto' }}
       />
     </div>
   );
@@ -86,15 +85,15 @@ export function FooterLogo() {
 export function HeroLogo() {
   return (
     <div className="relative w-12 h-12 sm:w-16 sm:h-16">
-      <Image
+      <img
         src="/assets/images/logos/logo-primary.png"
         alt="Reino nas Ruas"
         width={64}
         height={64}
         className="w-full h-full object-contain"
-        priority={true}
-        quality={95}
+        loading="eager"
         sizes="(max-width: 640px) 48px, 64px"
+        style={{ imageRendering: 'auto' }}
       />
     </div>
   );
@@ -104,15 +103,15 @@ export function HeroLogo() {
 export function VolunteerModalLogo() {
   return (
     <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-      <Image
+      <img
         src="/assets/images/logos/logo-primary.png"
         alt="Reino nas Ruas"
         width={60}
         height={60}
         className="w-full h-full object-contain"
-        priority={true}
-        quality={100}
+        loading="eager"
         sizes="(max-width: 640px) 60px, 60px"
+        style={{ imageRendering: 'auto' }}
       />
     </div>
   );

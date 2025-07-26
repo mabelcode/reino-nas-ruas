@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight, Calendar, Users, Star } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -50,12 +49,12 @@ export function ProjectsSection() {
             >
               <div className="aspect-video relative">
                 {project.image ? (
-                  <Image
+                  <img
                     src={project.image}
                     alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover"
+                    className="object-cover w-full h-full"
+                    style={{ objectFit: 'cover' }}
+                    loading="lazy"
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gray-200" />

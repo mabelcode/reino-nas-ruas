@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { Calendar, Eye, ArrowRight } from 'lucide-react';
 import { EventModal } from '@/components/events/EventModal';
 import { ApiEvent, useEventsStore } from '@/stores/events-store';
@@ -173,12 +172,12 @@ export default function EventsPage() {
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="aspect-video relative">
-                      <Image 
+                      <img 
                         src={item.image} 
                         alt={item.title} 
-                        fill 
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover" 
+                        className="object-cover w-full h-full"
+                        style={{ objectFit: 'cover' }}
+                        loading="lazy"
                       />
                       <div className="absolute top-4 left-4 space-x-2">
                         {item.categories.map((cat) => (

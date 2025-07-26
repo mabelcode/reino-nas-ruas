@@ -4,19 +4,28 @@ Allow: /
 # Sitemap
 Sitemap: https://reinonasruas.org.br/sitemap.xml
 
-# Crawl-delay
+# Crawl-delay para respeitar o servidor
 Crawl-delay: 1
 
-# Disallow admin areas (if any)
-Disallow: /admin/
+# Bloquear arquivos desnecessários
 Disallow: /api/
 Disallow: /_next/
-Disallow: /private/
+Disallow: /admin/
+Disallow: /.env
+Disallow: /.git
+Disallow: /node_modules/
 
-# Allow important pages
-Allow: /about/
-Allow: /projects/
-Allow: /contact/
-Allow: /donate/
-Allow: /transparency/
-Allow: /events/
+# Permitir assets importantes
+Allow: /assets/
+Allow: /_next/static/
+Allow: /_next/image
+
+# Googlebot específico
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bingbot específico
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

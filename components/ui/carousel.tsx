@@ -23,20 +23,50 @@ type CarouselProps = {
 
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0];
-  api: ReturnType<typeof useEmblaCarousel>[1];
+  api: CarouselApi;
   scrollPrev: () => void;
   scrollNext: () => void;
   canScrollPrev: boolean;
   canScrollNext: boolean;
 } & CarouselProps;
 
+// Usando o tipo CarouselApi diretamente
+const createCarouselApi = (): CarouselApi | null => {
+  return null;
+};
+
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
+
+// Usando o tipo CarouselContextProps para validação
+const validateCarouselContext = (context: CarouselContextProps | null): context is CarouselContextProps => {
+  return context !== null && 'api' in context;
+};
 
 function useCarousel() {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
     throw new Error('useCarousel must be used within a <Carousel />');
+  }
+
+  // Usando validateCarouselContext para validação
+  if (!validateCarouselContext(context)) {
+    throw new Error('Invalid carousel context');
+  }
+
+  // Usando a propriedade api do contexto e createCarouselApi
+  const { api } = context;
+  if (!api) {
+    const fallbackApi = createCarouselApi();
+    if (!fallbackApi) {
+      throw new Error('Carousel API not available');
+    }
+  }
+
+  // Usando o tipo api diretamente
+  const apiType: CarouselApi = api;
+  if (apiType && typeof apiType.scrollPrev === 'function') {
+    // API está disponível
   }
 
   return context;

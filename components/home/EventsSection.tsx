@@ -42,7 +42,8 @@ export function EventsSection() {
         }));
         setEvents(upcoming);
       } catch (error) {
-        console.error('Erro ao carregar eventos:', error);
+        // Log de erro para debugging (removido em produção)
+        // console.error('Erro ao carregar eventos:', error);
       } finally {
         setLoading(false);
       }

@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 function getSlidesToShow() {
   if (typeof window === 'undefined') return 1;
@@ -63,10 +63,12 @@ export function PartnersShowcase() {
   const goTo = (idx: number) => setCurrentPage(Math.max(0, Math.min(idx, totalPages - 1)));
   const next = () => goTo(currentPage + 1);
   const prev = () => goTo(currentPage - 1);
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchStart = (e: React.TouchEvent) => { 
+    touchStartX.current = e.touches[0]?.clientX || 0; 
+  };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    const diff = (e.changedTouches[0]?.clientX || 0) - touchStartX.current;
     if (diff > 50) prev();
     if (diff < -50) next();
     touchStartX.current = null;

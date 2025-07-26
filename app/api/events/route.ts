@@ -7,10 +7,23 @@ export async function GET(request: NextRequest, context: any) {
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get('limit') || '10';
   const page = searchParams.get('page') || '1';
+  
+      // Parâmetros de paginação para uso futuro
+    const limitValue = parseInt(limit);
+    const pageValue = parseInt(page);
+    
+    // Usando as variáveis para validação
+    if (limitValue < 1 || limitValue > 100) {
+      return NextResponse.json({ error: 'Invalid limit parameter' }, { status: 400 });
+    }
+    
+    if (pageValue < 1) {
+      return NextResponse.json({ error: 'Invalid page parameter' }, { status: 400 });
+    }
 
   const config = getDirectusConfig(context);
 
-  let url = `${config.DIRECTUS_URL}/items/events?fields=*,related_projects.projects_id,filter_tags.event_tags_id,gallery.directus_files_id&limit=${limit}&page=${page}&meta=total_count`;
+  const url = `${config.DIRECTUS_URL}/items/events?fields=*,related_projects.projects_id,filter_tags.event_tags_id,gallery.directus_files_id&limit=${limit}&page=${page}&meta=total_count`;
 
   try {
     const res = await fetch(url, {

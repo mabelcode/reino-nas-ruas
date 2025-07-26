@@ -1,3 +1,8 @@
 node_modules
 .next
 out
+dist
+coverage
+test-results
+*.config.js
+*.config.mjs

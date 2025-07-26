@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export const dynamic = 'force-static';
+export const revalidate = 86400; // 24 horas
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://reinonasruas.org.br'

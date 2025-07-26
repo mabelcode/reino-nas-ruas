@@ -47,11 +47,11 @@ export default function TestimonialsCarousel({ testimonials, projectMap }: Testi
 
   // Swipe handlers
   const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    touchStartX.current = e.touches[0]?.clientX || 0;
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    const diff = (e.changedTouches[0]?.clientX || 0) - touchStartX.current;
     if (diff > 50) prev();
     if (diff < -50) next();
     touchStartX.current = null;

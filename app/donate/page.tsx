@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { logger } from '@/lib/logger';
 import { Heart, Copy, CheckCircle, Users, BookOpen, Trophy, Home } from 'lucide-react';
 import { useDonate } from '@/hooks/use-donate';
 import QRCode from 'react-qr-code';
@@ -43,7 +44,11 @@ export default function DonatePage() {
         }
         await navigator.share(shareData);
       } catch (err) {
-        console.error('Erro ao compartilhar', err);
+                logger.error('Erro ao compartilhar conteúdo', err as Error, {
+          page: 'donate',
+          action: 'share_content',
+          shareData
+        });
       }
     } else {
       alert('O compartilhamento não é suportado neste navegador.');

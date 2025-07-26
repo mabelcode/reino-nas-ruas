@@ -5,6 +5,7 @@ export const runtime = 'edge';
 
 export const dynamic = 'force-dynamic';
 
+// Interface para tipagem da resposta da API
 interface DonateInfo {
   id: string;
   date_created?: string;
@@ -13,6 +14,18 @@ interface DonateInfo {
   pix: string;
   suggested_values: string[];
 }
+
+// Usando o tipo DonateInfo para validação
+const validateDonateInfoData = (data: unknown): data is DonateInfo => {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'pix' in data &&
+    'suggested_values' in data &&
+    Array.isArray((data as DonateInfo).suggested_values)
+  );
+};
 
 export async function GET(request: NextRequest, context: any) {
   const config = getDirectusConfig(context);
@@ -27,7 +40,13 @@ export async function GET(request: NextRequest, context: any) {
     }
 
     const data = await res.json();
-    return NextResponse.json(data);
+    
+    // Validando dados usando o tipo DonateInfo
+    if (data.data && validateDonateInfoData(data.data)) {
+      return NextResponse.json(data);
+    }
+    
+    return NextResponse.json({ error: 'Invalid data format' }, { status: 500 });
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Calendar, Users, Star } from 'lucide-react';
+import { ArrowRight, Calendar, Users } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useProjects } from '@/hooks/use-projects';

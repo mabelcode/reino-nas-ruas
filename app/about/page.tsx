@@ -1,11 +1,12 @@
 'use client';
 
 import { Award, Users, Target, Star } from 'lucide-react';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useInfo } from '@/hooks/use-info';
 import { useProjectStats } from '@/hooks/use-project-stats';
 import { TeamPagination } from '@/components/home/TeamPagination';
+import { logger } from '@/lib/logger';
 
 interface AboutData {
   history: string;
@@ -60,7 +61,10 @@ export default function AboutPage() {
           setTeam(data.data || []);
         }
       } catch (err) {
-        console.error(err);
+                logger.error('Erro ao carregar dados sobre a organização', err as Error, {
+          page: 'about',
+          action: 'fetch_about_data'
+        });
       }
     }
 

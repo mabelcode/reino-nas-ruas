@@ -6,7 +6,6 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "rm -rf .next/cache",
-    "deploy": "vercel --prod",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",

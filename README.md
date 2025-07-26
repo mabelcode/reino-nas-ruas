@@ -24,16 +24,10 @@ npm run build
 
 ## Deploy na Vercel
 
-O deploy é feito pela Vercel. Conecte o repositório no painel da Vercel e defina as seguintes configurações:
+O deploy é realizado automaticamente pela Vercel sempre que há push para o ramo `main`. Conecte o repositório no painel da Vercel e defina as seguintes configurações:
 
 - **Build Command**: `npm run build`
 - **Install Command**: `npm install`
 - **Output Directory**: `.next`
 
-Também é possível fazer o deploy manualmente usando a CLI:
-
-```bash
-npm run deploy
-```
-
-Isso executará `vercel --prod`, enviando a aplicação para produção.
+Não é necessário executar nenhum comando manual de deploy. A Vercel fará o build e publicará a aplicação automaticamente.

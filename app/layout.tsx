@@ -115,14 +115,13 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* Preload critical resources */}
-        <link rel="preload" href="/assets/images/logos/logo-primary.png" as="image" />
-        <link rel="preload" href="/assets/images/social/og-image.jpg" as="image" />
-        <link rel="preload" href="/assets/images/icons/favicon.ico" as="image" />
+        {/* Preload critical resources for maximum SEO */}
+        <link rel="preload" href="/assets/images/logos/logo-primary.png" as="image" type="image/png" />
+        <link rel="preload" href="/assets/images/social/og-image.jpg" as="image" type="image/jpeg" />
+        <link rel="preload" href="/assets/images/icons/favicon.ico" as="image" type="image/x-icon" />
 
         {/* Security headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="X-Frame-Options" content="DENY" />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 
@@ -153,8 +152,8 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
 
         {/* Configurações de Segurança Adicional */}
         <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
-        <meta httpEquiv="Cross-Origin-Opener-Policy" content="same-origin" />
-        <meta httpEquiv="Cross-Origin-Embedder-Policy" content="require-corp" />
+        <meta httpEquiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
+        <meta httpEquiv="Cross-Origin-Embedder-Policy" content="unsafe-none" />
         <meta httpEquiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 
         {/* DNS Prefetch para Performance */}
@@ -286,6 +285,12 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         />
       </head>
       <body>
+        {/* SEO-critical images (hidden but loaded for preload optimization) */}
+        <div style={{ display: 'none' }}>
+          <img src="/assets/images/social/og-image.jpg" alt="Open Graph Image" />
+          <img src="/assets/images/icons/favicon.ico" alt="Favicon" />
+        </div>
+        
         <Header />
         <main className="min-h-screen">
           {children}

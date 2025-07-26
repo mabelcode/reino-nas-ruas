@@ -98,6 +98,34 @@ const nextConfig = {
           },
         ],
       },
+      // Headers específicos para Next.js Image Optimization
+      {
+        source: '/_next/image(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'Accept-Encoding',
+            value: 'gzip, deflate, br',
+          },
+        ],
+      },
+      // Headers específicos para API de assets
+      {
+        source: '/api/assets/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=604800, immutable',
+          },
+          {
+            key: 'Accept-Encoding',
+            value: 'gzip, deflate, br',
+          },
+        ],
+      },
     ];
   },
 

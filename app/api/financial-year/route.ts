@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDirectusConfig } from '../../../lib/utils';
 
+export const runtime = 'edge';
+
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest, context: any) {
   const config = getDirectusConfig(context);
 

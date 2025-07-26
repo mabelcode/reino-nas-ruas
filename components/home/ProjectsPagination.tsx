@@ -120,6 +120,7 @@ export function ProjectsPagination({ programs }: ProjectsPaginationProps) {
                     src={`/api/assets/${program.image}`}
                     alt={program.title}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="rounded-3xl shadow-lg object-cover w-full"
                   />
                 </div>

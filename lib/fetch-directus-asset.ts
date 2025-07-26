@@ -6,26 +6,19 @@
  * @returns Response com a imagem ou NextResponse com erro
  */
 import { NextResponse } from 'next/server';
+import { getDirectusConfig } from './utils';
 
 export async function fetchDirectusAsset(
   id: string,
   context: Record<string, any>
 ): Promise<Response | NextResponse> {
-  const DIRECTUS_URL: string | undefined = context?.env?.DIRECTUS_URL ?? process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN: string | undefined = context?.env?.DIRECTUS_TOKEN ?? process.env.DIRECTUS_TOKEN;
-
-  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 }
-    );
-  }
+  const config = getDirectusConfig(context);
 
   let imageRes: Response;
   try {
-    imageRes = await fetch(`${DIRECTUS_URL}/assets/${encodeURIComponent(id)}`, {
+    imageRes = await fetch(`${config.DIRECTUS_URL}/assets/${encodeURIComponent(id)}`, {
       headers: {
-        Authorization: `Bearer ${DIRECTUS_TOKEN}`,
+        Authorization: `Bearer ${config.DIRECTUS_TOKEN}`,
       },
       // Mantém compatibilidade futura para edge/server
       cache: 'force-cache',

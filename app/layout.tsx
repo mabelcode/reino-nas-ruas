@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     telephone: false,
     date: false,
   },
-  metadataBase: new URL('https://reinonasruas.ong.br'),
+  metadataBase: new URL('https://reinonasruas.org.br'),
   alternates: {
     canonical: '/',
     languages: {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: 'Promovendo transformação social através de atividades educativas e esportivas para crianças e adolescentes em situação de vulnerabilidade.',
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://reinonasruas.ong.br',
+    url: 'https://reinonasruas.org.br',
     siteName: 'Associação Reino nas Ruas',
     countryName: 'Brasil',
     images: [
@@ -175,8 +175,8 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
               "@type": "NonProfit",
               "name": "Associação Reino nas Ruas",
               "description": "ONG brasileira que trabalha com crianças e adolescentes em situação de vulnerabilidade, promovendo transformação social através de atividades educativas e esportivas.",
-              "url": "https://reinonasruas.ong.br",
-              "logo": "https://reinonasruas.ong.br/assets/images/logos/logo-primary.png",
+              "url": "https://reinonasruas.org.br",
+              "logo": "https://reinonasruas.org.br/assets/images/logos/logo-primary.png",
               "sameAs": [
                 "https://www.facebook.com/reinonasruas",
                 "https://www.instagram.com/reinonasruas",

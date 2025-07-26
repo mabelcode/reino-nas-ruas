@@ -100,6 +100,7 @@ export function EventsSection() {
                     src={event.image}
                     alt={event.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover"
                   />
                   <div className="absolute top-3 sm:top-4 left-3 sm:left-4">

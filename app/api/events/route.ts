@@ -1,49 +1,31 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDirectusConfig } from '../../../lib/utils';
 
 export const runtime = 'edge';
 
-const DIRECTUS_URL = process.env.DIRECTUS_URL;
-const TOKEN = process.env.DIRECTUS_TOKEN;
+export async function GET(request: NextRequest, context: any) {
+  const { searchParams } = new URL(request.url);
+  const limit = searchParams.get('limit') || '10';
+  const page = searchParams.get('page') || '1';
 
-export async function GET(req: Request) {
-  if (!DIRECTUS_URL) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 },
-    );
-  }
+  const config = getDirectusConfig(context);
 
-  const { searchParams } = new URL(req.url);
-  const page = searchParams.get('page') ?? '0';
-  const limit = searchParams.get('limit') ?? '6';
-  const upcoming = searchParams.get('upcoming') === 'true';
+  let url = `${config.DIRECTUS_URL}/items/events?fields=*,related_projects.projects_id,filter_tags.event_tags_id,gallery.directus_files_id&limit=${limit}&page=${page}&meta=total_count`;
 
-  let url = `${DIRECTUS_URL}/items/events?fields=*,related_projects.projects_id,filter_tags.event_tags_id,gallery.directus_files_id&limit=${limit}&page=${page}&meta=total_count`;
-
-  if (upcoming) {
-    const today = new Date().toLocaleDateString('sv-SE', {
-      timeZone: 'America/Sao_Paulo',
+  try {
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${config.DIRECTUS_TOKEN}`,
+      },
     });
-    url += `&filter[date][_gte]=${today}&sort=date`;
+
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch events' }, { status: res.status });
+    }
+
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
-
-  const res = await fetch(url, {
-    headers: TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {},
-  });
-
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: 'Failed to fetch events' },
-      { status: res.status },
-    );
-  }
-
-  const data = await res.json();
-
-  return NextResponse.json(
-    { data: data.data, meta: data.meta },
-    {
-      status: 200,
-    },
-  );
 }

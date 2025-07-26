@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDirectusConfig } from '../../../../lib/utils';
 
 export const runtime = 'edge';
 
@@ -16,38 +17,21 @@ interface Partner {
 
 export const revalidate = 86400;
 
-export async function GET(request: Request, context: any) {
-    const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-    const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+export async function GET(request: NextRequest, context: any) {
+  const config = getDirectusConfig(context);
 
-    if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-        return NextResponse.json(
-            { error: 'Server misconfiguration' },
-            { status: 500 }
-        );
-    }
-
-    const partnersRes = await fetch(`${DIRECTUS_URL}/items/partners`, {
-        headers: {
-            Authorization: `Bearer ${DIRECTUS_TOKEN}`,
-        },
-        next: { revalidate },
+  try {
+    const partnersRes = await fetch(`${config.DIRECTUS_URL}/items/partners`, {
+      headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
     });
 
     if (!partnersRes.ok) {
-        return NextResponse.json(
-            { error: 'Failed to fetch partners' },
-            { status: partnersRes.status }
-        );
+      return NextResponse.json({ error: 'Failed to fetch partners' }, { status: partnersRes.status });
     }
 
-    const partners: Partner[] = (await partnersRes.json()).data;
-
-    return NextResponse.json({ data: partners },
-        {
-            status: 200,
-            headers: {
-                'Cache-Control': `public, max-age=${revalidate}`,
-            },
-        });
+    const data = await partnersRes.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

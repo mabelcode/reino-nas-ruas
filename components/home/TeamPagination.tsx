@@ -33,7 +33,7 @@ export function TeamPagination({ team }: TeamPaginationProps) {
                 alt={member.name}
                 className="w-full h-full object-cover"
                 fill
-                sizes="(max-width: 640px) 100vw, 400px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 style={{ objectFit: 'cover' }}
               />
             </div>

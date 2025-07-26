@@ -218,6 +218,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                     src={fullContent.images[currentImageIndex] ? `/api/assets/${fullContent.images[currentImageIndex]}` : ''}
                     alt={`Foto ${currentImageIndex + 1} do evento`}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
                     className="object-cover"
                   />
 
@@ -287,6 +288,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                         src={thumbnail ? `/api/assets/${thumbnail}` : ''}
                         alt="Video thumbnail"
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     )}

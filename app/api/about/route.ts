@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDirectusConfig } from '../../../lib/utils';
 
 export const runtime = 'edge';
 
@@ -16,38 +17,21 @@ interface About {
   user_updated?: string | null;
 }
 
-export async function GET(request: Request, context: any) {
-  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+export async function GET(request: NextRequest, context: any) {
+  const config = getDirectusConfig(context);
 
-  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 }
-    );
-  }
+  try {
+    const res = await fetch(`${config.DIRECTUS_URL}/items/about`, {
+      headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
+    });
 
-  const res = await fetch(`${DIRECTUS_URL}/items/about`, {
-    headers: { Authorization: `Bearer ${DIRECTUS_TOKEN}` },
-    next: { revalidate },
-  });
-
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: 'Failed to fetch about info' },
-      { status: res.status }
-    );
-  }
-
-  const about: About = (await res.json()).data;
-
-  return NextResponse.json(
-    { data: about },
-    {
-      status: 200,
-      headers: {
-        'Cache-Control': `public, max-age=${revalidate}`,
-      },
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch about' }, { status: res.status });
     }
-  );
+
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

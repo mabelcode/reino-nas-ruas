@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDirectusConfig } from '../../../lib/utils';
 
 export const runtime = 'edge';
 
@@ -12,40 +13,21 @@ interface Social {
   url: string;
 }
 
-export async function GET(request: Request, context: any) {
-  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
-
-  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 }
-    );
-  }
+export async function GET(request: NextRequest, context: any) {
+  const config = getDirectusConfig(context);
 
   try {
-    const res = await fetch(`${DIRECTUS_URL}/items/social_media`, {
-      headers: { Authorization: `Bearer ${DIRECTUS_TOKEN}` },
-      next: { revalidate },
+    const res = await fetch(`${config.DIRECTUS_URL}/items/social_media`, {
+      headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
     });
 
-    if (!res.ok) throw new Error('Failed to fetch social media');
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch socials' }, { status: res.status });
+    }
 
-    const socials: Social[] = (await res.json()).data;
-
-    return NextResponse.json(
-      { data: socials },
-      {
-        status: 200,
-        headers: {
-          'Cache-Control': `public, max-age=${revalidate}`,
-        },
-      }
-    );
-  } catch {
-    return NextResponse.json(
-      { error: 'Failed to fetch social media' },
-      { status: 500 }
-    );
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

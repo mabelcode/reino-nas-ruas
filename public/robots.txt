@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://reinonasruas.ong.br/sitemap.xml
+Sitemap: https://reinonasruas.org.br/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1

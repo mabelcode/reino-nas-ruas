@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDirectusConfig } from '../../../lib/utils';
 
 export const runtime = 'edge';
 
@@ -17,38 +18,25 @@ interface TeamMember {
   user_updated?: string | null;
 }
 
-export async function GET(request: Request, context: any) {
-  const DIRECTUS_URL = context?.env?.DIRECTUS_URL || process.env.DIRECTUS_URL;
-  const DIRECTUS_TOKEN = context?.env?.DIRECTUS_TOKEN || process.env.DIRECTUS_TOKEN;
+export async function GET(request: NextRequest, context: any) {
+  const { searchParams } = new URL(request.url);
+  const limit = searchParams.get('limit') || '10';
+  const page = searchParams.get('page') || '1';
 
-  if (!DIRECTUS_URL || !DIRECTUS_TOKEN) {
-    return NextResponse.json(
-      { error: 'Server misconfiguration' },
-      { status: 500 }
-    );
-  }
+  const config = getDirectusConfig(context);
 
-  const res = await fetch(`${DIRECTUS_URL}/items/team`, {
-    headers: { Authorization: `Bearer ${DIRECTUS_TOKEN}` },
-    next: { revalidate },
-  });
+  try {
+    const res = await fetch(`${config.DIRECTUS_URL}/items/team`, {
+      headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
+    });
 
-  if (!res.ok) {
-    return NextResponse.json(
-      { error: 'Failed to fetch team' },
-      { status: res.status }
-    );
-  }
-
-  const team: TeamMember[] = (await res.json()).data;
-
-  return NextResponse.json(
-    { data: team },
-    {
-      status: 200,
-      headers: {
-        'Cache-Control': `public, max-age=${revalidate}`,
-      },
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch team' }, { status: res.status });
     }
-  );
+
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

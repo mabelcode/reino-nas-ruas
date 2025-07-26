@@ -173,7 +173,13 @@ export default function EventsPage() {
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="aspect-video relative">
-                      <Image src={item.image} alt={item.title} fill className="object-cover" />
+                      <Image 
+                        src={item.image} 
+                        alt={item.title} 
+                        fill 
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover" 
+                      />
                       <div className="absolute top-4 left-4 space-x-2">
                         {item.categories.map((cat) => (
                           <span

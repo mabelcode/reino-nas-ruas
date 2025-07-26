@@ -1,11 +1,15 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { fetchDirectusAsset } from '@/lib/fetch-directus-asset';
 
 export const runtime = 'edge';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }, context: any) {
+export async function GET(
+  request: NextRequest, 
+  { params }: { params: Promise<{ id: string }> }, 
+  context: any
+) {
     const { id } = await params;
     if (!id) {
         return NextResponse.json(

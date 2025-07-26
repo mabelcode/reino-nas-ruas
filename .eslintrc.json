@@ -14,7 +14,11 @@
     "no-var": "error",
     "no-console": "warn",
     "no-debugger": "error",
-    "no-unused-vars": "warn",
+    "no-unused-vars": ["warn", { 
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_",
+      "caughtErrorsIgnorePattern": "^_"
+    }],
     "no-undef": "error"
   },
   "env": {

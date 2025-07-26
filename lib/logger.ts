@@ -3,6 +3,7 @@
  * Suporta diferentes níveis de log e integração com serviços externos
  */
 
+/* eslint-disable no-unused-vars */
 export enum LogLevel {
   DEBUG = 'debug',
   INFO = 'info',
@@ -10,6 +11,7 @@ export enum LogLevel {
   ERROR = 'error',
   FATAL = 'fatal'
 }
+/* eslint-enable no-unused-vars */
 
 // Usando os tipos LogLevel diretamente
 const LOG_LEVELS: LogLevel[] = [LogLevel.DEBUG, LogLevel.INFO, LogLevel.WARN, LogLevel.ERROR, LogLevel.FATAL];

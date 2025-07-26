@@ -126,8 +126,11 @@ class Logger {
     try {
       // Validando o nível de log
       if (!isValidLogLevel(entry.level)) {
-        // eslint-disable-next-line no-console
-        console.error('Invalid log level:', entry.level);
+        // Log interno para erro de validação
+        if (this.isDevelopment) {
+          // eslint-disable-next-line no-console
+          console.warn(`Invalid log level: ${entry.level}. Using INFO level instead.`);
+        }
         return;
       }
 
@@ -162,8 +165,10 @@ class Logger {
       
     } catch (error) {
       // Fallback para console em caso de falha no serviço externo
-      // eslint-disable-next-line no-console
-      console.error('Failed to send log to external service:', error);
+      if (this.isDevelopment) {
+        // eslint-disable-next-line no-console
+        console.warn('Failed to send log to external service:', error);
+      }
     }
   }
 

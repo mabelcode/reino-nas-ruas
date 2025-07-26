@@ -25,5 +25,13 @@
     "browser": true,
     "es2023": true,
     "node": true
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "__tests__/**/*"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

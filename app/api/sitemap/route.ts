@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/logger';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400; // 24 horas
@@ -10,8 +11,12 @@ export async function GET(request: NextRequest) {
   
   // Log de acesso ao sitemap
   if (userAgent) {
-    // eslint-disable-next-line no-console
-    console.log(`Sitemap accessed by: ${userAgent}${referer ? ` from ${referer}` : ''}`);
+    logger.info('Sitemap acessado', {
+      endpoint: '/api/sitemap',
+      userAgent,
+      referer,
+      action: 'sitemap_access'
+    });
   }
   
   const baseUrl = 'https://reinonasruas.org.br';

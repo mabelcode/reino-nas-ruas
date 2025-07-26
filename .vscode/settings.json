@@ -1,0 +1,20 @@
+{
+  "jest.jestCommandLine": "npx jest",
+  "jest.testExplorer": {
+    "enabled": true,
+    "showInlineError": true
+  },
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "files.associations": {
+    "**/*.test.ts": "typescript",
+    "**/*.test.tsx": "typescriptreact",
+    "**/*.spec.ts": "typescript",
+    "**/*.spec.tsx": "typescriptreact"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+} 

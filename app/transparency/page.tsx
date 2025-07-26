@@ -14,6 +14,7 @@ import {
 import { useFinancialYears } from '@/hooks/use-financial-year';
 import { useFinancialReports } from '@/hooks/use-financial-reports';
 import { CertificationsCarousel } from '@/components/transparency/CertificationsCarousel';
+import { useLogger } from '@/lib/logger';
 
 export default function TransparencyPage() {
   const financialYears = useFinancialYears();
@@ -22,6 +23,7 @@ export default function TransparencyPage() {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedYear, setSelectedYear] = useState<string>('');
+  const logger = useLogger();
 
   // Ordenar anos naturalmente (crescente) e criar opções
   const yearOptions = financialYears
@@ -104,8 +106,12 @@ export default function TransparencyPage() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (error) {
-      // Log de erro para debugging (removido em produção)
-      // console.error('Erro ao baixar arquivo:', error);
+      logger.error('Erro ao baixar arquivo', error as Error, {
+        component: 'TransparencyPage',
+        action: 'download_file',
+        fileId,
+        title
+      });
       alert('Erro ao baixar o arquivo. Tente novamente.');
     } finally {
       setIsDownloading(null);

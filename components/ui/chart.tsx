@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '@/lib/utils';
+import { useLogger } from '@/lib/logger';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -68,12 +69,17 @@ const ChartContainer = React.forwardRef<
 ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+  const logger = useLogger();
+  
   const colorConfig = Object.entries(config).filter(
     ([_key, config]) => {
       // Usando a variável _key para logging (mesmo sendo prefixada com _)
       if (process.env.NODE_ENV === 'development' && _key) {
-        // eslint-disable-next-line no-console
-        console.log(`Processing chart config for key: ${_key}`);
+        logger.debug('Processando configuração de gráfico', {
+          component: 'ChartStyle',
+          chartId: id,
+          configKey: _key
+        });
       }
       return config.theme || config.color;
     }

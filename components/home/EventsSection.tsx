@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useLogger } from '@/lib/logger';
 
 interface HomeEvent {
   title: string;
@@ -16,6 +17,7 @@ interface HomeEvent {
 export function EventsSection() {
   const [events, setEvents] = useState<HomeEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const logger = useLogger();
 
   useEffect(() => {
     async function load() {
@@ -42,8 +44,10 @@ export function EventsSection() {
         }));
         setEvents(upcoming);
       } catch (error) {
-        // Log de erro para debugging (removido em produção)
-        // console.error('Erro ao carregar eventos:', error);
+        logger.error('Erro ao carregar eventos', error as Error, {
+          component: 'EventsSection',
+          action: 'load_events'
+        });
       } finally {
         setLoading(false);
       }

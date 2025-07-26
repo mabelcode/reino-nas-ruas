@@ -214,10 +214,8 @@ const nextConfig = {
 
   // Configurações de Compilação
   compiler: {
-    // Remove console.log em produção, mantém console.error
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error'],
-    } : false,
+    // Remove console.log em produção (agora usamos sistema de logging profissional)
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 
   // Configurações de Trailing Slash

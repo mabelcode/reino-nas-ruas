@@ -2,6 +2,7 @@
 
 import { Target, Eye, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useLogger } from '@/lib/logger';
 
 interface About {
   mission: string;
@@ -11,6 +12,7 @@ interface About {
 
 export function MissionSection() {
   const [about, setAbout] = useState<About | null>(null);
+  const logger = useLogger();
 
   useEffect(() => {
     async function fetchAbout() {
@@ -21,8 +23,10 @@ export function MissionSection() {
           setAbout(data.data);
         }
       } catch (err) {
-        // Log de erro para debugging (removido em produção)
-        // console.error(err);
+        logger.error('Erro ao carregar dados sobre a organização', err as Error, {
+          component: 'MissionSection',
+          action: 'fetch_about'
+        });
       }
     }
 

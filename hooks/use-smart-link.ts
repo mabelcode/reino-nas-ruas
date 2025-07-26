@@ -18,7 +18,7 @@ export function useSmartLink() {
     // Se for âncora na mesma página (ex: /about#infos)
     if (href.includes('#')) {
       const [base, hash] = href.split('#');
-      if (pathname === base) {
+      if (pathname === base && hash) {
         const el = document.getElementById(hash);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });

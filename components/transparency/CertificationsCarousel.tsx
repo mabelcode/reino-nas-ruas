@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FileText, CalendarClock, Handshake, FileBarChart, HeartHandshake, Award, UsersRound, SearchCheck } from 'lucide-react';
 
 interface Certification {
@@ -83,7 +83,7 @@ export function CertificationsCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const touchStartX = useRef<number | null>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const autoPlayRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const totalCertifications = certifications.length;
 
@@ -142,12 +142,12 @@ export function CertificationsCarousel() {
 
   // Swipe handlers
   const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
+    touchStartX.current = e.touches[0]?.clientX || 0;
   };
 
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
-    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    const diff = (e.changedTouches[0]?.clientX || 0) - touchStartX.current;
     if (diff > 50) prev();
     if (diff < -50) next();
     touchStartX.current = null;
@@ -190,6 +190,7 @@ export function CertificationsCarousel() {
         <div className="flex justify-center items-center gap-4 sm:gap-6 transition-all duration-500">
           {visibleIndices.map((index, position) => {
             const certification = certifications[index];
+            if (!certification) return null;
             const isCenter = slidesToShow === 3 ? position === 1 : position === 0; // Card central ou único
 
             // Função para navegar ao clicar nos cards laterais

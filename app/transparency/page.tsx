@@ -38,7 +38,7 @@ export default function TransparencyPage() {
   // Inicializar com o primeiro ano disponível (mais antigo)
   useEffect(() => {
     if (yearOptions.length > 0 && !selectedYear) {
-      setSelectedYear(yearOptions[0]);
+      setSelectedYear(yearOptions[0] || '');
     }
   }, [yearOptions, selectedYear]);
 
@@ -57,9 +57,9 @@ export default function TransparencyPage() {
     return total > 0 ? Math.round((value / total) * 100) : 0;
   };
 
-  const projectsPercentage = calculatePercentage(financialData.projetcs, financialData.amount_invested);
-  const infrastructurePercentage = calculatePercentage(financialData.infrastructure, financialData.amount_invested);
-  const administrationPercentage = calculatePercentage(financialData.administration, financialData.amount_invested);
+  const projectsPercentage = financialData ? calculatePercentage(financialData.projetcs, financialData.amount_invested) : 0;
+  const infrastructurePercentage = financialData ? calculatePercentage(financialData.infrastructure, financialData.amount_invested) : 0;
+  const administrationPercentage = financialData ? calculatePercentage(financialData.administration, financialData.amount_invested) : 0;
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -104,7 +104,8 @@ export default function TransparencyPage() {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     } catch (error) {
-      console.error('Erro ao baixar arquivo:', error);
+      // Log de erro para debugging (removido em produção)
+      // console.error('Erro ao baixar arquivo:', error);
       alert('Erro ao baixar o arquivo. Tente novamente.');
     } finally {
       setIsDownloading(null);
@@ -194,7 +195,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <DollarSign className="w-10 h-10 text-[var(--reino-green-c)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.amount_received)}
+                  {financialData ? formatCurrency(financialData.amount_received) : 'R$ 0,00'}
                 </div>
                 <div className="text-sm text-gray-600">Total Recebido</div>
               </div>
@@ -202,7 +203,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <TrendingUp className="w-10 h-10 text-[var(--reino-orange)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {formatCurrency(financialData.amount_invested)}
+                  {financialData ? formatCurrency(financialData.amount_invested) : 'R$ 0,00'}
                 </div>
                 <div className="text-sm text-gray-600">Total Investido</div>
               </div>
@@ -210,7 +211,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Users className="w-10 h-10 text-[var(--reino-yellow)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.amount_beneficiaries}+
+                  {financialData ? financialData.amount_beneficiaries + '+' : '0+'}
                 </div>
                 <div className="text-sm text-gray-600">Beneficiários</div>
               </div>
@@ -218,7 +219,7 @@ export default function TransparencyPage() {
               <div className="bg-white rounded-3xl p-6 text-center shadow-lg">
                 <Calendar className="w-10 h-10 text-[var(--reino-green-e)] mx-auto mb-3" />
                 <div className="text-2xl font-bold text-[var(--reino-green-e)] mb-1">
-                  {financialData.amount_events}
+                  {financialData ? financialData.amount_events : 0}
                 </div>
                 <div className="text-sm text-gray-600">Eventos Realizados</div>
               </div>
@@ -236,7 +237,7 @@ export default function TransparencyPage() {
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Projetos Diretos</h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {formatCurrency(financialData.projetcs)}
+                    {financialData ? formatCurrency(financialData.projetcs) : 'R$ 0,00'}
                   </p>
                   <p className="text-xs text-gray-500">
                     Atividades educativas, esportivas e culturais
@@ -249,7 +250,7 @@ export default function TransparencyPage() {
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Infraestrutura</h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {formatCurrency(financialData.infrastructure)}
+                    {financialData ? formatCurrency(financialData.infrastructure) : 'R$ 0,00'}
                   </p>
                   <p className="text-xs text-gray-500">
                     Manutenção, equipamentos e materiais
@@ -262,7 +263,7 @@ export default function TransparencyPage() {
                   </div>
                   <h4 className="font-semibold text-[var(--reino-green-e)] mb-2">Administração</h4>
                   <p className="text-gray-600 text-sm mb-2">
-                    {formatCurrency(financialData.administration)}
+                    {financialData ? formatCurrency(financialData.administration) : 'R$ 0,00'}
                   </p>
                   <p className="text-xs text-gray-500">
                     Gestão e operação da organização

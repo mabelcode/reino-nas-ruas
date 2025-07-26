@@ -1,8 +1,10 @@
+import React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { VolunteerModal } from '@/components/volunteer/VolunteerModal';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { generateKeywordsString } from '@/lib/keywords';
 
 
@@ -115,10 +117,14 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
 
-        {/* Preload critical resources for maximum SEO */}
+        {/* Preload critical resources for maximum SEO and performance */}
         <link rel="preload" href="/assets/images/logos/logo-primary.png" as="image" type="image/png" />
         <link rel="preload" href="/assets/images/social/og-image.jpg" as="image" type="image/jpeg" />
         <link rel="preload" href="/assets/images/icons/favicon.ico" as="image" type="image/x-icon" />
+        
+        {/* Preload critical fonts */}
+        <link rel="preload" href="/fonts/inter/inter-v19-latin-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/poppins/poppins-v23-latin-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
 
         {/* Security headers */}
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
@@ -164,6 +170,10 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <link rel="dns-prefetch" href="//www.facebook.com" />
         <link rel="dns-prefetch" href="//www.instagram.com" />
         <link rel="dns-prefetch" href="//www.youtube.com" />
+        
+        {/* Preconnect para domínios críticos */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* Structured Data for Organization */}
         <script
@@ -243,7 +253,13 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
                   url: window.location.href
                 };
                 
-                console.error('Error:', errorData);
+                // Log profissional para produção
+                logger.error('JavaScript Error', e.error || new Error(e.message), {
+                  filename: e.filename,
+                  lineno: e.lineno,
+                  colno: e.colno,
+                  url: window.location.href
+                });
                 
                 // Log para analytics (quando disponível)
                 if (typeof gtag !== 'undefined') {
@@ -256,9 +272,8 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
 
               // Unhandled promise rejection
               window.addEventListener('unhandledrejection', function(e) {
-                console.error('Unhandled Promise Rejection:', {
+                logger.error('Unhandled Promise Rejection', new Error(String(e.reason)), {
                   reason: e.reason,
-                  timestamp: new Date().toISOString(),
                   url: window.location.href
                 });
               });
@@ -285,18 +300,16 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         />
       </head>
       <body>
-        {/* SEO-critical images (hidden but loaded for preload optimization) */}
-        <div style={{ display: 'none' }}>
-          <img src="/assets/images/social/og-image.jpg" alt="Open Graph Image" />
-          <img src="/assets/images/icons/favicon.ico" alt="Favicon" />
-        </div>
+        {/* SEO-critical images preloaded via link tags above */}
         
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Footer />
-        <VolunteerModal />
+        <ErrorBoundary componentName="RootLayout">
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+          <VolunteerModal />
+        </ErrorBoundary>
       </body>
     </html>
   );

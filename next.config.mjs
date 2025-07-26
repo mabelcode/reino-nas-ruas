@@ -1,19 +1,28 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = process.env.ANALYZE === 'true' 
+  ? bundleAnalyzer({ enabled: true })
+  : (config) => config;
+
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
 
-  // Otimizações de Build
+  // Otimizações de Build para Vercel
   eslint: {
     ignoreDuringBuilds: true,
   },
 
-  // Configurações Experimentais
+  // Configurações Experimentais otimizadas para Vercel
   experimental: {
     // Otimizações de performance
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
 
-  // Otimizações de Imagem
+  // Configurações de bundle otimizadas para Vercel
+  bundlePagesRouterDependencies: true,
+  serverExternalPackages: [],
+
+  // Otimizações de Imagem para Vercel
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [320, 420, 768, 1024, 1200, 1920, 2560],
@@ -29,11 +38,22 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    // Otimizações específicas para Vercel
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
-  // Otimizações de Performance
+  // Otimizações de Performance para Vercel
   poweredByHeader: false,
   compress: true,
+  // Otimizações específicas para Vercel
+  output: 'standalone',
+  generateEtags: false,
+  // Otimizações de cache
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
 
   // Configurações de Headers de Segurança
   async headers() {
@@ -148,9 +168,9 @@ const nextConfig = {
     ];
   },
 
-  // Configurações de Webpack para otimização
+  // Configurações de Webpack otimizadas para Vercel
   webpack: (config, { dev, isServer }) => {
-    // Otimizações para produção
+    // Otimizações para produção na Vercel
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -159,14 +179,33 @@ const nextConfig = {
             test: /[\\/]node_modules[\\/]/,
             name: 'vendors',
             chunks: 'all',
+            priority: 10,
           },
           common: {
             name: 'common',
             minChunks: 2,
             chunks: 'all',
             enforce: true,
+            priority: 5,
+          },
+          // Otimização específica para React
+          react: {
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+            name: 'react',
+            chunks: 'all',
+            priority: 20,
           },
         },
+      };
+    }
+
+    // Otimizações para Edge Runtime
+    if (config.resolve) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
       };
     }
 
@@ -191,4 +230,4 @@ const nextConfig = {
   // },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

@@ -5,8 +5,9 @@ export const runtime = 'edge';
 
 export const dynamic = 'force-dynamic';
 
-export const revalidate = 86400; // cache for 24 hours
+export const revalidate = 86400;
 
+// Interface para tipagem da resposta da API
 interface ONGInfo {
   id: string;
   email: string;
@@ -26,22 +27,41 @@ interface ONGInfo {
   working_days_3?: string | null;
 }
 
+// Usando o tipo ONGInfo para validação
+const validateONGInfoData = (data: unknown): data is ONGInfo => {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'id' in data &&
+    'name' in data &&
+    'description' in data &&
+    'address' in data &&
+    'phone' in data &&
+    'email' in data &&
+    'cnpj' in data
+  );
+};
+
 export async function GET(request: NextRequest, context: any) {
   const config = getDirectusConfig(context);
 
   try {
-    const infoRes = await fetch(`${config.DIRECTUS_URL}/items/infos`, {
-      headers: {
-        Authorization: `Bearer ${config.DIRECTUS_TOKEN}`,
-      },
+    const res = await fetch(`${config.DIRECTUS_URL}/items/info`, {
+      headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
     });
 
-    if (!infoRes.ok) {
-      return NextResponse.json({ error: 'Failed to fetch info' }, { status: infoRes.status });
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch info' }, { status: res.status });
     }
 
-    const data = await infoRes.json();
-    return NextResponse.json(data);
+    const data = await res.json();
+    
+    // Validando dados usando o tipo ONGInfo
+    if (data.data && validateONGInfoData(data.data)) {
+      return NextResponse.json(data);
+    }
+    
+    return NextResponse.json({ error: 'Invalid data format' }, { status: 500 });
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

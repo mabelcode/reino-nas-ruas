@@ -21,7 +21,8 @@ export function MissionSection() {
           setAbout(data.data);
         }
       } catch (err) {
-        console.error(err);
+        // Log de erro para debugging (removido em produção)
+        // console.error(err);
       }
     }
 

@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "rm -rf .next/cache && next build",
-    "build:production": "rm -rf .next/cache && next build && next-on-pages",
+    "build": "next build",
     "postbuild": "rm -rf .next/cache",
-    "deploy": "wrangler deploy --env production",
+    "deploy": "vercel --prod",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
@@ -76,7 +75,6 @@
     "zustand": "^5.0.6"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.13",
     "@playwright/test": "^1.54.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",

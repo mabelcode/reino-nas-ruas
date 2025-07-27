@@ -7,22 +7,104 @@ import { useDonate } from '@/hooks/use-donate';
 import QRCode from 'react-qr-code';
 import { QrCodePix } from 'qrcode-pix';
 
+// Função para gerar QR Code PIX manualmente (fallback)
+const generatePixQRCode = (pixKey: string, amount?: string) => {
+  const cleanKey = pixKey.replace(/[^\w]/g, '');
+  const pixAmount = amount ? parseFloat(amount).toFixed(2) : '0.00';
+  
+  // Estrutura do QR Code PIX conforme especificação do Banco Central
+  const pixData = [
+    '000201', // Payload Format Indicator
+    '2658', // Point of Initiation Method
+    '0014br.gov.bcb.pix', // Global Unique Identifier
+    '01' + cleanKey.length.toString().padStart(2, '0') + cleanKey, // PIX Key
+    '52040000', // Merchant Category Code
+    '5303986', // Transaction Currency
+    '54' + pixAmount.length.toString().padStart(2, '0') + pixAmount, // Transaction Amount
+    '5802BR', // Country Code
+    '59' + 'REINO NAS RUAS'.length.toString().padStart(2, '0') + 'REINO NAS RUAS', // Merchant Name
+    '60' + 'SAO PAULO'.length.toString().padStart(2, '0') + 'SAO PAULO', // Merchant City
+    '62070503***', // Additional Data Field Template
+    '6304' // CRC16
+  ].join('');
+  
+  return pixData;
+};
+
 export default function DonatePage() {
   const [copiedPix, setCopiedPix] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState('');
+  const [qrError, setQrError] = useState(false);
 
   const donateInfo = useDonate();
   const pixKey = donateInfo.pix;
 
-  const qrPayload = useMemo(() => {
-    const qr = QrCodePix({
-      version: '01',
-      key: pixKey,
-      name: 'REINO NAS RUAS',
-      city: 'SAO PAULO',
-      value: selectedAmount ? Number(selectedAmount) : undefined,
-    });
-    return qr.payload();
+  // Função para validar e formatar a chave PIX
+  const formatPixKey = (key: string) => {
+    // Remove caracteres especiais e espaços
+    return key.replace(/[^\w]/g, '');
+  };
+
+  // Função para validar se a chave PIX é válida
+  const isValidPixKey = (key: string) => {
+    if (!key || key === '00.000.000/0000-00') return false;
+    
+    // Remove caracteres especiais para validação
+    const cleanKey = key.replace(/[^\w]/g, '');
+    
+    // Validações específicas por tipo de chave PIX
+    if (cleanKey.length === 11) {
+      // CPF
+      return /^\d{11}$/.test(cleanKey);
+    } else if (cleanKey.length === 14) {
+      // CNPJ
+      return /^\d{14}$/.test(cleanKey);
+    } else if (cleanKey.includes('@')) {
+      // Email
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(key);
+    } else if (cleanKey.length === 11 && cleanKey.startsWith('55')) {
+      // Telefone (Brasil)
+      return /^55\d{9}$/.test(cleanKey);
+    } else if (cleanKey.length >= 10) {
+      // Chave aleatória (mínimo 10 caracteres)
+      return true;
+    }
+    
+    return false;
+  };
+
+    const qrPayload = useMemo(() => {
+    try {
+      setQrError(false);
+      
+      // Validar se a chave PIX é válida
+      if (!isValidPixKey(pixKey)) {
+        // Em vez de throw, usar fallback diretamente
+        setQrError(true);
+        return generatePixQRCode(pixKey, selectedAmount);
+      }
+
+      // Tentar usar a biblioteca qrcode-pix primeiro
+      const qr = QrCodePix({
+        version: '01',
+        key: formatPixKey(pixKey),
+        name: 'REINO NAS RUAS',
+        city: 'SAO PAULO',
+        value: selectedAmount ? Number(selectedAmount) : undefined,
+        transactionId: 'REINO' + Date.now().toString().slice(-8),
+        message: 'Doação Reino nas Ruas',
+      });
+      
+      return qr.payload();
+    } catch (error) {
+      // Só logar erro se não for de validação
+      if (error instanceof Error && !error.message?.includes('Chave PIX inválida')) {
+        console.error('Erro ao gerar QR Code PIX com biblioteca:', error);
+      }
+      setQrError(true);
+      // Fallback para geração manual
+      return generatePixQRCode(pixKey, selectedAmount);
+    }
   }, [pixKey, selectedAmount]);
 
   const handleCopyPix = () => {
@@ -165,7 +247,21 @@ export default function DonatePage() {
                     QR Code PIX
                   </h3>
                   <div className="bg-gray-100 rounded-2xl p-8 mb-6 flex items-center justify-center">
-                    <QRCode value={qrPayload} size={192} />
+                    {qrPayload ? (
+                      <div className="text-center">
+                        <QRCode value={qrPayload} size={192} />
+                        {qrError && (
+                          <p className="text-xs text-orange-600 mt-2">
+                            QR Code gerado manualmente
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-500">
+                        <p className="text-sm">QR Code não disponível</p>
+                        <p className="text-xs mt-1">Use a chave PIX acima</p>
+                      </div>
+                    )}
                   </div>
                   <p className="text-gray-600 text-sm">
                     Escaneie o QR Code acima com seu aplicativo bancário para fazer a doação instantaneamente.

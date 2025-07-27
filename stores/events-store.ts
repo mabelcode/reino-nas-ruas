@@ -31,7 +31,7 @@ export const useEventsStore = create<EventsState>((set) => ({
   events: [],
   totalPages: 1,
   loading: false,
-  async fetchEvents(page = 0) {
+  async fetchEvents(page = 1) {
     set({ loading: true });
     try {
       const res = await fetch(`/api/events?page=${page}`);

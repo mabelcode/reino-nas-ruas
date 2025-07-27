@@ -18,6 +18,16 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
 
+  // Configurações do Turbopack (agora estável)
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+
   // Configurações de bundle otimizadas para Vercel
   bundlePagesRouterDependencies: true,
   serverExternalPackages: [],
@@ -168,49 +178,51 @@ const nextConfig = {
     ];
   },
 
-  // Configurações de Webpack otimizadas para Vercel
-  webpack: (config, { dev, isServer }) => {
-    // Otimizações para produção na Vercel
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-            priority: 10,
+  // Configurações de Webpack otimizadas para Vercel (apenas para produção sem Turbopack)
+  ...(process.env.NODE_ENV === 'production' && {
+    webpack: (config, { dev, isServer }) => {
+      // Otimizações para produção na Vercel
+      if (!dev && !isServer) {
+        config.optimization.splitChunks = {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+              priority: 10,
+            },
+            common: {
+              name: 'common',
+              minChunks: 2,
+              chunks: 'all',
+              enforce: true,
+              priority: 5,
+            },
+            // Otimização específica para React
+            react: {
+              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+              name: 'react',
+              chunks: 'all',
+              priority: 20,
+            },
           },
-          common: {
-            name: 'common',
-            minChunks: 2,
-            chunks: 'all',
-            enforce: true,
-            priority: 5,
-          },
-          // Otimização específica para React
-          react: {
-            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-            name: 'react',
-            chunks: 'all',
-            priority: 20,
-          },
-        },
-      };
-    }
+        };
+      }
 
-    // Otimizações para Edge Runtime
-    if (config.resolve) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
+      // Otimizações para Edge Runtime
+      if (config.resolve) {
+        config.resolve.fallback = {
+          ...config.resolve.fallback,
+          fs: false,
+          net: false,
+          tls: false,
+        };
+      }
 
-    return config;
-  },
+      return config;
+    },
+  }),
 
   // Configurações de Compilação
   compiler: {

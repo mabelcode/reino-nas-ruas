@@ -70,7 +70,7 @@ export default function EventsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { events, totalPages } = useEvents(currentPage - 1);
+  const { events, totalPages } = useEvents(currentPage);
   const updateEvent = useEventsStore((state) => state.updateEvent);
 
   useEffect(() => {

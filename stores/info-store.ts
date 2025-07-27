@@ -1,9 +1,14 @@
 import { create } from 'zustand';
 
 export interface ONGInfo {
+  id: string;
+  date_created?: string;
+  user_updated?: string | null;
+  date_updated?: string | null;
   email: string;
   phone: string;
   cnpj: string;
+  founded_year: number;
   street: string;
   number: number;
   neighborhood: string;
@@ -15,13 +20,14 @@ export interface ONGInfo {
   working_days_1?: string | null;
   working_days_2?: string | null;
   working_days_3?: string | null;
-  founded_year?: number;
 }
 
 export const fallbackInfo: ONGInfo = {
+  id: 'fallback',
   email: 'contato@reinonasruas.org',
   phone: '(11) 99999-9999',
   cnpj: '12.345.678/0001-90',
+  founded_year: 2018,
   street: 'Rua da Esperança',
   number: 123,
   neighborhood: 'Jardim São Paulo',
@@ -33,7 +39,6 @@ export const fallbackInfo: ONGInfo = {
   working_days_1: 'Segunda a Sexta: 8h às 18h',
   working_days_2: 'Sábado: 8h às 12h',
   working_days_3: 'Domingo: Fechado',
-  founded_year: 0,
 };
 
 interface InfoState {

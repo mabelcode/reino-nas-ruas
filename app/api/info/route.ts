@@ -10,6 +10,9 @@ export const revalidate = 86400;
 // Interface para tipagem da resposta da API
 interface ONGInfo {
   id: string;
+  date_created?: string;
+  user_updated?: string | null;
+  date_updated?: string | null;
   email: string;
   phone: string;
   cnpj: string;
@@ -33,12 +36,16 @@ const validateONGInfoData = (data: unknown): data is ONGInfo => {
     typeof data === 'object' &&
     data !== null &&
     'id' in data &&
-    'name' in data &&
-    'description' in data &&
-    'address' in data &&
-    'phone' in data &&
     'email' in data &&
-    'cnpj' in data
+    'phone' in data &&
+    'cnpj' in data &&
+    'founded_year' in data &&
+    'street' in data &&
+    'number' in data &&
+    'neighborhood' in data &&
+    'city' in data &&
+    'state' in data &&
+    'zipcode' in data
   );
 };
 
@@ -46,7 +53,7 @@ export async function GET(request: NextRequest, context: any) {
   const config = getDirectusConfig(context);
 
   try {
-    const res = await fetch(`${config.DIRECTUS_URL}/items/info`, {
+    const res = await fetch(`${config.DIRECTUS_URL}/items/infos`, {
       headers: { Authorization: `Bearer ${config.DIRECTUS_TOKEN}` },
     });
 

@@ -37,7 +37,7 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [320, 420, 768, 1024, 1200, 1920, 2560],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
-    minimumCacheTTL: 604800, // 7 dias
+    minimumCacheTTL: 86400, // 24 horas
     unoptimized: false,
     // Domínios permitidos (se necessário)
     remotePatterns: [
@@ -111,7 +111,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=86400, s-maxage=86400',
           },
         ],
       },
@@ -121,7 +121,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=86400, s-maxage=86400',
           },
           {
             key: 'Accept-Encoding',
@@ -135,7 +135,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
+            value: 'public, max-age=86400, s-maxage=86400',
           },
           {
             key: 'Accept-Encoding',
@@ -149,7 +149,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=604800, immutable',
+            value: 'public, max-age=86400, s-maxage=86400',
           },
           {
             key: 'Accept-Encoding',

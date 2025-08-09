@@ -22,7 +22,7 @@ export async function fetchDirectusAsset(
       },
       // Mantém compatibilidade futura para edge/server
       cache: 'force-cache',
-      next: { revalidate: 604800 },
+      next: { revalidate: 86400 },
     });
   } catch (error) {
     return NextResponse.json(
@@ -43,7 +43,7 @@ export async function fetchDirectusAsset(
   return new Response(imageRes.body, {
     headers: {
       'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=604800, immutable',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
     },
   });
 } 

@@ -49,16 +49,16 @@ export function Logo({
 // Componente específico para o header (otimizado)
 export function HeaderLogo() {
   return (
-    <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18">
+    <div className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14">
       <Image
         src="/assets/images/logos/logo-primary.png"
         alt="Reino nas Ruas"
-        width={72}
-        height={72}
+        width={56}
+        height={56}
         className="w-full h-full object-contain"
         priority={true}
         quality={100}
-        sizes="(max-width: 640px) 56px, (max-width: 1024px) 64px, 72px"
+        sizes="(max-width: 640px) 40px, (max-width: 1024px) 48px, 56px"
       />
     </div>
   );

@@ -9,7 +9,11 @@ import { generateKeywordsString } from '@/lib/keywords';
 
 
 export const metadata: Metadata = {
-  description: 'ONG brasileira que trabalha com crianças e adolescentes em situação de vulnerabilidade, promovendo transformação social através de atividades educativas e esportivas.',
+  title: {
+    default: 'Reino nas Ruas | ONG Guarujá - Transformando Vidas',
+    template: '%s | Reino nas Ruas'
+  },
+  description: 'ONG brasileira que atua em Guarujá/SP trabalhando com crianças e adolescentes em vulnerabilidade social. Transformação através do esporte, arte e educação.',
   keywords: generateKeywordsString(),
   authors: [
     { name: 'Associação Reino nas Ruas' },
@@ -47,12 +51,12 @@ export const metadata: Metadata = {
     yahoo: 'your-yahoo-verification-code',
   },
   openGraph: {
-    title: 'Associação Reino nas Ruas | Transformando Vidas',
-    description: 'Promovendo transformação social através de atividades educativas e esportivas para crianças e adolescentes em situação de vulnerabilidade.',
+    title: 'Reino nas Ruas | ONG Guarujá - Transformando Vidas',
+    description: 'ONG em Guarujá/SP que transforma vidas através do esporte, arte e educação. Trabalhamos com crianças e adolescentes em vulnerabilidade social.',
     type: 'website',
     locale: 'pt_BR',
     url: 'https://reinonasruas.org.br',
-    siteName: 'Associação Reino nas Ruas',
+    siteName: 'Reino nas Ruas',
     countryName: 'Brasil',
     images: [
       {
@@ -65,10 +69,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Associação Reino nas Ruas | Transformando Vidas',
-    description: 'Promovendo transformação social através de atividades educativas e esportivas para crianças e adolescentes em situação de vulnerabilidade.',
-    creator: '@reinonasruas',
+    title: 'Reino nas Ruas | ONG Guarujá - Transformando Vidas',
+    description: 'ONG em Guarujá/SP que transforma vidas através do esporte, arte e educação. Trabalhamos com crianças e adolescentes em vulnerabilidade social.',
     site: '@reinonasruas',
+    creator: '@reinonasruas',
     images: ['/assets/images/social/twitter-image.jpg'],
   },
   category: 'Non-profit organization',
@@ -121,7 +125,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <link rel="preload" href="/assets/images/logos/logo-primary.png" as="image" type="image/png" />
         <link rel="preload" href="/assets/images/social/og-image.jpg" as="image" type="image/jpeg" />
         <link rel="preload" href="/assets/images/icons/favicon.ico" as="image" type="image/x-icon" />
-        
+
         {/* Preload critical fonts */}
         <link rel="preload" href="/fonts/inter/inter-v19-latin-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/poppins/poppins-v23-latin-600.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
@@ -142,15 +146,24 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <meta name="accessibility-control" content="full-keyboard" />
         <meta name="accessibility-hazard" content="none" />
 
-        {/* Configurações de Idioma */}
+        {/* Configurações de Idioma e Localização */}
         <meta name="language" content="pt-BR" />
         <meta name="content-language" content="pt-BR" />
-        <meta name="geo.region" content="BR" />
+        <meta name="geo.region" content="BR-SP" />
         <meta name="geo.country" content="Brasil" />
-        <meta name="geo.placename" content="São Paulo" />
+        <meta name="geo.placename" content="Guarujá" />
+        <meta name="ICBM" content="-24.0045,-46.2565" />
         <meta name="distribution" content="global" />
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="7 days" />
+
+        {/* Meta tags para Google My Business e Local SEO */}
+        <meta name="locality" content="Guarujá" />
+        <meta name="region" content="São Paulo" />
+        <meta name="country-name" content="Brasil" />
+        <meta name="postal-code" content="11450" />
+        <meta name="business-type" content="Non-profit organization" />
+        <meta name="category" content="Social Services, Education, Sports" />
 
         {/* Configurações de Cache */}
         <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
@@ -170,7 +183,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <link rel="dns-prefetch" href="//www.facebook.com" />
         <link rel="dns-prefetch" href="//www.instagram.com" />
         <link rel="dns-prefetch" href="//www.youtube.com" />
-        
+
         {/* Preconnect para domínios críticos */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -182,17 +195,26 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "NonProfit",
-              "name": "Associação Reino nas Ruas",
-              "description": "ONG brasileira que trabalha com crianças e adolescentes em situação de vulnerabilidade, promovendo transformação social através de atividades educativas e esportivas.",
+              "name": "Reino nas Ruas",
+              "alternateName": "Associação Reino nas Ruas",
+              "description": "ONG que atua em Guarujá/SP transformando vidas de crianças e adolescentes através do esporte, arte e educação.",
               "url": "https://reinonasruas.org.br",
-              "logo": "https://reinonasruas.org.br/assets/images/logos/logo-primary.png",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://reinonasruas.org.br/assets/images/logos/logo-primary.png",
+                "width": 200,
+                "height": 200
+              },
+              "image": "https://reinonasruas.org.br/assets/images/social/og-image.jpg",
               "sameAs": [
-                "https://www.facebook.com/reinonasruas",
-                "https://www.instagram.com/reinonasruas",
+                "https://www.facebook.com/profile.php?id=61567349796756",
+                "https://www.instagram.com/ongreinonasruas",
                 "https://www.youtube.com/@reinonasruas"
               ],
               "address": {
                 "@type": "PostalAddress",
+                "addressLocality": "Guarujá",
+                "addressRegion": "SP",
                 "addressCountry": "BR"
               },
               "contactPoint": {
@@ -201,8 +223,17 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
                 "availableLanguage": "Portuguese"
               },
               "foundingDate": "2018",
-              "areaServed": "Brasil",
-              "serviceType": ["Educação", "Esporte", "Arte", "Cultura", "Empoderamento Feminino"]
+              "serviceType": ["Educação", "Esporte", "Arte", "Cultura", "Empoderamento Feminino"],
+              "keywords": "ONG Guarujá, ONG em Guarujá, Reino nas Ruas, esporte educação, transformação social, crianças vulneráveis",
+              "slogan": "Transformando vidas através do esporte, arte e educação",
+              "areaServed": {
+                "@type": "City",
+                "name": "Guarujá",
+                "containedInPlace": {
+                  "@type": "State",
+                  "name": "São Paulo"
+                }
+              }
             })
           }}
         />
@@ -301,7 +332,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
       </head>
       <body>
         {/* SEO-critical images preloaded via link tags above */}
-        
+
         <ErrorBoundary componentName="RootLayout">
           <Header />
           <main className="min-h-screen">

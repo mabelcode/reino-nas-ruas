@@ -80,11 +80,25 @@ export const SEO_KEYWORDS = {
   // Localização e Alcance
   location: [
     'ONG brasileira',
+    'ONG Guarujá',
+    'ONG em Guarujá',
+    'ONG no Guarujá', 
+    'ong guaruja',
+    'ong em guaruja',
+    'ong no guaruja',
+    'projetos sociais Guarujá',
+    'projetos sociais São Paulo',
+    'transformação social Guarujá',
+    'assistência social Guarujá',
+    'ONG São Paulo',
+    'ONG litoral paulista',
+    'trabalho social Guarujá',
+    'impacto social Guarujá',
+    'terceiro setor Guarujá',
+    'organização não governamental Guarujá',
+    'assistência social São Paulo',
     'projetos sociais Brasil',
     'transformação social Brasil',
-    'assistência social Brasil',
-    'projetos sociais São Paulo',
-    'ONG São Paulo',
     'trabalho social Brasil',
     'impacto social Brasil',
   ],
@@ -246,6 +260,9 @@ export function getKeywordsByCategory(category: keyof typeof SEO_KEYWORDS): stri
  */
 export const PRIMARY_KEYWORDS = [
   'Reino nas Ruas',
+  'ONG Guarujá',
+  'ONG em Guarujá', 
+  'ong guaruja',
   'ONG Brasil',
   'crianças vulneráveis',
   'transformação social',
@@ -262,6 +279,9 @@ export const PRIMARY_KEYWORDS = [
  * Keywords secundárias (complementares)
  */
 export const SECONDARY_KEYWORDS = [
+  'projetos sociais Guarujá',
+  'trabalho social Guarujá', 
+  'assistência social Guarujá',
   'projetos sociais',
   'educação através do esporte',
   'cultura transformação',

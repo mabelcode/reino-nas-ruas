@@ -14,18 +14,36 @@ Disallow: /admin/
 Disallow: /.env
 Disallow: /.git
 Disallow: /node_modules/
+Disallow: /__tests__/
+Disallow: /scripts/
+Disallow: /docs/
 
-# Permitir assets importantes
+# Permitir assets importantes para SEO
 Allow: /assets/
 Allow: /_next/static/
 Allow: /_next/image
+Allow: /assets/images/logos/
+Allow: /assets/images/social/
+Allow: /assets/images/icons/
 
-# Googlebot específico
+# Googlebot específico - prioridade para logo e imagens sociais
 User-agent: Googlebot
 Allow: /
+Allow: /assets/images/logos/logo-primary.png
+Allow: /assets/images/social/og-image.jpg
 Crawl-delay: 1
 
 # Bingbot específico
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
+
+# Facebookexternalhit para Open Graph
+User-agent: facebookexternalhit
+Allow: /
+Allow: /assets/images/social/
+
+# Twitterbot para Twitter Cards
+User-agent: Twitterbot
+Allow: /
+Allow: /assets/images/social/

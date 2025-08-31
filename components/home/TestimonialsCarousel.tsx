@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Testimonial } from '@/stores/testimonials-store';
+
+interface Testimonial {
+  id: string;
+  name: string;
+  testimony: string;
+  project?: string;
+}
 
 interface TestimonialsCarouselProps {
   testimonials: Testimonial[];
@@ -16,10 +22,15 @@ const getSlidesToShow = () => {
 
 export default function TestimonialsCarousel({ testimonials, projectMap }: TestimonialsCarouselProps) {
   const [currentPage, setCurrentPage] = useState(0);
-  const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
+  const [slidesToShow, setSlidesToShow] = useState(1); // Always start with 1 for SSR consistency
+  const [isHydrated, setIsHydrated] = useState(false);
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
+    // Set hydrated and initial slidesToShow
+    setIsHydrated(true);
+    setSlidesToShow(getSlidesToShow());
+    
     const handleResize = () => setSlidesToShow(getSlidesToShow());
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -58,7 +69,8 @@ export default function TestimonialsCarousel({ testimonials, projectMap }: Testi
   };
 
   // Se só existe um depoimento, não mostra setas nem dots
-  const showNavigation = testimonials.length > slidesToShow;
+  // Only show navigation after hydration to avoid SSR mismatch
+  const showNavigation = isHydrated && testimonials.length > slidesToShow;
 
   return (
     <div className="relative px-2 sm:px-6 lg:px-12" style={{ overflow: 'visible' }}>
@@ -108,7 +120,6 @@ export default function TestimonialsCarousel({ testimonials, projectMap }: Testi
                 <div className="border-t border-gray-200 pt-4">
                   <div className="font-semibold text-[var(--reino-green-e)]">
                     {testimonial.name}
-                    {testimonial.age ? `, ${testimonial.age} anos` : ''}
                   </div>
                   <div className="text-sm text-[var(--reino-orange)]">
                     {testimonial.project && projectMap[testimonial.project] ? projectMap[testimonial.project] : ''}

@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react';
 import { logger } from '@/lib/logger';
 import { Heart, Copy, CheckCircle, Users, BookOpen, Trophy, Home } from 'lucide-react';
-import { useDonate } from '@/hooks/use-donate';
 import QRCode from 'react-qr-code';
 import { QrCodePix } from 'qrcode-pix';
 
@@ -36,7 +35,12 @@ export default function DonatePage() {
   const [selectedAmount, setSelectedAmount] = useState('');
   const [qrError, setQrError] = useState(false);
 
-  const donateInfo = useDonate();
+  // Dados estáticos da doação baseados no print fornecido
+  const donateInfo = {
+    pix: '52.752.545/0001-84',
+    suggested_values: ['30', '50', '100', '250', '500']
+  };
+  
   const pixKey = donateInfo.pix;
 
   // Função para validar e formatar a chave PIX

@@ -12,8 +12,6 @@ import {
   Linkedin,
   Youtube,
 } from 'lucide-react';
-import { useInfo } from '@/hooks/use-info';
-import { useSocials } from '@/hooks/use-socials';
 import MapIframe from '@/components/MapIframe';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 
@@ -27,8 +25,30 @@ export default function ContactPage() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const info = useInfo();
-  const socials = useSocials();
+
+  // Dados estáticos baseados no print fornecido
+  const info = {
+    street: 'Gentil da Silva Nunes',
+    number: 79,
+    neighborhood: 'Jardim Monteiro da Cruz (Vicente de Carvalho)',
+    city: 'Guarujá',
+    state: 'SP',
+    zipcode: '11454-630',
+    phone: '(13) 99758-7169',
+    email: 'ongreinonasruas@gmail.com',
+    email_2: 'contato@reinonasruas.ong.br',
+    working_days_1: '8h às 22h',
+    working_days_2: '8h às 18h',
+    working_days_3: '8h às 18h'
+  };
+
+  const socials = [
+    { id: 'ig', platform: 'instagram', url: 'https://instagram.com' },
+    { id: 'fb', platform: 'facebook', url: 'https://facebook.com' },
+    { id: 'ln', platform: 'linkedin', url: 'https://linkedin.com' },
+    { id: 'yt', platform: 'youtube', url: 'https://youtube.com' }
+  ];
+
   const iconMap = {
     facebook: Facebook,
     instagram: Instagram,
@@ -227,12 +247,6 @@ export default function ContactPage() {
                       <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Telefone</h3>
                       <p className="text-gray-600">
                         {info.phone}
-                        {info.phone_2 && (
-                          <>
-                            <br />
-                            {info.phone_2}
-                          </>
-                        )}
                       </p>
                     </div>
                   </div>
@@ -244,13 +258,8 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">E-mail</h3>
                       <p className="text-gray-600">
-                        {info.email}
-                        {info.email_2 && (
-                          <>
-                            <br />
-                            {info.email_2}
-                          </>
-                        )}
+                        {info.email}<br />
+                        {info.email_2}
                       </p>
                     </div>
                   </div>
@@ -262,19 +271,9 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-[var(--reino-green-e)] mb-1">Horário de Funcionamento</h3>
                       <p className="text-gray-600">
-                        Segunda a Sexta: {info.working_days_1}
-                        {info.working_days_2 && (
-                          <>
-                            <br />
-                            Sábado: {info.working_days_2}
-                          </>
-                        )}
-                        {info.working_days_3 && (
-                          <>
-                            <br />
-                            Domingo: {info.working_days_3}
-                          </>
-                        )}
+                        Segunda a Sexta: {info.working_days_1}<br />
+                        Sábado: {info.working_days_2}<br />
+                        Domingo: {info.working_days_3}
                       </p>
                     </div>
                   </div>

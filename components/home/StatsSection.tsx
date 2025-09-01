@@ -1,32 +1,24 @@
 'use client';
 
 import { Users, Calendar, Trophy, Heart } from 'lucide-react';
-import { useInfo } from '@/hooks/use-info';
-import { useProjectStats } from '@/hooks/use-project-stats';
 
 export function StatsSection() {
-  const info = useInfo();
-  const {
-    totalPeople,
-    activeProjects
-  } = useProjectStats();
-  const impactYears = new Date().getFullYear() - (info.founded_year ?? new Date().getFullYear());
   const stats = [
     {
       icon: Users,
-      number: String(totalPeople) + '+',
+      number: '230+',
       label: 'Pessoas Atendidas',
       color: 'text-[var(--reino-orange)]'
     },
     {
       icon: Calendar,
-      number: String(impactYears),
+      number: '7',
       label: 'Anos de Atividade',
       color: 'text-[var(--reino-green-c)]'
     },
     {
       icon: Trophy,
-      number: String(activeProjects),
+      number: '5',
       label: 'Projetos Ativos',
       color: 'text-[var(--reino-yellow)]'
     },

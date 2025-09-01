@@ -1,7 +1,6 @@
 'use client';
 
 import { WhatsappIcon } from '@/components/icons/WhatsappIcon';
-import { useInfo } from '@/hooks/use-info';
 
 export interface WhatsAppButtonProps {
   fixed?: boolean;
@@ -10,11 +9,7 @@ export interface WhatsAppButtonProps {
 }
 
 export function WhatsAppButton({ fixed = false, className = '', color = '#25D366' }: WhatsAppButtonProps) {
-  const info = useInfo();
-
-  if (!info.phone) return null;
-
-  const phoneDigits = info.phone.replace(/\D/g, '');
+  const phoneDigits = '13997587169';
   const message = encodeURIComponent(
     'Olá, tudo bem? Gostaria de falar com a equipe da Associação Reino nas Ruas. Encontrei o contato pelo site.'
   );

@@ -1,11 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { Calendar, Eye, ArrowRight } from 'lucide-react';
+import { Calendar, ArrowRight } from 'lucide-react';
 import { EventModal } from '@/components/events/EventModal';
-import { ApiEvent, useEventsStore } from '@/stores/events-store';
-import { useEvents } from '@/hooks/use-events';
 
 interface EventItem {
   id: string;
@@ -15,7 +13,6 @@ interface EventItem {
   category: string;
   categories: string[];
   image: string;
-  views: number;
   future: boolean;
   fullContent?: {
     description: string;
@@ -32,50 +29,50 @@ interface EventItem {
   };
 }
 
-function transformEvent(api: ApiEvent): EventItem {
-  const plain = api.description ? api.description.replace(/<[^>]+>/g, '') : '';
-  const today = new Date().toLocaleDateString('sv-SE', {
-    timeZone: 'America/Sao_Paulo',
-  });
-  const future = new Date(api.date) > new Date(today);
-  return {
-    id: api.id,
-    title: api.title,
-    excerpt: plain.slice(0, 120) + (plain.length > 120 ? '...' : ''),
-    date: api.date,
-    category: api.filter_tags?.[0] || 'ALL',
-    categories: api.filter_tags ?? [],
-    image: api.cover_image ? `/api/assets/${api.cover_image}` : '',
-    views: api.views || 0,
-    future,
-    fullContent: {
-      description: api.description || '',
-      details: {
-        participants: api.participants,
-        location: api.location,
-        duration: api.duration,
-        organizer: api.organizer,
-      },
-      images: api.gallery?.map((g: any) => g.directus_files_id) || [],
-      videoUrl: api.video_url || undefined,
-      highlights: api.highlights || [],
-      impact: api.impact || '',
-    },
-  };
-}
-
 export default function EventsPage() {
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [selectedItem, setSelectedItem] = useState<EventItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
-  const { events, totalPages } = useEvents(currentPage);
-  const updateEvent = useEventsStore((state) => state.updateEvent);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeCategory]);
+  // Dados estáticos do evento baseados no print fornecido
+  const events: EventItem[] = [
+    {
+      id: '1',
+      title: 'Festival de Talentos 2024 - Um Sucesso Absoluto',
+      excerpt: 'Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento...',
+      date: '2024-11-29',
+      category: 'COMMUNITY',
+      categories: ['COMMUNITY', 'PROJECT'],
+      image: '/assets/images/events/talent_festival/foto1.webp',
+      future: false,
+      fullContent: {
+        description: 'Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento',
+        details: {
+          participants: 100,
+          location: 'Centro Cultural da Comunidade',
+          duration: '5 horas',
+          organizer: 'Associação Reino nas Ruas',
+        },
+        images: [
+          '/assets/images/events/talent_festival/foto1.webp',
+          '/assets/images/events/talent_festival/foto2.webp',
+          '/assets/images/events/talent_festival/foto3.webp',
+          '/assets/images/events/talent_festival/foto4.webp',
+          '/assets/images/events/talent_festival/foto5.webp',
+        ],
+        videoUrl: 'https://www.youtube.com/watch?v=iBAC5Xl6OGE&embeds_referring_euri=https%3A%2F%2Freinonasruas.org.br%2F&source_ve_path=MjM4NTE',
+        highlights: [
+          'Apresentações de rap com letras autorais sobre superação e esperança',
+          'Exposição de trabalhos artísticos criados nas oficinas de arte',
+          'Participação especial de ex-alunos que hoje são referências na comunidade',
+          'Demonstrações de Jiu-Jitsu com técnicas aprendidas durante o ano',
+          'Depoimentos emocionantes de pais e responsáveis',
+          'Arrecadação de fundos para novos projetos através de venda de produtos artesanais',
+        ],
+        impact: 'Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto Impacto',
+      },
+    },
+  ];
 
   const categoryOptions = [
     { id: 'ACHIEVEMENTS', name: 'Conquistas' },
@@ -85,11 +82,9 @@ export default function EventsPage() {
     { id: 'ALL', name: 'Todas' },
   ];
 
-  const filtered = events.filter((e) =>
-    activeCategory === 'ALL' ? true : e.filter_tags?.includes(activeCategory),
+  const filteredEvents = events.filter((event) =>
+    activeCategory === 'ALL' ? true : event.categories.includes(activeCategory)
   );
-
-  const formattedEvents = filtered.map(transformEvent);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
@@ -99,24 +94,8 @@ export default function EventsPage() {
     });
   };
 
-  const handleReadMore = async (apiEvent: any) => {
-    const current = transformEvent(apiEvent);
-    try {
-      const res = await fetch(`/api/events/${apiEvent.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ views: (apiEvent.views || 0) + 1 }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        updateEvent(data.data);
-        setSelectedItem(transformEvent(data.data));
-      } else {
-        setSelectedItem(current);
-      }
-    } catch {
-      setSelectedItem(current);
-    }
+  const handleReadMore = (event: EventItem) => {
+    setSelectedItem(event);
     setIsModalOpen(true);
   };
 
@@ -148,14 +127,12 @@ export default function EventsPage() {
               {categoryOptions.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id);
-                    setCurrentPage(1);
-                  }}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${activeCategory === category.id
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                    activeCategory === category.id
                       ? 'bg-[var(--reino-orange)] text-white shadow-lg'
                       : 'bg-white text-gray-600 hover:bg-gray-100'
-                    }`}
+                  }`}
                 >
                   {category.name}
                 </button>
@@ -164,90 +141,66 @@ export default function EventsPage() {
 
             {/* Grid de Eventos */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {formattedEvents.map((item, index) => {
-                const originalEvent = events.find(e => e.id === item.id);
-                return (
-                  <article
-                    key={item.id}
-                    className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="aspect-video relative">
-                      <Image 
-                        src={item.image} 
-                        alt={item.title} 
-                        fill 
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover" 
-                      />
-                      <div className="absolute top-4 left-4 space-x-2">
-                        {item.categories.map((cat) => (
-                          <span
-                            key={cat}
-                            className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize"
-                          >
-                            {categoryOptions.find((c) => c.id === cat)?.name || cat}
-                          </span>
-                        ))}
+              {filteredEvents.map((item, index) => (
+                <article
+                  key={item.id}
+                  className={`bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="aspect-video relative">
+                    <Image 
+                      src={item.image} 
+                      alt={item.title} 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover" 
+                    />
+                    <div className="absolute top-4 left-4 space-x-2">
+                      {item.categories.map((cat) => (
+                        <span
+                          key={cat}
+                          className="px-3 py-1 bg-[var(--reino-orange)] text-white text-sm rounded-full capitalize"
+                        >
+                          {categoryOptions.find((c) => c.id === cat)?.name || cat}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
+
+                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {formatDate(item.date)}
                       </div>
                     </div>
 
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-[var(--reino-green-e)] mb-3 line-clamp-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 line-clamp-3">{item.excerpt}</p>
-
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                        <div className="flex items-center">
-                          <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(item.date)}
-                        </div>
-                        <div className="flex items-center">
-                          <Eye className="w-4 h-4 mr-1" />
-                          {item.views}
-                        </div>
-                      </div>
-
-                      {item.fullContent && !item.future ? (
-                        <button
-                          onClick={() => handleReadMore(originalEvent)}
-                          className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
-                        >
-                          Ver Mais
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
-                          title="Mais detalhes em breve"
-                        >
-                          Em breve
-                        </button>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
+                    {item.fullContent && !item.future ? (
+                      <button
+                        onClick={() => handleReadMore(item)}
+                        className="w-full bg-gray-100 text-[var(--reino-orange)] font-semibold py-3 rounded-xl hover:bg-[var(--reino-orange)] hover:text-white transition-all duration-300 flex items-center justify-center"
+                      >
+                        Ver Mais
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className="w-full bg-gray-100 text-gray-400 font-semibold py-3 rounded-xl cursor-not-allowed flex items-center justify-center"
+                        title="Mais detalhes em breve"
+                      >
+                        Em breve
+                      </button>
+                    )}
+                  </div>
+                </article>
+              ))}
             </div>
-
-            {totalPages > 1 && (
-              <div className="flex justify-center mt-8 space-x-2">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${currentPage === page
-                        ? 'bg-[var(--reino-orange)] text-white'
-                        : 'bg-white text-gray-600 hover:bg-gray-100'
-                      }`}
-                  >
-                    {page}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </section>
 

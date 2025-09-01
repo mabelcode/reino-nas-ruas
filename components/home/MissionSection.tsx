@@ -1,38 +1,8 @@
 'use client';
 
 import { Target, Eye, Heart } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useLogger } from '@/lib/logger';
-
-interface About {
-  mission: string;
-  vision: string;
-  values: string;
-}
 
 export function MissionSection() {
-  const [about, setAbout] = useState<About | null>(null);
-  const logger = useLogger();
-
-  useEffect(() => {
-    async function fetchAbout() {
-      try {
-        const res = await fetch('/api/about');
-        if (res.ok) {
-          const data = await res.json();
-          setAbout(data.data);
-        }
-      } catch (err) {
-        logger.error('Erro ao carregar dados sobre a organização', err as Error, {
-          component: 'MissionSection',
-          action: 'fetch_about'
-        });
-      }
-    }
-
-    fetchAbout();
-  }, []);
-
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -56,11 +26,9 @@ export function MissionSection() {
             <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
               Missão
             </h3>
-            {about && (
-              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                {about.mission}
-              </div>
-            )}
+            <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              Promover a transformação social de crianças e adolescentes em situação de vulnerabilidade através de atividades educativas, esportivas e culturais, desenvolvendo seu potencial humano e construindo um futuro melhor para todos.
+            </div>
           </div>
 
           <div
@@ -73,11 +41,9 @@ export function MissionSection() {
             <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
               Visão
             </h3>
-            {about && (
-              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                {about.vision}
-              </div>
-            )}
+            <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              Ser reconhecida como uma organização de referência na promoção da inclusão social e desenvolvimento integral de jovens, contribuindo para a construção de uma sociedade mais justa e igualitária.
+            </div>
           </div>
 
           <div
@@ -90,11 +56,9 @@ export function MissionSection() {
             <h3 className="text-xl sm:text-2xl font-bold text-[var(--reino-green-e)] mb-3 sm:mb-4">
               Valores
             </h3>
-            {about && (
-              <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                {about.values}
-              </div>
-            )}
+            <div className="text-sm sm:text-base text-gray-600 leading-relaxed">
+              Amor, respeito, inclusão, transparência, compromisso social e desenvolvimento humano. Acreditamos no poder transformador da educação e do esporte como ferramentas de mudança social.
+            </div>
           </div>
         </div>
       </div>

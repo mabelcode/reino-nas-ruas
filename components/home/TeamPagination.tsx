@@ -29,7 +29,7 @@ export function TeamPagination({ team }: TeamPaginationProps) {
           <div key={member.id} className="bg-white rounded-3xl overflow-hidden shadow-lg card-hover animate-slide-up">
             <div className="relative w-full" style={{ height: '340px' }}>
               <Image
-                src={`/api/assets/${member.cover}`}
+                src={member.cover}
                 alt={member.name}
                 className="w-full h-full object-cover"
                 fill

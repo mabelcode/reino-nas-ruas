@@ -3,31 +3,37 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Calendar, Users } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import { useProjects } from '@/hooks/use-projects';
 
 export function ProjectsSection() {
-  const projects = useProjects().filter(
-    (p) => p.status?.toLowerCase() === 'em andamento'
-  );
-
-  const mappedProjects = projects.slice(0, 3).map((p) => ({
-    ...p,
-    image: p.cover_image ? `/api/assets/${p.cover_image}` : undefined,
-    participants:
-      (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
-    duration: p.start_date
-      ? formatDistanceToNow(new Date(p.start_date), {
-          addSuffix: true,
-          locale: ptBR,
-        })
-      : '',
-    shortDescription:
-      p.description.length > 99
-        ? `${p.description.slice(0, 99)}...`
-        : p.description,
-  }));
+  const projects = [
+    {
+      id: '1',
+      title: 'Futebol do futuro',
+      description: 'Futebol Futebol Futebol Futebol Futebol Futebol Futebol Futebol Futebol Futebol Futebol Futebol Ful.',
+      image: '/assets/images/projects/futebol.webp',
+      participants: 20,
+      duration: 'há 5 meses',
+      status: 'Em andamento'
+    },
+    {
+      id: '2',
+      title: 'Futuro Campeão - Jiu-Jitsu',
+      description: 'Programa esportivo que desenvolve disciplina, autoestima e valores, através da prática do Jiu-Jitsu.',
+      image: '/assets/images/projects/jiujitsu.webp',
+      participants: 50,
+      duration: 'há mais de 1 ano',
+      status: 'Em andamento'
+    },
+    {
+      id: '3',
+      title: 'Mulheres Empreendedoras',
+      description: 'Programa de empoderamento feminino com foco em capacitação profissional e empreendedorismo.',
+      image: '/assets/images/projects/mulheres.webp',
+      participants: 50,
+      duration: 'há cerca de 2 anos',
+      status: 'Em andamento'
+    }
+  ];
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
@@ -42,24 +48,20 @@ export function ProjectsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
-          {mappedProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <div 
-              key={project.title}
+              key={project.id}
               className={`bg-white rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-slide-up`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
               <div className="aspect-video relative">
-                {project.image ? (
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-gray-200" />
-                )}
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
+                />
                 <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                   <span className="px-2 sm:px-3 py-1 bg-[var(--reino-green-c)] text-white text-xs sm:text-sm rounded-full">
                     {project.status}
@@ -72,7 +74,7 @@ export function ProjectsSection() {
                   {project.title}
                 </h3>
                 <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed">
-                  {project.shortDescription}
+                  {project.description}
                 </p>
                 
                 <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">

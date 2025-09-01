@@ -117,7 +117,7 @@ export function ProjectsPagination({ programs }: ProjectsPaginationProps) {
               {program.image ? (
                 <div className="aspect-video relative">
                   <Image
-                    src={`/api/assets/${program.image}`}
+                    src={program.image}
                     alt={program.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"

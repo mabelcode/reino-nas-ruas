@@ -67,23 +67,14 @@ export const fallbackProjects: Project[] = [
 interface ProjectsState {
   projects: Project[];
   loading: boolean;
-  fetchProjects: () => Promise<void>;
+  fetchProjects: () => void;
 }
 
 export const useProjectsStore = create<ProjectsState>((set) => ({
-  projects: [],
+  projects: fallbackProjects,
   loading: false,
-  async fetchProjects() {
-    set({ loading: true });
-    try {
-      const res = await fetch('/api/projects');
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      set({ projects: data.data });
-    } catch {
-      set({ projects: fallbackProjects });
-    } finally {
-      set({ loading: false });
-    }
+  fetchProjects() {
+    // Dados estáticos - sem necessidade de fetch
+    set({ projects: fallbackProjects, loading: false });
   },
 }));

@@ -1,16 +1,90 @@
 'use client';
 
 import { Star, ClipboardList } from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
-import { useProjects } from '@/hooks/use-projects';
-import { useTestimonials } from '@/hooks/use-testimonials';
 import TestimonialsCarousel from '@/components/home/TestimonialsCarousel';
 import { ProjectsPagination } from '@/components/home/ProjectsPagination';
 
 export default function Projects() {
-  const projects = useProjects();
-  const testimonials = useTestimonials();
+  // Dados estáticos dos depoimentos baseados no print fornecido
+  const testimonials = [
+    {
+      id: '1',
+      name: 'Carlos, 14 anos',
+      testimony: 'Através do rap, consegui expressar meus sentimentos e ajudar outros jovens da comunidade.',
+      project: '4'
+    },
+    {
+      id: '2', 
+      name: 'Maria, 45 anos',
+      testimony: 'Minha filha melhorou muito na escola depois que começou a participar do reforço. Obrigada Reino nas Ruas!',
+      project: '5'
+    },
+    {
+      id: '3',
+      name: 'Dona Ivone, 52 anos',
+      testimony: 'Voltei a estudar depois de 20 anos. Meus filhos ficaram tão felizes que começaram a me ajudar com os deveres.',
+      project: '5'
+    }
+  ];
+
+  // Dados estáticos dos projetos baseados no print fornecido
+  const projects = [
+    {
+      id: '1',
+      title: 'Futebol do futuro',
+      description: 'Programa esportivo que promove integração social, disciplina e saúde através da prática do futebol, desenvolvendo valores como trabalho em equipe e fair play.',
+      keywords: ['Esporte', 'Futebol', 'Futuro', 'Saúde'],
+      participants: 40,
+      duration: 'há 6 meses',
+      image: '/assets/images/projects/futebol.webp',
+      status: 'Em andamento',
+      highlighted: true
+    },
+    {
+      id: '2', 
+      title: 'Futuro Campeão - Jiu-Jitsu',
+      description: 'Programa esportivo que desenvolve disciplina, autoestima e valores através da prática do Jiu-Jitsu.',
+      keywords: ['Aulas 3x Por Semana', 'Competições E Eventos', 'Faixas Etárias: 6 a 17 Anos', 'Filosofia E Valores Marciais'],
+      participants: 60,
+      duration: 'há mais de 1 ano',
+      image: '/assets/images/projects/jiujitsu.webp',
+      status: 'Em andamento',
+      highlighted: true
+    },
+    {
+      id: '3',
+      title: 'Mulheres Empreendedoras', 
+      description: 'Programa de empoderamento feminino com foco em capacitação profissional e empreendedorismo.',
+      keywords: ['Cursos De Capacitação Profissional', 'Mentoria Empresarial', 'Microcrédito E Apoio Financeiro', 'Workshops De Empreendedorismo'],
+      participants: 50,
+      duration: 'há cerca de 2 anos',
+      image: '/assets/images/projects/mulheres.webp',
+      status: 'Em andamento',
+      highlighted: true
+    },
+    {
+      id: '4',
+      title: 'Ritmo e Rima - RAP e Cultura',
+      description: 'Desenvolvimento da expressão artística e consciência social através da música e cultura hip-hop.',
+      keywords: ['Apresentações Públicas', 'Letras Com Consciência Social', 'Oficinas De Rap E Beatbox', 'Produção Musical'],
+      participants: 30,
+      duration: 'há 7 meses',
+      image: '/assets/images/projects/rap.webp',
+      status: 'Em andamento',
+      highlighted: false
+    },
+    {
+      id: '5',
+      title: 'Educação Transformadora',
+      description: 'Programa de reforço escolar e desenvolvimento educacional personalizado.',
+      keywords: ['Acompanhamento Pedagógico', 'Desenvolvimento Da Leitura', 'Preparação Para Vestibulares', 'Reforço Em Matemática E Português'],
+      participants: 50,
+      duration: 'há mais de 1 ano',
+      image: '/assets/images/projects/educacao.webp',
+      status: 'Em andamento',
+      highlighted: true
+    }
+  ];
 
   const projectMap = projects.reduce<Record<string, string>>((acc, p) => {
     acc[p.id] = p.title;
@@ -23,14 +97,9 @@ export default function Projects() {
     title: p.title,
     description: p.description,
     details: p.keywords || [],
-    participants: (p.kids || 0) + (p.young || 0) + (p.adult || 0) + (p.elderly || 0),
-    duration: p.start_date
-      ? formatDistanceToNow(new Date(p.start_date), {
-        addSuffix: true,
-        locale: ptBR,
-      })
-      : '',
-    image: p.cover_image || undefined,
+    participants: p.participants,
+    duration: p.duration,
+    image: p.image,
     status: p.status,
   }));
 

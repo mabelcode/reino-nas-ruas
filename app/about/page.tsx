@@ -1,28 +1,8 @@
 'use client';
 
 import { Award, Users, Target, Star } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useInfo } from '@/hooks/use-info';
-import { useProjectStats } from '@/hooks/use-project-stats';
 import { TeamPagination } from '@/components/home/TeamPagination';
-import { logger } from '@/lib/logger';
-
-interface AboutData {
-  history: string;
-  mission: string;
-  vision: string;
-  values: string;
-  about_image?: string;
-}
-
-interface Acknowledgment {
-  id: string;
-  year: number;
-  title: string;
-  subtitle?: string;
-  authority?: string;
-}
 
 interface TeamMember {
   id: string;
@@ -33,43 +13,81 @@ interface TeamMember {
 }
 
 export default function AboutPage() {
-  const info = useInfo();
-  const { totalPeople, activeProjects } = useProjectStats();
+  // Dados estáticos baseados no print fornecido
+  const aboutData = {
+    history: "A Associação Reino nas Ruas nasceu em 2016 do sonho de Jesus Cristo, etc, etc etcetc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc etc. O que começou como um pequeno grupo de 10 crianças em uma quadra emprestada, hoje se transformou em uma organização que atende mais de 500 jovens em diversos projetos educacionais, esportivos e culturais.",
+    mission: "Promover a transformação social de crianças e adolescentes em situação de vulnerabilidade através de atividades educativas, esportivas e culturais, desenvolvendo seu potencial humano e construindo um futuro melhor para todos.",
+    vision: "Ser reconhecida como uma organização de referência na promoção da inclusão social e desenvolvimento integral de jovens, contribuindo para a construção de uma sociedade mais justa e igualitária.",
+    values: "Amor, respeito, inclusão, transparência, compromisso social e desenvolvimento humano. Acreditamos no poder transformador da educação e do esporte como ferramentas de mudança social."
+  };
 
-  const [about, setAbout] = useState<AboutData | null>(null);
-  const [team, setTeam] = useState<TeamMember[]>([]);
-  const [awards, setAwards] = useState<Acknowledgment[]>([]);
+  const stats = {
+    foundedYear: 2018,
+    totalPeople: 230,
+    activeProjects: 5
+  };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const aboutRes = await fetch('/api/about');
-        if (aboutRes.ok) {
-          const data = await aboutRes.json();
-          setAbout(data.data);
-        }
-
-        const ackRes = await fetch('/api/acknowledgments');
-        if (ackRes.ok) {
-          const data = await ackRes.json();
-          setAwards(data.data || []);
-        }
-
-        const teamRes = await fetch('/api/team');
-        if (teamRes.ok) {
-          const data = await teamRes.json();
-          setTeam(data.data || []);
-        }
-      } catch (err) {
-                logger.error('Erro ao carregar dados sobre a organização', err as Error, {
-          page: 'about',
-          action: 'fetch_about_data'
-        });
-      }
+  const awards = [
+    {
+      id: "1",
+      year: 2022,
+      title: "Organização do Ano",
+      subtitle: "Serviços Especiais na realização dos eventos do município",
+      authority: "Prefeitura Municipal"
+    },
+    {
+      id: "2", 
+      year: 2022,
+      title: "Melhor Projeto Esportivo",
+      subtitle: "Centro de Ensino de Atletismo e Treinamento Esportivo",
+      authority: "Secretaria de Esportes"
+    },
+    {
+      id: "3",
+      year: 2021,
+      title: "Prêmio Transformação Social",
+      subtitle: "Fundação Lola Aché",
+      authority: "Secretaria de Desenvolvimento Social"
     }
+  ];
 
-    fetchData();
-  }, []);
+  const team: TeamMember[] = [
+    {
+      id: "1",
+      name: "Bruna",
+      role: "Função Funcao",
+      resume: "Bruna Bruna Bruna Bruna Bruna Bruna Bruna Bruna",
+      cover: "/assets/images/about/bruna.webp"
+    },
+    {
+      id: "2", 
+      name: "Heloisa",
+      role: "Funcao",
+      resume: "Heloisa Heloisa Heloisa Heloisa Heloisa Heloisa Heloisa",
+      cover: "/assets/images/about/heloisa.webp"
+    },
+    {
+      id: "3",
+      name: "Jéssica", 
+      role: "Função",
+      resume: "Jéssica Jéssica Jéssica Jéssica Jéssica Jéssica Jéssica",
+      cover: "/assets/images/about/jessica.webp"
+    },
+    {
+      id: "4",
+      name: "Mariana",
+      role: "Funcao",
+      resume: "Mariana Mariana Mariana Mariana Mariana Mariana Mariana",
+      cover: "/assets/images/about/mariana.webp"
+    },
+    {
+      id: "5",
+      name: "Thiago",
+      role: "Funcao Funcao",
+      resume: "Thiago Thiago Thiago Thiago Thiago Thiago Thiago Thiago",
+      cover: "/assets/images/about/thiago.webp"
+    }
+  ];
 
   return (
     <>
@@ -94,36 +112,32 @@ export default function AboutPage() {
           <div className="container-max">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-slide-in-left">
-                {about?.about_image && (
-                  <Image
-                    src={`/api/assets/${about.about_image}`}
-                    alt="Início da Reino nas Ruas"
-                    className="rounded-3xl shadow-lg"
-                    width={800}
-                    height={600}
-                  />
-                )}
+                <Image
+                  src="/assets/images/about/team.webp"
+                  alt="Início da Reino nas Ruas"
+                  className="rounded-3xl shadow-lg"
+                  width={800}
+                  height={600}
+                />
               </div>
               <div className="animate-slide-in-right">
                 <h2 className="heading-font text-3xl sm:text-4xl text-[var(--reino-green-e)] mb-6">
                   Como Tudo Começou
                 </h2>
-                {about && (
-                  <div className="text-gray-600 mb-6 leading-relaxed">
-                    {about.history}
-                  </div>
-                )}
+                <div className="text-gray-600 mb-6 leading-relaxed">
+                  {aboutData.history}
+                </div>
                 <div className="flex items-center space-x-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[var(--reino-orange)]">{info.founded_year}</div>
+                    <div className="text-3xl font-bold text-[var(--reino-orange)]">{stats.foundedYear}</div>
                     <div className="text-sm text-gray-600">Fundação</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[var(--reino-green-c)]">{totalPeople}</div>
+                    <div className="text-3xl font-bold text-[var(--reino-green-c)]">{stats.totalPeople}</div>
                     <div className="text-sm text-gray-600">Pessoas impactadas</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-[var(--reino-yellow)]">{activeProjects}</div>
+                    <div className="text-3xl font-bold text-[var(--reino-yellow)]">{stats.activeProjects}</div>
                     <div className="text-sm text-gray-600">Projetos ativos</div>
                   </div>
                 </div>
@@ -148,31 +162,25 @@ export default function AboutPage() {
               <div className="bg-white rounded-3xl p-8 shadow-lg card-hover text-center">
                 <Target className="w-12 h-12 text-[var(--reino-orange)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Missão</h3>
-                {about && (
-                  <div className="text-gray-600 leading-relaxed">
-                    {about.mission}
-                  </div>
-                )}
+                <div className="text-gray-600 leading-relaxed">
+                  {aboutData.mission}
+                </div>
               </div>
 
               <div className="bg-white rounded-3xl p-8 shadow-lg card-hover text-center">
                 <Star className="w-12 h-12 text-[var(--reino-green-c)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Visão</h3>
-                {about && (
-                  <div className="text-gray-600 leading-relaxed">
-                    {about.vision}
-                  </div>
-                )}
+                <div className="text-gray-600 leading-relaxed">
+                  {aboutData.vision}
+                </div>
               </div>
 
               <div className="bg-white rounded-3xl p-8 shadow-lg card-hover text-center">
                 <Users className="w-12 h-12 text-[var(--reino-yellow)] mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-[var(--reino-green-e)] mb-4">Valores</h3>
-                {about && (
-                  <div className="text-gray-600 leading-relaxed">
-                    {about.values}
-                  </div>
-                )}
+                <div className="text-gray-600 leading-relaxed">
+                  {aboutData.values}
+                </div>
               </div>
             </div>
           </div>

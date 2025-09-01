@@ -44,7 +44,7 @@ export function DonationCTA() {
               </div>
               <div className="text-center">
                 <div className="text-xl sm:text-2xl font-bold mb-1">R$ 500</div>
-                <div className="text-xs sm:text-sm opacity-90">Evento para 50 crianças</div>
+                <div className="text-xs sm:text-sm opacity-90">Eventos para 10 crianças</div>
               </div>
             </div>
           </div>

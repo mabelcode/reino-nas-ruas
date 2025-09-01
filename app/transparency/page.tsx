@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Download,
   BarChart3,
@@ -9,21 +9,165 @@ import {
   DollarSign,
   Users,
   Calendar,
-  Loader2,
 } from 'lucide-react';
-import { useFinancialYears } from '@/hooks/use-financial-year';
-import { useFinancialReports } from '@/hooks/use-financial-reports';
 import { CertificationsCarousel } from '@/components/transparency/CertificationsCarousel';
-import { useLogger } from '@/lib/logger';
+
+interface FinancialYear {
+  id: string;
+  amount_received: number;
+  amount_invested: number;
+  amount_beneficiaries: number;
+  amount_events: number;
+  year: number;
+  projetcs: number;
+  infrastructure: number;
+  administration: number;
+}
+
+interface FinancialReport {
+  id: string;
+  title: string;
+  type: string;
+  date: string;
+  file: {
+    id: string;
+    filesize: string;
+    filename: string;
+  };
+}
 
 export default function TransparencyPage() {
-  const financialYears = useFinancialYears();
-  const { reports, loading: reportsLoading } = useFinancialReports();
   const [isDownloading, setIsDownloading] = useState<string | null>(null);
-  const [globalLoading, setGlobalLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedYear, setSelectedYear] = useState<string>('');
-  const logger = useLogger();
+  const [selectedYear, setSelectedYear] = useState<string>('2021');
+
+  // Dados estáticos baseados nos prints fornecidos
+  const financialYears: FinancialYear[] = [
+    {
+      id: '1',
+      amount_received: 100000,
+      amount_invested: 99000,
+      amount_beneficiaries: 300,
+      amount_events: 25,
+      year: 2021,
+      projetcs: 50000,
+      infrastructure: 20000,
+      administration: 19000,
+    },
+    {
+      id: '2',
+      amount_received: 300000,
+      amount_invested: 280000,
+      amount_beneficiaries: 500,
+      amount_events: 40,
+      year: 2022,
+      projetcs: 100000,
+      infrastructure: 50000,
+      administration: 50000,
+    },
+    {
+      id: '3',
+      amount_received: 400000,
+      amount_invested: 380000,
+      amount_beneficiaries: 300,
+      amount_events: 30,
+      year: 2023,
+      projetcs: 200000,
+      infrastructure: 100000,
+      administration: 100000,
+    },
+    {
+      id: '4',
+      amount_received: 450000,
+      amount_invested: 400000,
+      amount_beneficiaries: 700,
+      amount_events: 70,
+      year: 2024,
+      projetcs: 300000,
+      infrastructure: 50000,
+      administration: 50000,
+    },
+    {
+      id: '5',
+      amount_received: 600000,
+      amount_invested: 550000,
+      amount_beneficiaries: 1000,
+      amount_events: 50,
+      year: 2025,
+      projetcs: 400000,
+      infrastructure: 75000,
+      administration: 75000,
+    },
+  ];
+
+  const reports: FinancialReport[] = [
+    {
+      id: '1',
+      title: 'Relatório Mensal - Julho 2025',
+      type: 'MONTHLY',
+      date: '2025-07-30',
+      file: {
+        id: 'julho-2025',
+        filesize: '5632',
+        filename: 'relatorio-julho-2025.pdf'
+      }
+    },
+    {
+      id: '2',
+      title: 'Relatório Mensal - Maio 2025',
+      type: 'MONTHLY',
+      date: '2025-05-30',
+      file: {
+        id: 'maio-2025',
+        filesize: '1434',
+        filename: 'relatorio-maio-2025.pdf'
+      }
+    },
+    {
+      id: '3',
+      title: 'Relatório Mensal - Abril 2025',
+      type: 'MONTHLY',
+      date: '2025-04-29',
+      file: {
+        id: 'abril-2025',
+        filesize: '5632',
+        filename: 'relatorio-abril-2025.pdf'
+      }
+    },
+    {
+      id: '4',
+      title: 'Relatório Mensal - Janeiro 2025',
+      type: 'MONTHLY',
+      date: '2025-01-30',
+      file: {
+        id: 'janeiro-2025',
+        filesize: '1434',
+        filename: 'relatorio-janeiro-2025.pdf'
+      }
+    },
+    {
+      id: '5',
+      title: 'Relatório Mensal - Novembro 2024',
+      type: 'MONTHLY',
+      date: '2024-11-29',
+      file: {
+        id: 'novembro-2024',
+        filesize: '5632',
+        filename: 'relatorio-novembro-2024.pdf'
+      }
+    },
+    {
+      id: '6',
+      title: 'Relatório Mensal - Março 2024',
+      type: 'MONTHLY',
+      date: '2024-03-30',
+      file: {
+        id: 'marco-2024',
+        filesize: '1434',
+        filename: 'relatorio-marco-2024.pdf'
+      }
+    },
+  ];
 
   // Ordenar anos naturalmente (crescente) e criar opções
   const yearOptions = financialYears
@@ -36,18 +180,6 @@ export default function TransparencyPage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentReports = reports.slice(startIndex, endIndex);
-
-  // Inicializar com o primeiro ano disponível (mais antigo)
-  useEffect(() => {
-    if (yearOptions.length > 0 && !selectedYear) {
-      setSelectedYear(yearOptions[0] || '');
-    }
-  }, [yearOptions, selectedYear]);
-
-  // Resetar página quando os relatórios mudarem
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [reports.length]);
 
   const selectedData = financialYears.find(
     (fy) => fy.year.toString() === selectedYear,
@@ -85,37 +217,24 @@ export default function TransparencyPage() {
     return `${(size / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const handleDownload = async (fileId: string, title: string) => {
+  const handleDownload = (fileId: string, title: string) => {
     try {
       setIsDownloading(fileId);
-      setGlobalLoading(true);
-
-      const response = await fetch(`/api/assets/${fileId}`);
-
-      if (!response.ok) {
-        throw new Error('Falha ao baixar arquivo');
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      
+      // Link direto para o arquivo exemplo
+      const fileUrl = '/assets/files/Exemplo_Movimentacoes.xlsx';
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `${title}.pdf`;
+      a.href = fileUrl;
+      a.download = `${title}.xlsx`;
       document.body.appendChild(a);
       a.click();
-      window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
+      
     } catch (error) {
-      logger.error('Erro ao baixar arquivo', error as Error, {
-        component: 'TransparencyPage',
-        action: 'download_file',
-        fileId,
-        title
-      });
+      console.error('Erro ao baixar arquivo:', error);
       alert('Erro ao baixar o arquivo. Tente novamente.');
     } finally {
       setIsDownloading(null);
-      setGlobalLoading(false);
     }
   };
 
@@ -145,15 +264,6 @@ export default function TransparencyPage() {
     <>
       <title>TRANSPARÊNCIA | Reino nas Ruas</title>
       <div className="pt-16 sm:pt-18 lg:pt-20">
-        {/* Loading Overlay */}
-        {globalLoading && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-3xl p-8 flex flex-col items-center">
-              <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)] mb-4" />
-              <p className="text-gray-600">Baixando arquivo...</p>
-            </div>
-          </div>
-        )}
 
         {/* Hero Section */}
         <section className="relative py-20 bg-linear-to-r from-[var(--reino-green-e)] to-[var(--reino-green-c)] text-white">
@@ -292,73 +402,64 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            {reportsLoading ? (
-              <div className="flex justify-center items-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-[var(--reino-orange)]" />
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  {currentReports.map((report, index) => (
-                    <div
-                      key={report.id}
-                      className={`bg-gray-50 rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center">
-                          <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
-                          <div>
-                            <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
-                            <p className="text-sm text-gray-600">{getReportTypeLabel(report.type)}</p>
-                          </div>
-                        </div>
-                        <span className="text-xs text-gray-500">{formatFileSize(report.file.filesize)}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {currentReports.map((report, index) => (
+                <div
+                  key={report.id}
+                  className={`bg-gray-50 rounded-3xl p-6 shadow-lg card-hover animate-slide-up`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center">
+                      <FileText className="w-10 h-10 text-[var(--reino-orange)] mr-3" />
+                      <div>
+                        <h3 className="text-lg font-bold text-[var(--reino-green-e)]">{report.title}</h3>
+                        <p className="text-sm text-gray-600">{getReportTypeLabel(report.type)}</p>
                       </div>
-
-                      <div className="text-sm text-gray-600 mb-4">
-                        <span>{formatDate(report.date)}</span>
-                      </div>
-
-                      <button
-                        onClick={() => handleDownload(report.file.id, report.title)}
-                        disabled={isDownloading === report.file.id}
-                        className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {isDownloading === report.file.id ? (
-                          <>
-                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                            Baixando...
-                          </>
-                        ) : (
-                          <>
-                            <Download className="w-5 h-5 mr-2" />
-                            Baixar Relatório
-                          </>
-                        )}
-                      </button>
                     </div>
-                  ))}
-                </div>
-
-                {/* Paginação */}
-                {totalPages > 1 && (
-                  <div className="flex justify-center items-center gap-2 mt-8">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${currentPage === page
-                          ? 'bg-[var(--reino-orange)] text-white'
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                          }`}
-                      >
-                        {page}
-                      </button>
-                    ))}
+                    <span className="text-xs text-gray-500">{formatFileSize(report.file.filesize)}</span>
                   </div>
-                )}
-              </>
+
+                  <div className="text-sm text-gray-600 mb-4">
+                    <span>{formatDate(report.date)}</span>
+                  </div>
+
+                  <button
+                    onClick={() => handleDownload(report.file.id, report.title)}
+                    disabled={isDownloading === report.file.id}
+                    className="w-full bg-[var(--reino-orange)] text-white py-3 rounded-xl font-semibold hover:bg-[var(--reino-orange-hover)] transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isDownloading === report.file.id ? (
+                      <>
+                        Baixando...
+                      </>
+                    ) : (
+                      <>
+                        <Download className="w-5 h-5 mr-2" />
+                        Baixar Relatório
+                      </>
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Paginação */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-8">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`w-10 h-10 rounded-xl font-semibold transition-all duration-300 ${currentPage === page
+                      ? 'bg-[var(--reino-orange)] text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
         </section>

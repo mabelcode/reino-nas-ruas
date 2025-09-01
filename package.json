@@ -12,7 +12,7 @@
     "postbuild": "rm -rf .next/cache",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
+
     "e2e": "playwright test",
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
@@ -87,14 +87,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/jest": "^30.0.0",
     "cross-fetch": "^4.1.0",
-    "eslint": "^8.57.1",
-    "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.4",
-    "ts-jest": "^29.4.0"
+    "eslint": "^8.57.1"
   }
 }

@@ -7,11 +7,11 @@ export function EventsSection() {
   const events = [
     {
       title: 'Festival de Talentos 2024 - Um Sucesso Absoluto',
-      date: '20 de novembro',
+      date: '29 de novembro',
       time: '5 horas',
       location: 'Centro Cultural da Comunidade',
       description: 'Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Evento Eve...',
-      image: '/assets/images/events/next_event.webp'
+      image: '/assets/images/events/talent_festival/foto1.webp'
     }
   ];
 

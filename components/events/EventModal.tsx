@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { X, ChevronLeft, ChevronRight, Calendar, Eye, Play, Users, MapPin, Clock } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Calendar, Play, Users, MapPin, Clock } from 'lucide-react';
 
 const categoryLabels = {
   ACHIEVEMENTS: 'Conquistas',
@@ -19,7 +19,7 @@ interface EventItem {
   category: string;
   categories: string[];
   image: string;
-  views: number;
+  future: boolean;
   fullContent?: {
     description: string;
     details: {
@@ -107,10 +107,6 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
               <div className="flex items-center text-sm text-gray-500">
                 <Calendar className="w-4 h-4 mr-1" />
                 {formatDate(item.date)}
-              </div>
-              <div className="flex items-center text-sm text-gray-500">
-                <Eye className="w-4 h-4 mr-1" />
-                {item.views}
               </div>
             </div>
             <button
@@ -215,7 +211,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                 {/* Main Image */}
                 <div className="relative aspect-video lg:aspect-16/10 rounded-2xl overflow-hidden mb-4 bg-gray-100">
                   <Image
-                    src={fullContent.images[currentImageIndex] ? `/api/assets/${fullContent.images[currentImageIndex]}` : ''}
+                    src={fullContent.images[currentImageIndex] || '/assets/images/events/next_event.webp'}
                     alt={`Foto ${currentImageIndex + 1} do evento`}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
@@ -253,13 +249,14 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${index === currentImageIndex
-                          ? 'border-[var(--reino-orange)] scale-105'
-                          : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                        className={`shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                          index === currentImageIndex
+                            ? 'border-[var(--reino-orange)] scale-105'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
                       >
                         <Image
-                          src={image ? `/api/assets/${image}` : ''}
+                          src={image}
                           alt={`Miniatura ${index + 1}`}
                           width={80}
                           height={80}
@@ -285,7 +282,7 @@ export function EventModal({ item, isOpen, onClose }: EventModalProps) {
                   >
                     {thumbnail && (
                       <Image
-                        src={thumbnail ? `/api/assets/${thumbnail}` : ''}
+                        src={thumbnail}
                         alt="Video thumbnail"
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"

@@ -143,20 +143,7 @@ const nextConfig = {
           },
         ],
       },
-      // Headers específicos para API de assets
-      {
-        source: '/api/assets/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400, s-maxage=86400',
-          },
-          {
-            key: 'Accept-Encoding',
-            value: 'gzip, deflate, br',
-          },
-        ],
-      },
+
     ];
   },
 

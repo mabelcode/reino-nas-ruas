@@ -16,24 +16,15 @@ const fallbackSocials: SocialMedia[] = [
 interface SocialsState {
   socials: SocialMedia[];
   loading: boolean;
-  fetchSocials: () => Promise<void>;
+  fetchSocials: () => void;
 }
 
 export const useSocialsStore = create<SocialsState>((set) => ({
-  socials: [],
+  socials: fallbackSocials,
   loading: false,
-  async fetchSocials() {
-    set({ loading: true });
-    try {
-      const res = await fetch('/api/socials');
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      set({ socials: data.data });
-    } catch {
-      set({ socials: fallbackSocials });
-    } finally {
-      set({ loading: false });
-    }
+  fetchSocials() {
+    // Dados estáticos - sem necessidade de fetch
+    set({ socials: fallbackSocials, loading: false });
   },
 }));
 

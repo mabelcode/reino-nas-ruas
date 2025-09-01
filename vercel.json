@@ -3,11 +3,7 @@
   "installCommand": "npm ci",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
-    }
-  },
+
   "headers": [
     {
       "source": "/(.*)",
@@ -75,10 +71,5 @@
       "permanent": true
     }
   ],
-  "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "/api/sitemap"
-    }
-  ]
+
 } 

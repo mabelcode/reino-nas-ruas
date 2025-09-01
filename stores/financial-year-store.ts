@@ -31,23 +31,14 @@ export const fallbackFinancialYears: FinancialYear[] = [
 interface FinancialYearState {
   years: FinancialYear[];
   loading: boolean;
-  fetchYears: () => Promise<void>;
+  fetchYears: () => void;
 }
 
 export const useFinancialYearStore = create<FinancialYearState>((set) => ({
-  years: [],
+  years: fallbackFinancialYears,
   loading: false,
-  async fetchYears() {
-    set({ loading: true });
-    try {
-      const res = await fetch('/api/financial-year');
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      set({ years: data.data });
-    } catch {
-      set({ years: fallbackFinancialYears });
-    } finally {
-      set({ loading: false });
-    }
+  fetchYears() {
+    // Dados estáticos - sem necessidade de fetch
+    set({ years: fallbackFinancialYears, loading: false });
   },
 }));

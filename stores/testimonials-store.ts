@@ -37,23 +37,14 @@ export const fallbackTestimonials: Testimonial[] = [
 interface TestimonialsState {
   testimonials: Testimonial[];
   loading: boolean;
-  fetchTestimonials: () => Promise<void>;
+  fetchTestimonials: () => void;
 }
 
 export const useTestimonialsStore = create<TestimonialsState>((set) => ({
-  testimonials: [],
+  testimonials: fallbackTestimonials,
   loading: false,
-  async fetchTestimonials() {
-    set({ loading: true });
-    try {
-      const res = await fetch('/api/testimonials');
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      set({ testimonials: data.data });
-    } catch {
-      set({ testimonials: fallbackTestimonials });
-    } finally {
-      set({ loading: false });
-    }
+  fetchTestimonials() {
+    // Dados estáticos - sem necessidade de fetch
+    set({ testimonials: fallbackTestimonials, loading: false });
   },
 }));

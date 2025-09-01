@@ -44,23 +44,14 @@ export const fallbackInfo: ONGInfo = {
 interface InfoState {
   info: ONGInfo | null;
   loading: boolean;
-  fetchInfo: () => Promise<void>;
+  fetchInfo: () => void;
 }
 
 export const useInfoStore = create<InfoState>((set) => ({
-  info: null,
+  info: fallbackInfo,
   loading: false,
-  async fetchInfo() {
-    set({ loading: true });
-    try {
-      const res = await fetch('/api/info');
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      set({ info: data.data });
-    } catch {
-      set({ info: fallbackInfo });
-    } finally {
-      set({ loading: false });
-    }
+  fetchInfo() {
+    // Dados estáticos - sem necessidade de fetch
+    set({ info: fallbackInfo, loading: false });
   },
 }));
